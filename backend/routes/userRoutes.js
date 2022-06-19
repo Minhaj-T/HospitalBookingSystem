@@ -4,7 +4,7 @@ const router=express.Router()
 
 
 router.post('/signup', registerUser);
-router.post('/login',loginUser)
-router.get('/getuser',getUser)
+router.post('/login',loginUser);
+router.get('/getuser',getUser);
 
 module.exports=router;
