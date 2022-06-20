@@ -1,8 +1,9 @@
 import LoginPoster from "../../images/login-banner.png";
-import "./Login.css";
+import "./Signup.css";
 
-function Login() {
+function Signup() {
   return (
+    <>
     <>
       <div className="content">
         <div className="container-fluid">
@@ -21,7 +22,7 @@ function Login() {
                   <div className="col-md-12 col-lg-6 login-right">
                     <div className="login-header">
                       <h3>
-                        Login <span>Doccure</span>
+                         <span>Patient Register</span>
                       </h3>
                     </div>
                     <form action="">
@@ -32,25 +33,29 @@ function Login() {
                           id="floatingInput"
                           placeholder="name@example.com"
                         />
-                        <label htmlFor="floatingInput">Email address</label>
+                        <label htmlFor="floatingInput">Name</label>
                       </div>
                       <div className="form-floating mb-3">
                         <input
                           type="email"
                           className="form-control"
                           id="floatingInput"
-                          placeholder="name@example.com"
+                          placeholder="Mobile"
+                        />
+                        <label htmlFor="floatingInput">Mobile Number</label>
+                      </div>
+                      <div className="form-floating mb-3">
+                        <input
+                          type="email"
+                          className="form-control"
+                          id="floatingInput"
+                          placeholder="****"
                         />
                         <label htmlFor="floatingInput">Password</label>
                       </div>
-                      <div className="text-right">
-                        <a className="forgot-link" href="forgot-password.html">
-                          Forgot Password ?
-                        </a>
-                      </div>
                       <div className="d-grid mx-auto">
                         <button className="btn btn-primary" type="button">
-                          Login
+                          Signup
                         </button>
                       </div>
                       <div className="login-or">
@@ -59,8 +64,8 @@ function Login() {
                       </div>
 
                       <div className="text-center dont-have">
-                        Don’t have an account?{" "}
-                        <a href="register.html">Register</a>
+                      Already have an account?{" "}
+                        <a href="register.html">Login</a>
                       </div>
                     </form>
                   </div>
@@ -71,7 +76,10 @@ function Login() {
         </div>
       </div>
     </>
-  );
+     
+
+    </>
+  )
 }
 
-export default Login;
+export default Signup
