@@ -6,9 +6,10 @@ const User = require("../models/userModel");
 // @desc  Register New User
 // @rout  POST /api/users/signup
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, phone } = req.body;
+  console.log("this passed into client side",req.body);
+  const { name, email, password } = req.body;
 
-  if (!name || !email || !password || !phone) {
+  if (!name || !email || !password) {
     res.status(400);
     throw new Error(`please add all fields`);
   }
@@ -30,7 +31,6 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password: hashedPassword,
-    phone,
   });
 
   if (user) {

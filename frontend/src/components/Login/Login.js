@@ -1,7 +1,30 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import LoginPoster from "../../images/login-banner.png";
 import "./Login.css";
 
 function Login() {
+
+  const onSubmit= (e)=>{
+    e.preventDefault()
+    console.log("submit button cliked");
+
+  }
+  
+  const [formData, setFormData] = useState({
+    email:'',
+    password:''
+  })
+
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }))
+  }
+
+  const{email,password}=formData;
+
   return (
     <>
       <div className="content">
@@ -21,35 +44,39 @@ function Login() {
                   <div className="col-md-12 col-lg-6 login-right">
                     <div className="login-header">
                       <h3>
-                        Login <span>Doccure</span>
+                        Login <span>Carewell</span>
                       </h3>
                     </div>
-                    <form action="">
+                    <form onSubmit={onSubmit}>
                       <div className="form-floating mb-3">
                         <input
                           type="email"
+                          name="email"
+                          value={email}
                           className="form-control"
-                          id="floatingInput"
+                          onChange={onChange}
                           placeholder="name@example.com"
                         />
                         <label htmlFor="floatingInput">Email address</label>
                       </div>
                       <div className="form-floating mb-3">
                         <input
-                          type="email"
+                          type="password"
+                          name="password"
+                          value={password}
                           className="form-control"
-                          id="floatingInput"
-                          placeholder="name@example.com"
+                          onChange={onChange}
+                          placeholder="Enter your Password ?"
                         />
                         <label htmlFor="floatingInput">Password</label>
                       </div>
                       <div className="text-right">
-                        <a className="forgot-link" href="forgot-password.html">
+                        <Link className="forgot-link" to={"/"}>
                           Forgot Password ?
-                        </a>
+                        </Link>
                       </div>
                       <div className="d-grid mx-auto">
-                        <button className="btn btn-primary" type="button">
+                        <button className="btn btn-primary" type="submit">
                           Login
                         </button>
                       </div>
@@ -60,7 +87,7 @@ function Login() {
 
                       <div className="text-center dont-have">
                         Don’t have an account?{" "}
-                        <a href="register.html">Register</a>
+                        <Link to={"/signup"}>Register</Link>
                       </div>
                     </form>
                   </div>

@@ -2,6 +2,7 @@ const express = require('express')
 const dotenv = require('dotenv').config()
 const colors = require('colors');
 const connectDB = require('./config/db');
+const cors = require("cors");
 const {errorHandler,notFound}= require('./middlewares/errorMiddleware')
 
 // Mongodb Connection
@@ -10,6 +11,7 @@ const app= express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
+app.use(cors({ origin: true, credentials: true }));
 
 //Routes
 app.use('/api/goals',require('./routes/goalRoutes'))
