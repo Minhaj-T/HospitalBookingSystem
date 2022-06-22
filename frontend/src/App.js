@@ -11,6 +11,7 @@ import Signup from "./components/Signup/Signup";
 //Utilities and Components
 // const Loader = React.lazy(() => import("./components/Loader/Loader"));
 import Spinner from "./components/Spinner/Spinner";
+
 // Pages
 
 //Homepage

@@ -1,70 +1,69 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LoginPoster from "../../images/login-banner.png";
-import {useDispatch,useSelector} from 'react-redux'
-import {useNavigate} from 'react-router-dom'
-import {toast} from 'react-toastify'
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { register, reset } from "../../features/auth/authSlice";
 import "./Signup.css";
 import Spinner from "../Spinner/Spinner";
 
-
-
-
 function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {user, isLoading, isError, isSuccess, message}=useSelector((state)=>state.auth)
-  console.log('this is the user informations',user);
+  // get the current state
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
   useEffect(() => {
     if (isError) {
-      toast.error(message)
+      toast.error(message);
     }
-    if (isSuccess ||user) {
-      navigate('/')      
+    if (isSuccess || user) {
+      navigate("/");
     }
-    dispatch(reset())
-  }, [user, isError, isSuccess, message,navigate, dispatch ])
-  
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    password2: '',
-  })
-  const { name, email, password, password2 } = formData
+    name: "",
+    email: "",
+    password: "",
+    password2: "",
+  });
+  const { name, email, password, password2 } = formData;
 
+  // get the data into the form
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
-    }))
-  }
-  console.log(formData);
+    }));
+  };
 
-  const onSubmit=(e)=>{
-    console.log("click");
-    
-    e.preventDefault()
+  // submit the data into server
+  const onSubmit = (e) => {
+    e.preventDefault();
 
-    if(password !== password2){
-      toast.error('passwords do not match')
-    }else{
-      console.log("clicked submit");
-      const userData={
+    // Check password one equal to password2
+    if (password !== password2) {
+      toast.error("passwords do not match");
+    } else {
+      const userData = {
         name,
         email,
-        password
-      }
-      dispatch(register(userData))
+        password,
+      };
+      dispatch(register(userData));
     }
-  }
+  };
+
+  // Loading page
   if (isLoading) {
-    return <Spinner/>
+    return <Spinner />;
   }
 
- 
   return (
     <>
       <div className="content">

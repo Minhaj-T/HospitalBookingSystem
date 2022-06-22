@@ -6,7 +6,7 @@ const User = require("../models/userModel");
 // @desc  Register New User
 // @rout  POST /api/users/signup
 const registerUser = asyncHandler(async (req, res) => {
-  console.log("this passed into client side",req.body);
+  
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
@@ -52,7 +52,7 @@ const registerUser = asyncHandler(async (req, res) => {
 // @rout  POST /api/users/login
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-
+  console.log(" LOGIN :this passed into client side",req.body);
   //get for user email
   const user = await User.findOne({ email });
   if (user && bcrypt.compare(password, user.password)) {
@@ -71,7 +71,8 @@ const loginUser = asyncHandler(async (req, res) => {
 // @desc  get the data into User
 // @rout  POST /api/users/signup
 const getUser = asyncHandler(async (req, res) => {
-  res.status(200).json({ msg: "ger the user information about user" });
+
+  res.status(200).json(req.user);
 });
 
 const generateToken=(id)=>{

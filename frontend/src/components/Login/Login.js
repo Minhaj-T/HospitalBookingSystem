@@ -1,29 +1,60 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LoginPoster from "../../images/login-banner.png";
 import "./Login.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { login, reset } from "../../features/auth/authSlice";
+import Spinner from "../Spinner/Spinner";
 
 function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // get the current state
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
 
-  const onSubmit= (e)=>{
-    e.preventDefault()
-    console.log("submit button cliked");
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess || user) {
+      navigate("/");
+    }
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
-  }
-  
   const [formData, setFormData] = useState({
-    email:'',
-    password:''
-  })
+    email: "",
+    password: "",
+  });
 
+  const { email, password } = formData;
+
+  // get the data into the form
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
-    }))
-  }
+    }));
+  };
 
-  const{email,password}=formData;
+  // submit the data into server
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const userData = {
+      email,
+      password,
+    };
+    dispatch(login(userData));
+  };
+
+  // Loading page
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>
