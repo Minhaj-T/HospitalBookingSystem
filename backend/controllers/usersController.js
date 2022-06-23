@@ -55,7 +55,9 @@ const loginUser = asyncHandler(async (req, res) => {
   console.log(" LOGIN :this passed into client side",req.body);
   //get for user email
   const user = await User.findOne({ email });
-  if (user && bcrypt.compare(password, user.password)) {
+  console.log("this is the find email user",user);
+  if (user &&(await bcrypt.compare(password, user.password))) {
+    console.log("succserss");
     res.status(200).json({
       _id: user.id,
       name: user.name,

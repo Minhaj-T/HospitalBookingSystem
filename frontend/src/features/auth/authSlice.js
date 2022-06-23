@@ -66,17 +66,17 @@ const authSlice = createSlice({
       state.isLoading = true;
     },
     [register.fulfilled]: (state, action) => {
-      console.log("This is the fetched data from server", action);
+      console.log("This is the fetche data from server", action);
       state.isLoading = false;
       state.isSuccess = false;
       state.user = action.payload;
     },
     [register.rejected]: (state, action) => {
       state.isLoading = false;
-      state.isError = false;
+      state.isError = true;
       state.message = action.payload;
       state.user = null;
-      console.log("The axios erorr...", action.payload);
+      console.log("The axios erorr11...", action.payload);
     },
     // ........................................ 
     [login.pending]: (state) => {
@@ -90,7 +90,7 @@ const authSlice = createSlice({
     },
     [login.rejected]: (state, action) => {
       state.isLoading = false;
-      state.isError = false;
+      state.isError = true;
       state.message = action.payload;
       state.user = null;
       console.log("The axios erorr...", action.payload);

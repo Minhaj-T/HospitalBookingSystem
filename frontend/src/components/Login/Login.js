@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { login, reset } from "../../features/auth/authSlice";
 import Spinner from "../Spinner/Spinner";
+import { isLoginValid } from "../../validations/formValidator";
+import classname from "classnames";
 
 function Login() {
   const navigate = useNavigate();
@@ -15,6 +17,18 @@ function Login() {
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const { email, password } = formData;
+
+  const [loginErrors, setLoginError] = useState({
+    email: "",
+    password: "",
+  });
 
   useEffect(() => {
     if (isError) {
@@ -26,29 +40,30 @@ function Login() {
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const { email, password } = formData;
-
   // get the data into the form
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+    setLoginError((prevState) => ({
+      ...prevState,
+      [e.target.name]: "",
+    }));
   };
 
   // submit the data into server
   const onSubmit = (e) => {
     e.preventDefault();
-    const userData = {
-      email,
-      password,
-    };
-    dispatch(login(userData));
+
+    //form validation section
+    if (isLoginValid(formData, setLoginError)) {
+      const userData = {
+        email,
+        password,
+      };
+      dispatch(login(userData));
+    }
   };
 
   // Loading page
@@ -81,13 +96,20 @@ function Login() {
                     <form onSubmit={onSubmit}>
                       <div className="form-floating mb-3">
                         <input
-                          type="email"
+                          type="text"
                           name="email"
                           value={email}
-                          className="form-control"
+                          className={classname("form-control", {
+                            "is-invalid": loginErrors.email,
+                          })}
                           onChange={onChange}
                           placeholder="name@example.com"
                         />
+                        {loginErrors.email && (
+                          <div className="invalid-feedback">
+                            {loginErrors.email}
+                          </div>
+                        )}
                         <label htmlFor="floatingInput">Email address</label>
                       </div>
                       <div className="form-floating mb-3">
@@ -95,10 +117,17 @@ function Login() {
                           type="password"
                           name="password"
                           value={password}
-                          className="form-control"
+                          className={classname("form-control", {
+                            "is-invalid": loginErrors.password,
+                          })}
                           onChange={onChange}
                           placeholder="Enter your Password ?"
                         />
+                        {loginErrors.password && (
+                          <div className="invalid-feedback">
+                            {loginErrors.password}
+                          </div>
+                        )}
                         <label htmlFor="floatingInput">Password</label>
                       </div>
                       <div className="text-right">

@@ -1,6 +1,4 @@
-import axios from "axios";
-import { BACKEND_URL } from "../constants/url";
-import axiosInstance from "../constants/url";
+import axiosInstance from "../constants/axios";
 const API = axiosInstance;
 
 //User endpoints

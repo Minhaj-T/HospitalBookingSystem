@@ -4,9 +4,11 @@ import LoginPoster from "../../images/login-banner.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import classname from "classnames";
 import { register, reset } from "../../features/auth/authSlice";
 import "./Signup.css";
 import Spinner from "../Spinner/Spinner";
+import { isRegisterValid } from "../../validations/formValidator";
 
 function Signup() {
   const navigate = useNavigate();
@@ -16,16 +18,6 @@ function Signup() {
     (state) => state.auth
   );
 
-  useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
-    if (isSuccess || user) {
-      navigate("/");
-    }
-    dispatch(reset());
-  }, [user, isError, isSuccess, message, navigate, dispatch]);
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -34,11 +26,33 @@ function Signup() {
   });
   const { name, email, password, password2 } = formData;
 
+  const [registerErrors, setRegisterError] = useState({
+    name: "",
+    email: "",
+    password: "",
+    password2: "",
+  });
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+      console.log("this ...",message);
+    }
+    if (isSuccess || user) {
+      navigate("/");
+    }
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
   // get the data into the form
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
+    }));
+    setRegisterError((prevState) => ({
+      ...prevState,
+      [e.target.name]: "",
     }));
   };
 
@@ -46,19 +60,23 @@ function Signup() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    // Check password one equal to password2
-    if (password !== password2) {
-      toast.error("passwords do not match");
-    } else {
-      const userData = {
-        name,
-        email,
-        password,
-      };
-      dispatch(register(userData));
+    // form validation section
+    if (isRegisterValid(formData, setRegisterError)) {
+      
+      // Check password one equal to password2
+      if (password !== password2) {
+        toast.error("passwords do not match");
+      } else {
+        const userData = {
+          name,
+          email,
+          password,
+        };
+        dispatch(register(userData));
+      }
     }
   };
-
+ 
   // Loading page
   if (isLoading) {
     return <Spinner />;
@@ -93,20 +111,34 @@ function Signup() {
                           name="name"
                           value={name}
                           onChange={onChange}
-                          className="form-control"
+                          className={classname("form-control", {
+                            "is-invalid": registerErrors.name,
+                          })}
                           placeholder="name@example.com"
                         />
+                        {registerErrors.name && (
+                          <div className="invalid-feedback">
+                            {registerErrors.name}
+                          </div>
+                        )}
                         <label htmlFor="floatingInput">Name</label>
                       </div>
                       <div className="form-floating mb-3">
                         <input
-                          type="email"
+                          type="text"
                           name="email"
                           value={email}
                           onChange={onChange}
-                          className="form-control"
+                          className={classname("form-control", {
+                            "is-invalid": registerErrors.email,
+                          })}
                           placeholder="Email"
                         />
+                        {registerErrors.email && (
+                          <div className="invalid-feedback">
+                            {registerErrors.email}
+                          </div>
+                        )}
                         <label htmlFor="floatingInput">Email</label>
                       </div>
                       <div className="form-floating mb-3">
@@ -115,9 +147,16 @@ function Signup() {
                           name="password"
                           value={password}
                           onChange={onChange}
-                          className="form-control"
+                          className={classname("form-control", {
+                            "is-invalid": registerErrors.password,
+                          })}
                           placeholder="****"
                         />
+                        {registerErrors.password && (
+                          <div className="invalid-feedback">
+                            {registerErrors.password}
+                          </div>
+                        )}
                         <label htmlFor="floatingInput">Password</label>
                       </div>
                       <div className="form-floating mb-3">
@@ -125,10 +164,17 @@ function Signup() {
                           type="password"
                           name="password2"
                           value={password2}
+                          className={classname("form-control", {
+                            "is-invalid": registerErrors.password2,
+                          })}
                           onChange={onChange}
-                          className="form-control"
                           placeholder="****"
                         />
+                        {registerErrors.password2 && (
+                          <div className="invalid-feedback">
+                            {registerErrors.password2}
+                          </div>
+                        )}
                         <label htmlFor="floatingInput">Confirm Password</label>
                       </div>
                       <div className="d-grid mx-auto">
