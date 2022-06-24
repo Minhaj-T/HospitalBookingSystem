@@ -36,9 +36,8 @@ function Signup() {
   useEffect(() => {
     if (isError) {
       toast.error(message);
-      console.log("this ...",message);
     }
-    if (isSuccess || user) {
+    if (isSuccess && user) {
       navigate("/");
     }
     dispatch(reset());
@@ -62,7 +61,6 @@ function Signup() {
 
     // form validation section
     if (isRegisterValid(formData, setRegisterError)) {
-      
       // Check password one equal to password2
       if (password !== password2) {
         toast.error("passwords do not match");
@@ -76,7 +74,7 @@ function Signup() {
       }
     }
   };
- 
+
   // Loading page
   if (isLoading) {
     return <Spinner />;

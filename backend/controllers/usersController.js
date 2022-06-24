@@ -6,7 +6,6 @@ const User = require("../models/userModel");
 // @desc  Register New User
 // @rout  POST /api/users/signup
 const registerUser = asyncHandler(async (req, res) => {
-  
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
@@ -38,31 +37,28 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
-      token:generateToken(user._id)
+      token: generateToken(user._id),
     });
   } else {
     res.status(400);
     throw new Error("Invalid user data");
   }
-
-  res.status(200).json({ msg: "this is the user route" });
 });
 
 // @desc  Authenticate User
 // @rout  POST /api/users/login
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  console.log(" LOGIN :this passed into client side",req.body);
+
   //get for user email
   const user = await User.findOne({ email });
-  console.log("this is the find email user",user);
-  if (user &&(await bcrypt.compare(password, user.password))) {
-    console.log("succserss");
+  console.log("this is the find email user", user);
+  if (user && (await bcrypt.compare(password, user.password))) {
     res.status(200).json({
       _id: user.id,
       name: user.name,
       email: user.email,
-      token:generateToken(user._id)
+      token: generateToken(user._id),
     });
   } else {
     res.status(400);
@@ -73,19 +69,17 @@ const loginUser = asyncHandler(async (req, res) => {
 // @desc  get the data into User
 // @rout  POST /api/users/signup
 const getUser = asyncHandler(async (req, res) => {
-
   res.status(200).json(req.user);
 });
 
-const generateToken=(id)=>{
-    return jwt.sign({id},process.env.JWT_SECRET,{
-        expiresIn:'10d',
-    })
-}
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "10d",
+  });
+};
 
 module.exports = {
   registerUser,
   loginUser,
   getUser,
 };
-

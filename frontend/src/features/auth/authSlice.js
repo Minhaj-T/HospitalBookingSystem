@@ -68,7 +68,7 @@ const authSlice = createSlice({
     [register.fulfilled]: (state, action) => {
       console.log("This is the fetche data from server", action);
       state.isLoading = false;
-      state.isSuccess = false;
+      state.isSuccess = true;
       state.user = action.payload;
     },
     [register.rejected]: (state, action) => {
@@ -85,7 +85,7 @@ const authSlice = createSlice({
     [login.fulfilled]: (state, action) => {
       console.log("This is the fethched data from server", action);
       state.isLoading = false;
-      state.isSuccess = false;
+      state.isSuccess = true;
       state.user = action.payload;
     },
     [login.rejected]: (state, action) => {
@@ -98,6 +98,9 @@ const authSlice = createSlice({
     // ........................................ 
     [logout.fulfilled]: (state) => {
       state.user = null;
+      state.isSuccess = false;
+    
+      console.log('logout fullfilles');
     },
   },
 });
