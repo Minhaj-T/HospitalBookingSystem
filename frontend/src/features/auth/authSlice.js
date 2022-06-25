@@ -78,7 +78,7 @@ const authSlice = createSlice({
       state.user = null;
       console.log("The axios erorr11...", action.payload);
     },
-    // ........................................ 
+    // ........................................
     [login.pending]: (state) => {
       state.isLoading = true;
     },
@@ -95,12 +95,10 @@ const authSlice = createSlice({
       state.user = null;
       console.log("The axios erorr...", action.payload);
     },
-    // ........................................ 
+    // ........................................
     [logout.fulfilled]: (state) => {
       state.user = null;
       state.isSuccess = false;
-    
-      console.log('logout fullfilles');
     },
   },
 });

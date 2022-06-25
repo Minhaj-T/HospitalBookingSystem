@@ -1,5 +1,6 @@
 import maleIcon from '../../images/icons-male.png';
 import femaleIcon from '../../images/icons-female.png'
+import { Link } from 'react-router-dom';
 function SignupPage3() {
   return (
     <>
@@ -16,7 +17,7 @@ function SignupPage3() {
                       </div>
                       <div className="step-list">
                         <ul>
-                          <li>
+                          {/* <li>
                             <a href="#" className="active-done">
                               1
                             </a>
@@ -28,7 +29,7 @@ function SignupPage3() {
                           </li>
                           <li>
                             <a href="#">3</a>
-                          </li>
+                          </li> */}
                         </ul>
                       </div>
                       <form id="personal_details" enctype="multipart/form-data">
@@ -199,11 +200,11 @@ function SignupPage3() {
                         </div>
                       </div>
                       <div className="mt-4">
-                        <a
-                          href="patient-register-step3.html"
+                        <Link
+                          to={""}
                           className="btn btn-primary w-100 btn-lg login-btn step2_submit"
                           >continue
-                        </a>
+                        </Link>
                       </div>
                       </form>
                     </div>

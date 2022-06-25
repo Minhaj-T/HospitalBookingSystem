@@ -1,5 +1,6 @@
 import "./Signup.css";
 import camaraIcon from "../../images/icons-camera.svg";
+import { Link } from "react-router-dom";
 function SignupPage2() {
   return (
     <>
@@ -16,7 +17,7 @@ function SignupPage2() {
                         </div>
                         <div className="step-list">
                           <ul>
-                            <li>
+                            {/* <li>
                               <a href="#" className="active">
                                 1
                               </a>
@@ -26,7 +27,7 @@ function SignupPage2() {
                             </li>
                             <li>
                               <a href="#">3</a>
-                            </li>
+                            </li> */}
                           </ul>
                         </div>
                         <form
@@ -53,12 +54,12 @@ function SignupPage2() {
                             </div>
                           </div>
                           <div className="mt-5">
-                            <a
-                              href="patient-register-step2.html"
+                            <Link
+                              to={""}
                               className="btn btn-primary w-100 btn-lg login-btn step1_submit"
                             >
                               continue
-                            </a>
+                            </Link>
                           </div>
                         </form>
                       </div>

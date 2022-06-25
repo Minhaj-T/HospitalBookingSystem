@@ -8,6 +8,7 @@ const Doctor = require("../models/doctorModel");
 // @rout  POST /api/admin/login
 const loginAdmin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+  console.log("this is the admin details coming from frontent",req.body);
 
   const admin = await Admin.findOne({ email });
   if (admin && (await bcrypt.compare(password, admin.password))) {

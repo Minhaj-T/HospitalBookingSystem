@@ -1,4 +1,4 @@
-import * as api from "../../api";
+import * as api from "../../api/index";
 
 // Register user
 const register = async (userData) => {
@@ -8,7 +8,6 @@ const register = async (userData) => {
   if (data) {
     localStorage.setItem("user", JSON.stringify(data));
   }
-
   return data;
 };
 
@@ -28,7 +27,7 @@ const logout = () => [localStorage.removeItem("user")];
 const authService = {
   register,
   logout,
-  login
+  login,
 };
 
 export default authService;

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 function SignupPage4() {
   return (
@@ -14,9 +15,9 @@ function SignupPage4() {
                     </div>
                     <div className="step-list">
                       <ul>
-                        <li><a href="#" className="active-done">1</a></li>
+                        {/* <li><a href="#" className="active-done">1</a></li>
                         <li><a href="#" className="active-done">2</a></li>
-                        <li><a href="#" className="active">3</a></li>
+                        <li><a href="#" className="active">3</a></li> */}
                       </ul>
                     </div>
                     <form method="post">
@@ -50,11 +51,11 @@ function SignupPage4() {
                         </select>
                       </div>
                       <div className="mt-5">
-                        <a
-                          href=""
+                        <Link
+                          to={""}
                           className="btn btn-primary w-100 btn-lg login-btn step5_submit"
                           >continue
-                        </a>
+                        </Link>
                       </div>
                     </form>
                   </div>
