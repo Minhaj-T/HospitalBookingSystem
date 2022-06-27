@@ -12,7 +12,7 @@ function HomePage() {
     <>
       <div className="main-wrapper">
         {/* Main Banner */}
-        <div className="home-one-banner">
+        <div className="home-one-banner" style={{paddingTop:'50px'}}>
           <div className="bg-shapes">
             <img
               src={shape10}

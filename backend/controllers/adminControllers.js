@@ -3,6 +3,7 @@ const Admin = require("../models/adminModel");
 const bcrypt = require("bcryptjs");
 const { customAlphabet } = require("nanoid");
 const Doctor = require("../models/doctorModel");
+const User= require("../models/userModel")
 
 // @desc  Authenticate Admin
 // @rout  POST /api/admin/login
@@ -22,6 +23,24 @@ const loginAdmin = asyncHandler(async (req, res) => {
     throw new Error("invalid the Admin data");
   }
 });
+
+// @desc  get users
+// @rout  GET /api/admin/fetch-users
+const fetchUsers= asyncHandler(async(req,res)=>{
+
+ const user= await User.find({})
+ if (user) {
+  console.log(user);
+  res.status(200).json({
+    user
+  })
+ }else{
+  res.status(400);
+  throw new Error("invalid the user data");
+ }
+})
+
+
 
 // @desc  Add Doctors
 // @rout  POST /api/admin/add-doctors
@@ -66,4 +85,5 @@ const addDoctors = asyncHandler(async (req, res) => {
 module.exports = {
   loginAdmin,
   addDoctors,
+  fetchUsers,
 };

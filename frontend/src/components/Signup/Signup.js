@@ -9,6 +9,7 @@ import { register, reset } from "../../features/auth/authSlice";
 import "./Signup.css";
 import Spinner from "../Spinner/Spinner";
 import { isRegisterValid } from "../../validations/formValidator";
+import Header from "../Header/Header";
 
 function Signup() {
   const navigate = useNavigate();
@@ -82,10 +83,11 @@ function Signup() {
 
   return (
     <>
+    <Header/>
       <div className="content">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-8 offset-md-2">
+            <div className="col-md-8 offset-md-2"style={{paddingTop:'50px'}}>
               {/* Login Tab Content  */}
               <div className="account-content">
                 <div className="row align-items-center justify-content-center">

@@ -9,6 +9,7 @@ import { login, reset } from "../../features/auth/authSlice";
 import Spinner from "../Spinner/Spinner";
 import { isLoginValid } from "../../validations/formValidator";
 import classname from "classnames";
+import Header from "../Header/Header";
 
 function Login() {
   const navigate = useNavigate();
@@ -74,10 +75,11 @@ function Login() {
 
   return (
     <>
+    <Header/>
       <div className="content">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-8 offset-md-2">
+            <div className="col-md-8 offset-md-2" style={{paddingTop:'50px'}}>
               {/* Login Tab Content  */}
               <div className="account-content">
                 <div className="row align-items-center justify-content-center">

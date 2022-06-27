@@ -8,3 +8,4 @@ const API = axios.create({
 
 //admin endpoints
 export const loginAdmin = (data) => API.post(`/login`, data);
+export const fetchUsers=()=>API.get('/fetch-users')

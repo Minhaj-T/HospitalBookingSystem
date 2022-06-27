@@ -44,7 +44,7 @@ function AdminLogin() {
       toast.error(message);
     }
     if (isSuccess && admin) {
-      console.log("this useeffect",isSuccess,admin);
+      
       navigate("/");
     }
     dispatch(reset());
