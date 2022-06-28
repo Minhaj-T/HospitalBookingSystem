@@ -36,7 +36,7 @@ const fetchUsers= asyncHandler(async(req,res)=>{
   })
  }else{
   res.status(400);
-  throw new Error("invalid the user data");
+  throw new Error("some error occurred...");
  }
 })
 

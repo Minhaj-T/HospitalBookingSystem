@@ -26,6 +26,7 @@ function Sidebar() {
                     <LocalHospitalIcon className="icon"/>
                     <span>Specialites</span>
                 </li>
+                <Link to='add-doctor'> add doctor</Link>
                 <li>
                     <VaccinesIcon className="icon"/>
                     <span>Doctors</span>

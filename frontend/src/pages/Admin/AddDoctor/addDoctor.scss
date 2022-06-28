@@ -1,0 +1,13 @@
+.new {
+  display: flex;
+  width: 100%;
+  .newContainer {
+      flex: 6;
+
+      .AddDoctor{
+        float: right;
+        padding: 11px;
+        padding-right: 41px;
+      }
+  }
+}

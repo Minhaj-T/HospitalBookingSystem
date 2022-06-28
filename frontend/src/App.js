@@ -9,6 +9,7 @@ import Signup from './components/Signup/Signup';
 import Spinner from './components/Spinner/Spinner';
 
 
+
 // Pages
 
 //Homepage
@@ -19,12 +20,10 @@ const SignupPage3 = React.lazy(() => import('./components/Signup/SignupPage3'));
 const SignupPage4 = React.lazy(() => import('./components/Signup/SignupPage4'));
 
 // Admin
-const AdminLogin = React.lazy(() =>
-  import('./components/Admin/AdminLogni/AdminLogin')
-);
+const AdminLogin = React.lazy(() =>import('./components/Admin/AdminLogni/AdminLogin'));
 const AdminDashboard = React.lazy(() =>import('./pages/Admin/admindashboard/adminDashboard'));
 const List= React.lazy(()=>import('./pages/Admin/Lists/List'));
-
+const AddDoctor=React.lazy(()=>import('./pages/Admin/AddDoctor/AddDoctor'));
 
 function App() {
   return (
@@ -44,6 +43,7 @@ function App() {
             <Route exact path="/adminDashboard">
             <Route path="" element={<AdminDashboard />}/>
             <Route path="users" element={<List/>}/>
+            <Route path="add-doctor" element={<AddDoctor/>}/>
             </Route>
           </Routes>
         </Router>

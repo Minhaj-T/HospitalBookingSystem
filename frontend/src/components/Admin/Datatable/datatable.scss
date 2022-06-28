@@ -1,5 +1,5 @@
 .datatable {
-    height: 600px;
+    height: 1100px;
     padding: 20px;
     
     .datatableTitle{
@@ -38,18 +38,16 @@
   
     .cellWithStatus {
       padding: 5px;
+      width: 65px;
       border-radius: 5px;
+      text-align: center;
   
       &.active {
-        background-color: rgba(0, 128, 0, 0.05);
+        background-color: rgba(8, 141, 8, 0.281);
         color: green;
       }
-      &.pending {
-        background-color: rgba(255, 217, 0, 0.05);
-        color: goldenrod;
-      }
-      &.passive {
-        background-color: rgba(255, 0, 0, 0.05);
+      &.blocked {
+        background-color: rgba(255, 0, 0, 0.185);
         color: crimson;
       }
     }
@@ -59,20 +57,5 @@
       align-items: center;
       gap: 15px;
   
-      .viewButton {
-        padding: 2px 5px;
-        border-radius: 5px;
-        color: darkblue;
-        border: 1px dotted rgba(0, 0, 139, 0.596);
-        cursor: pointer;
-      }
-      
-      .deleteButton {
-        padding: 2px 5px;
-        border-radius: 5px;
-        color: crimson;
-        border: 1px dotted rgba(220, 20, 60, 0.6);
-        cursor: pointer;
-      }
     }
   }
