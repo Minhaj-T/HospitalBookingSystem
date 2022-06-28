@@ -24,6 +24,21 @@ const loginAdmin = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc  get Doctors
+// @rout  GET /api/admin/fetch-doctors 
+const fetchDoctors=asyncHandler(async(req,res)=>{
+  const doctor=await Doctor.find({})
+  if(doctor){
+    res.status(200).json({
+      doctor
+    })
+  }else{
+    res.status(400)
+    throw new Error("some error occurred...");
+  }
+})
+
+
 // @desc  get users
 // @rout  GET /api/admin/fetch-users
 const fetchUsers= asyncHandler(async(req,res)=>{
@@ -86,4 +101,5 @@ module.exports = {
   loginAdmin,
   addDoctors,
   fetchUsers,
+  fetchDoctors
 };
