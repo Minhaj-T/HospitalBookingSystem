@@ -3,7 +3,8 @@ const Admin = require("../models/adminModel");
 const bcrypt = require("bcryptjs");
 const { customAlphabet } = require("nanoid");
 const Doctor = require("../models/doctorModel");
-const User= require("../models/userModel")
+const User= require("../models/userModel");
+const { find, findByIdAndUpdate } = require("../models/adminModel");
 
 // @desc  Authenticate Admin
 // @rout  POST /api/admin/login
@@ -24,6 +25,49 @@ const loginAdmin = asyncHandler(async (req, res) => {
   }
 });
 
+
+
+// @desc  get users
+// @rout  GET /api/admin/fetch-users
+const fetchUsers= asyncHandler(async(req,res)=>{
+  
+  const user= await User.find({})
+  if (user) {
+    res.status(200).json({
+      user
+    })
+  }else{
+    res.status(400);
+    throw new Error("some error occurred...");
+  }
+})
+
+
+// @desc  edit the users
+// @rout  GET /api/admin//edit-user/:id
+const editUser= asyncHandler(async(req,res)=>{
+  const userId=req.params.id
+  try {
+    const newUserData = {
+      name: req.body.name,
+      email: req.body.email,
+    };
+    const user = await User.findByIdAndUpdate(userId, newUserData, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+    res.status(200).json({
+      success: true,
+      user
+    });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+  
+
+
 // @desc  get Doctors
 // @rout  GET /api/admin/fetch-doctors 
 const fetchDoctors=asyncHandler(async(req,res)=>{
@@ -37,25 +81,6 @@ const fetchDoctors=asyncHandler(async(req,res)=>{
     throw new Error("some error occurred...");
   }
 })
-
-
-// @desc  get users
-// @rout  GET /api/admin/fetch-users
-const fetchUsers= asyncHandler(async(req,res)=>{
-
- const user= await User.find({})
- if (user) {
-  console.log(user);
-  res.status(200).json({
-    user
-  })
- }else{
-  res.status(400);
-  throw new Error("some error occurred...");
- }
-})
-
-
 
 // @desc  Add Doctors
 // @rout  POST /api/admin/add-doctors
@@ -97,9 +122,37 @@ const addDoctors = asyncHandler(async (req, res) => {
     throw new Error("Invalid user data");
   }
 });
+
+// @desc  get users
+// @rout  GET /api/admin//edit-user/:id
+const editDoctor= asyncHandler(async(req,res)=>{
+  const doctorId=req.params.id
+  try {
+    const newUserData = {
+      name: req.body.name,
+      email: req.body.email,
+    };
+    const doctor = await Doctor.findByIdAndUpdate(doctorId, newUserData, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+    res.status(200).json({
+      success: true,
+      doctor
+    });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+
+
 module.exports = {
   loginAdmin,
   addDoctors,
   fetchUsers,
-  fetchDoctors
+  fetchDoctors,
+  editUser,
+  editDoctor
 };
