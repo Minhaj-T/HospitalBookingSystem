@@ -1,11 +1,11 @@
 import "./HomePage.css";
 import "./home.css";
-import shape10 from "../../images/shapes-shape-10.png";
-import shape6 from "../../images/shapes-shape-6.png";
-import shape7 from "../../images/shapes-shape-7.png";
-import shape8 from "../../images/shapes-shape-8.png";
-import bannerChecked from "../../images/img-banner-check.png";
-import mainBanner from "../../images/img-banner-img.png";
+import shape10 from "../../../images/shapes-shape-10.png";
+import shape6 from "../../../images/shapes-shape-6.png";
+import shape7 from "../../../images/shapes-shape-7.png";
+import shape8 from "../../../images/shapes-shape-8.png";
+import bannerChecked from "../../../images/img-banner-check.png";
+import mainBanner from "../../../images/img-banner-img.png";
 
 function HomePage() {
   return (

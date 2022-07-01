@@ -3,11 +3,29 @@ import PageHeader from '../../../components/Admin/PageHeader';
 import Sidebar from '../../../components/Admin/Sidebar/Sidebar';
 import './addDoctor.scss'
 import VaccinesOutlinedIcon from '@mui/icons-material/VaccinesOutlined';
-import { Paper } from '@mui/material';
 import DoctorForm from '../../../components/Admin/DoctorForm/DoctorForm';
-
+import { useDispatch, useSelector } from 'react-redux';
+import Spinner from '../../../components/User/Spinner/Spinner';
+import Datatables from '../../../components/Admin/DoctorForm/Datatables';
+import { reset,} from '../../../features/admin/Get-all-users/getallUsersSlice'
+import { useEffect } from 'react';
+import { toast } from "react-toastify";
 
 function AddDoctor() {
+  const dispatch=useDispatch();
+  const { doctors,isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.allDoctors)
+    useEffect(() => {
+      if (isError) {
+        toast.error(message ||"Not Found");
+        return 
+      }
+      dispatch(reset());
+    }, [doctors, isError, isSuccess, message, dispatch]);
+     // Loading page
+     if (isLoading) {
+      return <Spinner />;
+    }
 
   return (
     <div className="new">
@@ -24,9 +42,10 @@ function AddDoctor() {
         <div className='AddDoctor'>
           <DoctorForm/>
         </div>
-        <Paper className='container'>
-          
-        </Paper>
+        <div className='dataTable'>
+          <Datatables/>
+        </div>
+        
     </div>  
     </div>
   );

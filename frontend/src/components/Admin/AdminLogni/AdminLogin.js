@@ -5,7 +5,7 @@ import { useDispatch,useSelector } from "react-redux";
 import { reset,login} from '../../../features/admin/auth/adminauthSlice'
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Spinner from "../../Spinner/Spinner";
+import Spinner from "../../User/Spinner/Spinner"; 
 
 // TODO: admin form validation pending
 //style proportys
@@ -45,7 +45,7 @@ function AdminLogin() {
     }
     if (isSuccess && admin) {
       
-      navigate("/");
+      navigate('/adminDashboard');
     }
     dispatch(reset());
   }, [admin, isError, isSuccess, message, navigate, dispatch]);

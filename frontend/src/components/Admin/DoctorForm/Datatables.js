@@ -1,43 +1,28 @@
-import './datatable.scss'
+
 import { DataGrid } from '@mui/x-data-grid';
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import { Link, } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
-import CustomizedDialogs from '../Edituser/EditUserModal';
-import { useDispatch,useSelector } from 'react-redux';
-import { toast } from "react-toastify";
-import { reset,} from '../../../features/admin/Get-all-users/getallUsersSlice'
-import Spinner from "../../User/Spinner/Spinner";
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteDoctor} from '../../../features/admin/Doctors/DoctorSlice'
+// import CustomizedDialogs from '../Edituser/EditUserModal';
 
-function Datatable() {
-  const label = { inputProps: { 'aria-label': '' } };
-  const [Users, setUsers] = useState([])
+
+
+function Datatables() {
   const dispatch=useDispatch()
+  const label = { inputProps: { 'aria-label': '' } };
+  const {  doctors } = useSelector(
+    (state) => state.allDoctors)
 
-  const { users, isLoading, isError, isSuccess, message } = useSelector((state) => state.fetchAlluser);
-  useEffect(() => {
-    if (isError) {
-      toast.error(message ||"Not Found");
-      return
-    }
-    if (isSuccess && users) {
-      setUsers(users.user)
-    }
-    dispatch(reset());
-  }, [users, isError, isSuccess, message, dispatch]);
-
-   // Loading page
-   if (isLoading) {
-    return <Spinner />;
-  }
 
 const columns = [
   { field:"", headerName: 'No', width: 50 },
-  { field: '_id', headerName: 'User-ID', width: 170 },
+  { field: 'doctorID', headerName: 'Doctor-ID', width: 170 },
   {
     field: 'name',
-    headerName: 'User',
+    headerName: 'Doctor',
     width: 230,
     renderCell:(params)=>{
         return(
@@ -70,11 +55,13 @@ renderCell:(params)=>{
   renderCell: (params) => {
     return (
       <div className="cellAction">
-        <CustomizedDialogs id={params.id ? params.id:""}/>
+        {/* <CustomizedDialogs id={params.id ? params.id:""}/> */}
         
         <div className="deleteButton">
         <Link to="" style={{ textDecoration: "none" }}>
-        <Button   variant="outlined" size="small" color="error">
+        <Button onClick={()=>{
+          dispatch(deleteDoctor(params.id))
+        }}   variant="outlined" size="small" color="error">
           Delete
         </Button>
         </Link>
@@ -85,7 +72,7 @@ renderCell:(params)=>{
 },
 ];
 
-const rows =Users ? Users : '';
+const rows =doctors.doctor ? doctors.doctor : '';
 
   return (
     <div className="datatable">
@@ -103,4 +90,4 @@ const rows =Users ? Users : '';
   )
 }
 
-export default Datatable
+export default Datatables

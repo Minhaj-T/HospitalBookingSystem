@@ -1,4 +1,4 @@
-import * as api from "../../api/index";
+import * as api from "../../../api/index";
 
 // Register user
 const register = async (userData) => {

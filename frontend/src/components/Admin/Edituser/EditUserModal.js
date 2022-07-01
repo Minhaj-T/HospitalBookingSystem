@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Grid, TextField } from '@mui/material';
 import { useSelector } from 'react-redux';
+import * as api from "../../../api/admin";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -49,25 +50,51 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function CustomizedDialogs(params) {
+export default function CustomizedDialogs (params) {
   const [User, setUser] = useState([])
   const { users } = useSelector((state) => state.fetchAlluser);
 
+  const [formData, setFormData] = useState({
+    userId:params.id,
+    email:"",
+    name:"",
+  });
+console.log(formData);
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+  
+  const { name=User.map(x => x.name),email=User.map(x => x.email) ,userId} = formData;
+   //get values for the filter data
   const userName=User.map(x => x.name)
   const userEmail=User.map(x => x.email)
-
+  
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = async() => {
-    setOpen(true);
     const getUser =await users.user.filter(user => user._id === params.id )
     setUser(getUser);
-
+    setOpen(true);
   };
-  const handleClose = () => {
+  const handleClose = async() => {
+    const userData = {
+      email,
+      name,
+    };
+    const user=await api.editUser(userData,userId);
+    if (user) {
+      setOpen(false);
+    }else{
+      console.log("erooorr..");
+    }
+  };
+  const handleClose1 = async() => {
     setOpen(false);
-  };
+  }
+
   return (
-    
     <div>
       <Button variant="outlined" size="small" onClick={handleClickOpen}>
         Edit
@@ -77,7 +104,7 @@ export default function CustomizedDialogs(params) {
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose1}>
           Edit User Details
         
         </BootstrapDialogTitle>
@@ -93,7 +120,8 @@ export default function CustomizedDialogs(params) {
           fullWidth
           autoComplete="given-name"
           variant="standard"
-          value={userName}
+          value={name ? name : userName}
+          onChange={onChange}
           focused 
         />
       </Grid>
@@ -106,7 +134,22 @@ export default function CustomizedDialogs(params) {
           color="secondary"
           autoComplete="family-name"
           variant="standard"
-          value={userEmail}
+          value={email?email:userEmail}
+          onChange={onChange}
+          focused 
+        />
+      </Grid>
+      {/* <Grid item xs={12} sm={6}>
+        <TextField
+          required
+          id="lastName"
+          name="lastName"
+          label="Last name"
+          fullWidth
+          color="secondary"
+          autoComplete="family-name"
+          variant="standard"
+          onChange={onChange}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -120,19 +163,7 @@ export default function CustomizedDialogs(params) {
           autoComplete="family-name"
           variant="standard"
         />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField
-          required
-          id="lastName"
-          name="lastName"
-          label="Last name"
-          fullWidth
-          color="secondary"
-          autoComplete="family-name"
-          variant="standard"
-        />
-      </Grid>
+      </Grid> */}
         </Grid>
         </DialogContent>
         <DialogActions>

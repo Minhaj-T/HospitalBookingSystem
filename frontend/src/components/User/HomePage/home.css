@@ -119,7 +119,7 @@
   width: 240px;
 }
 .search-location .form-control {
-  background: #fff url(../../../build/static/media/location.png) no-repeat 10px
+  background: #fff url(../../../../build/static/media/location.png) no-repeat 10px
     center;
 }
 .search-box .search-info {
@@ -130,7 +130,7 @@
   width: 490px;
 }
 .search-info .form-control {
-  background: #fff url(../../../build/static/media/search.png) no-repeat 10px
+  background: #fff url(../../../../build/static/media/search.png) no-repeat 10px
     center;
 }
 .search-box .search-btn {
@@ -628,7 +628,7 @@
   width: 240px;
 }
 .search-box1 .search-location .form-control {
-  background: #fff url(../../../build/static/media/location.png) no-repeat 10px
+  background: #fff url(../../../../build/static/media/location.png) no-repeat 10px
     center;
 }
 .search-box1 .search-info {

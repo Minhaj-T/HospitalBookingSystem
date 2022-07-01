@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import LoginPoster from "../../images/login-banner.png";
-import "./Login.css";
+import LoginPoster from "../../../images/login-banner.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { login, reset } from "../../features/auth/authSlice";
-import Spinner from "../Spinner/Spinner";
-import { isLoginValid } from "../../validations/formValidator";
 import classname from "classnames";
+import { register, reset } from "../../../features/users/auth/authSlice"; 
+import "./Signup.css";
+import Spinner from "../../User/Spinner/Spinner";
+import { isRegisterValid } from "../../../validations/formValidator";
 import Header from "../Header/Header";
 
-function Login() {
+
+
+function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // get the current state
@@ -20,15 +22,18 @@ function Login() {
   );
 
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
+    password2: "",
   });
+  const { name, email, password, password2 } = formData;
 
-  const { email, password } = formData;
-
-  const [loginErrors, setLoginError] = useState({
+  const [registerErrors, setRegisterError] = useState({
+    name: "",
     email: "",
     password: "",
+    password2: "",
   });
 
   useEffect(() => {
@@ -36,7 +41,6 @@ function Login() {
       toast.error(message);
     }
     if (isSuccess && user) {
-      console.log("this useeffect",isSuccess,user);
       navigate("/");
     }
     dispatch(reset());
@@ -48,7 +52,7 @@ function Login() {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-    setLoginError((prevState) => ({
+    setRegisterError((prevState) => ({
       ...prevState,
       [e.target.name]: "",
     }));
@@ -58,13 +62,19 @@ function Login() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    //form validation section
-    if (isLoginValid(formData, setLoginError)) {
-      const userData = {
-        email,
-        password,
-      };
-      dispatch(login(userData));
+    // form validation section
+    if (isRegisterValid(formData, setRegisterError)) {
+      // Check password one equal to password2
+      if (password !== password2) {
+        toast.error("passwords do not match");
+      } else {
+        const userData = {
+          name,
+          email,
+          password,
+        };
+        dispatch(register(userData));
+      }
     }
   };
 
@@ -79,7 +89,7 @@ function Login() {
       <div className="content">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-8 offset-md-2" style={{paddingTop:'50px'}}>
+            <div className="col-md-8 offset-md-2"style={{paddingTop:'50px'}}>
               {/* Login Tab Content  */}
               <div className="account-content">
                 <div className="row align-items-center justify-content-center">
@@ -93,64 +103,94 @@ function Login() {
                   <div className="col-md-12 col-lg-6 login-right">
                     <div className="login-header">
                       <h3>
-                        Login <span>Carewell</span>
+                        <span>Patient Register</span>
                       </h3>
                     </div>
                     <form onSubmit={onSubmit}>
                       <div className="form-floating mb-3">
                         <input
                           type="text"
-                          name="email"
-                          value={email}
-                          className={classname("form-control", {
-                            "is-invalid": loginErrors.email,
-                          })}
+                          name="name"
+                          value={name}
                           onChange={onChange}
+                          className={classname("form-control", {
+                            "is-invalid": registerErrors.name,
+                          })}
                           placeholder="name@example.com"
                         />
-                        {loginErrors.email && (
+                        {registerErrors.name && (
                           <div className="invalid-feedback">
-                            {loginErrors.email}
+                            {registerErrors.name}
                           </div>
                         )}
-                        <label htmlFor="floatingInput">Email address</label>
+                        <label htmlFor="floatingInput">Name</label>
+                      </div>
+                      <div className="form-floating mb-3">
+                        <input
+                          type="text"
+                          name="email"
+                          value={email}
+                          onChange={onChange}
+                          className={classname("form-control", {
+                            "is-invalid": registerErrors.email,
+                          })}
+                          placeholder="Email"
+                        />
+                        {registerErrors.email && (
+                          <div className="invalid-feedback">
+                            {registerErrors.email}
+                          </div>
+                        )}
+                        <label htmlFor="floatingInput">Email</label>
                       </div>
                       <div className="form-floating mb-3">
                         <input
                           type="password"
                           name="password"
                           value={password}
-                          className={classname("form-control", {
-                            "is-invalid": loginErrors.password,
-                          })}
                           onChange={onChange}
-                          placeholder="Enter your Password ?"
+                          className={classname("form-control", {
+                            "is-invalid": registerErrors.password,
+                          })}
+                          placeholder="****"
                         />
-                        {loginErrors.password && (
+                        {registerErrors.password && (
                           <div className="invalid-feedback">
-                            {loginErrors.password}
+                            {registerErrors.password}
                           </div>
                         )}
                         <label htmlFor="floatingInput">Password</label>
                       </div>
-                      <div className="text-right">
-                        <Link className="forgot-link" to={"/"}>
-                          Forgot Password ?
-                        </Link>
+                      <div className="form-floating mb-3">
+                        <input
+                          type="password"
+                          name="password2"
+                          value={password2}
+                          className={classname("form-control", {
+                            "is-invalid": registerErrors.password2,
+                          })}
+                          onChange={onChange}
+                          placeholder="****"
+                        />
+                        {registerErrors.password2 && (
+                          <div className="invalid-feedback">
+                            {registerErrors.password2}
+                          </div>
+                        )}
+                        <label htmlFor="floatingInput">Confirm Password</label>
                       </div>
                       <div className="d-grid mx-auto">
                         <button className="btn btn-primary" type="submit">
-                          Login
+                          Signup
                         </button>
                       </div>
                       <div className="login-or">
                         <span className="or-line"></span>
                         <span className="span-or">or</span>
                       </div>
-
                       <div className="text-center dont-have">
-                        Don’t have an account?{" "}
-                        <Link to={"/signup"}>Register</Link>
+                        Already have an account?{" "}
+                        <Link to={"/login"}>Login</Link>
                       </div>
                     </form>
                   </div>
@@ -164,4 +204,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;

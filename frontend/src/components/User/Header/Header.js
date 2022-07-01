@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./Header11.css";
 import { useDispatch, useSelector } from "react-redux";
-import { logout, reset } from "../../features/auth/authSlice";
-import Mainlogo from "../../images/logo.png";
+import { logout, reset } from "../../../features/users/auth/authSlice";
+import Mainlogo from "../../../images/logo.png";
 import { FaHospital } from 'react-icons/fa'
 function Header() {
   const navigate = useNavigate();

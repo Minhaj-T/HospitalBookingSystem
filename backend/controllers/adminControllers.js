@@ -44,9 +44,11 @@ const fetchUsers= asyncHandler(async(req,res)=>{
 
 
 // @desc  edit the users
-// @rout  GET /api/admin//edit-user/:id
+// @rout  PUT /api/admin//edit-user/:id
 const editUser= asyncHandler(async(req,res)=>{
   const userId=req.params.id
+  console.log(req.body);
+
   try {
     const newUserData = {
       name: req.body.name,
@@ -62,9 +64,12 @@ const editUser= asyncHandler(async(req,res)=>{
       user
     });
   } catch (error) {
+    console.log("erooo");
     res.status(400).json(error);
   }
 });
+
+
   
 
 
@@ -85,8 +90,7 @@ const fetchDoctors=asyncHandler(async(req,res)=>{
 // @desc  Add Doctors
 // @rout  POST /api/admin/add-doctors
 const addDoctors = asyncHandler(async (req, res) => {
-  const { name,email, password } = req.body;
-
+  const { name,email, password,gender,phone,specialization } = req.body;
   // generate a random id for Doctors
   const nanoid = customAlphabet(`123DOC`, 5);
   const doctorID = nanoid();
@@ -108,14 +112,18 @@ const addDoctors = asyncHandler(async (req, res) => {
     doctorID,
     name,
     email,
+    gender,
+    phone,
+    specialization,
     password: hashedPassword,
   });
-
   if (doctor) {
     res.status(201).json({
       _id: doctor.id,
-      doctorID: doctor.doctorID,
+      doctorID:doctor.doctorID,
       name: doctor.name,
+      email:doctor.email
+
     });
   } else {
     res.status(400);
@@ -123,8 +131,8 @@ const addDoctors = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc  get users
-// @rout  GET /api/admin//edit-user/:id
+// @desc  edit doctor details
+// @rout  PUT /api/admin/edit-doctor/:id
 const editDoctor= asyncHandler(async(req,res)=>{
   const doctorId=req.params.id
   try {
@@ -146,6 +154,22 @@ const editDoctor= asyncHandler(async(req,res)=>{
   }
 });
 
+// @desc  DELETE the Doctor
+// @rout  DELETE /api/admin/delete-doctor/:id
+
+const deleteDoctor=asyncHandler(async(req,res)=>{
+  console.log("callled////......");
+  const doctorId=req.params.id;
+  try {
+    const doctor = await Doctor.findById(doctorId);
+   const data= await doctor.remove();
+    res.status(200).json({doctorId:data._id});
+  } catch (error) {
+    res.json(error);
+  }
+})
+
+
 
 
 module.exports = {
@@ -154,5 +178,6 @@ module.exports = {
   fetchUsers,
   fetchDoctors,
   editUser,
-  editDoctor
+  editDoctor,
+  deleteDoctor
 };

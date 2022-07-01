@@ -2,22 +2,22 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Signup from './components/Signup/Signup';
+import Signup from './components/User/Signup/Signup';
 
 //Utilities and Components
 // const Loader = React.lazy(() => import("./components/Loader/Loader"));
-import Spinner from './components/Spinner/Spinner';
+import Spinner from './components/User/Spinner/Spinner';
 
 
 
 // Pages
 
-//Homepage
-const HomePage = React.lazy(() => import('./pages/LandingPage/Landingpage'));
-const Login = React.lazy(() => import('./components/Login/Login'));
-const SignupPage2 = React.lazy(() => import('./components/Signup/SignupPage2'));
-const SignupPage3 = React.lazy(() => import('./components/Signup/SignupPage3'));
-const SignupPage4 = React.lazy(() => import('./components/Signup/SignupPage4'));
+//Homepage 
+const HomePage = React.lazy(() => import('./pages/user/LandingPage/Landingpage'));
+const Login = React.lazy(() => import('./components/User/Login/Login'));
+const SignupPage2 = React.lazy(() => import('./components/User/Signup/SignupPage2'));
+const SignupPage3 = React.lazy(() => import('./components/User/Signup/SignupPage3'));
+const SignupPage4 = React.lazy(() => import('./components/User/Signup/SignupPage4'));
 
 // Admin
 const AdminLogin = React.lazy(() =>import('./components/Admin/AdminLogni/AdminLogin'));

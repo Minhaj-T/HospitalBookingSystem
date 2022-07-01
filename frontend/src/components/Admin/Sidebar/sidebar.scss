@@ -10,15 +10,13 @@
     justify-content: center;
 
     .logo1 {
-      font-size: 30px;
+      font-size: 27px;
       font-weight: bold;
       color: #24135e;
     }
   }
   hr {
     height: 0;
-    border: 0.2px solid #555;
-    
     margin-top: 0px;
   }
 
@@ -31,7 +29,7 @@
       padding: 0;
 
       .title {
-        font-size: 10px;
+        font-size: 11px;
         font-weight: bold;
         color: #999;
         margin-top: 15px;
@@ -45,6 +43,7 @@
         cursor: pointer;
 
         &:hover {
+          padding: 8px;
           background-color: #ece8ff;
         }
 
@@ -54,9 +53,9 @@
         }
 
         span{
-            font-size: 13px;
-            font-weight: 600;
-            color: #888;
+            font-size: 15px;
+            font-weight: 700;
+            color: #605b5b;
             margin-left: 10px;
         }
       }
@@ -68,23 +67,5 @@
     align-items: center;
     margin: 10px;
 
-    .colorOption{
-        width: 20px;
-        height: 20px;
-        border-radius: 5px;
-        border: 1px solid #7451f8;
-        cursor: pointer;
-        margin: 5px;
-
-        &:nth-child(1){
-            background-color: whitesmoke;
-        }
-        &:nth-child(2){
-            background-color: #333;
-        }
-        &:nth-child(3){
-            background-color: darkblue;
-        }
-    }
 }
 }

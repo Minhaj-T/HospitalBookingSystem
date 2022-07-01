@@ -1,5 +1,5 @@
-import maleIcon from '../../images/icons-male.png';
-import femaleIcon from '../../images/icons-female.png'
+import maleIcon from '../../../images/icons-male.png';
+import femaleIcon from '../../../images/icons-female.png'
 import { Link } from 'react-router-dom';
 function SignupPage3() {
   return (
@@ -9,7 +9,7 @@ function SignupPage3() {
           <div className="container-fluid">
             <div className="account-content">
               <div className="row align-items-center">
-                <div className="login-right">
+                <div className="login-right">    
                   <div className="inner-right-login">
                     <div className="login-header">
                       <div className="logo-icon">

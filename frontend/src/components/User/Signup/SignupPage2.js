@@ -1,5 +1,5 @@
 import "./Signup.css";
-import camaraIcon from "../../images/icons-camera.svg";
+import camaraIcon from "../../../images/icons-camera.svg";  
 import { Link } from "react-router-dom";
 function SignupPage2() {
   return (

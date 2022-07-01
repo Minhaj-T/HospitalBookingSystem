@@ -3,7 +3,9 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from '@mui/icons-material/Person';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import VaccinesIcon from '@mui/icons-material/Vaccines';
+import OutlinedFlagIcon from '@mui/icons-material/OutlinedFlag';
 import { Link } from 'react-router-dom';
+import BookOnlineOutlined from '@mui/icons-material/BookOnlineOutlined';
 function Sidebar() {
   return (
     <div className='sidebar1'>
@@ -11,25 +13,36 @@ function Sidebar() {
         <hr></hr>
         <div className="center">
             <ul>
-            <p className="title">MAIN</p>
                 <li>
                 <DashboardIcon className="icon"/>
                     <span>Dashboard</span>
                 </li>
                 <p className="title">LISTS</p>
-                <Link to="users" style={{ textDecoration: "none" }}>aa</Link>
                 <li>
-                    <PersonIcon className="icon"/>
-                    <span>User</span>
+                    <BookOnlineOutlined className="icon"/>
+                    <span>Appointments</span>
                 </li>
                 <li>
                     <LocalHospitalIcon className="icon"/>
-                    <span>Specialites</span>
+                    <span>Specialties</span>
                 </li>
-                <Link to='add-doctor'> add doctor</Link>
+                <p className="title">MANAGEMENT</p>
+                <Link to="users" style={{ textDecoration: "none" }}>
+                <li>
+                    <PersonIcon className="icon"/>
+                    <span>Users</span>
+                </li>
+                </Link>
+                <Link to='add-doctor' style={{ textDecoration: 'none' }}> 
                 <li>
                     <VaccinesIcon className="icon"/>
                     <span>Doctors</span>
+                </li>
+                </Link>
+                <p className="title">STATICS</p>
+                <li>
+                    <OutlinedFlagIcon className="icon"/>
+                    <span>Reports</span>
                 </li>
             </ul>
         </div>
