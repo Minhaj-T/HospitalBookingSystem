@@ -4,13 +4,13 @@ const bcrypt = require("bcryptjs");
 const { customAlphabet } = require("nanoid");
 const Doctor = require("../models/doctorModel");
 const User= require("../models/userModel");
-const { find, findByIdAndUpdate } = require("../models/adminModel");
+const Specialties = require("../models/specialties");
+// const { find, findByIdAndUpdate } = require("../models/adminModel");
 
 // @desc  Authenticate Admin
 // @rout  POST /api/admin/login
 const loginAdmin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  console.log("this is the admin details coming from frontent",req.body);
 
   const admin = await Admin.findOne({ email });
   if (admin && (await bcrypt.compare(password, admin.password))) {
@@ -47,7 +47,6 @@ const fetchUsers= asyncHandler(async(req,res)=>{
 // @rout  PUT /api/admin//edit-user/:id
 const editUser= asyncHandler(async(req,res)=>{
   const userId=req.params.id
-  console.log(req.body);
 
   try {
     const newUserData = {
@@ -64,7 +63,6 @@ const editUser= asyncHandler(async(req,res)=>{
       user
     });
   } catch (error) {
-    console.log("erooo");
     res.status(400).json(error);
   }
 });
@@ -158,7 +156,6 @@ const editDoctor= asyncHandler(async(req,res)=>{
 // @rout  DELETE /api/admin/delete-doctor/:id
 
 const deleteDoctor=asyncHandler(async(req,res)=>{
-  console.log("callled////......");
   const doctorId=req.params.id;
   try {
     const doctor = await Doctor.findById(doctorId);
@@ -167,6 +164,26 @@ const deleteDoctor=asyncHandler(async(req,res)=>{
   } catch (error) {
     res.json(error);
   }
+})
+
+// @desc  POST add the Specialties
+// @rout  POST /api/admin/add-specialties/
+const addSpecialities = asyncHandler( async (req, res) => {
+  const data =req.body;
+  console.log("client sade data",data.name);
+ //Create a specialties
+ const specialities = await Specialties.create({
+  name:data.name
+});
+console.log("this is the find",specialities);
+if (specialities) {
+  res.status(201).json({
+    specialities
+  });
+} else {
+  res.status(400);
+  throw new Error("Invalid data");
+}
 })
 
 
@@ -179,5 +196,6 @@ module.exports = {
   fetchDoctors,
   editUser,
   editDoctor,
-  deleteDoctor
+  deleteDoctor,
+  addSpecialities,
 };

@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { reset,} from '../../../features/admin/Get-all-users/getallUsersSlice'
 import Spinner from "../../User/Spinner/Spinner";
 
+
 function Datatable() {
   const label = { inputProps: { 'aria-label': '' } };
   const [Users, setUsers] = useState([])

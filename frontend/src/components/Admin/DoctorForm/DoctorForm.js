@@ -58,10 +58,7 @@ BootstrapDialogTitle.propTypes = {
 export default function CustomizedDialogs() {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
-  // get the current state
-  // const { isLoading, isError, isSuccess, message } = useSelector(
-  //   (state) => state.allDoctors
-  // );
+ 
   const [formData, setFormData] = React.useState({
     name: '',
     email: '',
@@ -79,12 +76,7 @@ export default function CustomizedDialogs() {
     }));
   };
 
-  // React.useEffect(() => {
-  //   if (isError) {
-  //     toast.error(message);
-  //   }
-  //   dispatch(reset());
-  // }, [doctor, isError, isSuccess, message, dispatch]);
+
 
   const onSubmit=(e)=>{
     e.preventDefault();
@@ -107,10 +99,7 @@ export default function CustomizedDialogs() {
   const handleClose = () => {
     setOpen(false);
   };
-  //  // Loading page
-  //  if (isLoading) {
-  //   return <Spinner />;
-  // }
+
 
   return (
     <div>
@@ -160,6 +149,7 @@ export default function CustomizedDialogs() {
                 <TextField
                   required
                   name="phone"
+                  type="tel"
                   value={phone}
                   onChange={onChange}
                   label="Phone"
@@ -171,6 +161,7 @@ export default function CustomizedDialogs() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
+                  type="password"
                   name="password"
                   value={password}
                   onChange={onChange}
@@ -220,7 +211,9 @@ export default function CustomizedDialogs() {
               </Grid>
             </Grid>
           </React.Fragment>
-          <Button  type="submit">Save Doctor</Button>
+          <div style={{paddingTop: '25px',textAlign: 'center'}}>
+          <Button variant="contained" size="medium"  type="submit">Save Doctor</Button>
+          </div>
         </DialogContent>
       </form>  
       </BootstrapDialog>
