@@ -177,10 +177,11 @@ const fetchSpecialties = asyncHandler(async (req, res) => {
 // @rout  POST /api/admin/add-specialties/
 const addSpecialities = asyncHandler(async (req, res) => {
   const data = req.body;
-  console.log('client sade data', data.name);
+  console.log('client sade data', data);
   //Create a specialties
   const specialities = await Specialties.create({
     name: data.name,
+    img:data.img
   });
   console.log('this is the find', specialities);
   if (specialities) {

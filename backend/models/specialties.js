@@ -3,6 +3,10 @@ const specialtiesSchema = mongoose.Schema({
     name:{
         type:String,
         required:[true,'Please add a Name']
+    },
+    img:{
+        type:String,
+        required:[true,'Please add a Name']
     }
 },
     {

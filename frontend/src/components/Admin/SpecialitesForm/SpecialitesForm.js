@@ -11,8 +11,12 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch } from 'react-redux';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { addSpecialities } from '../../../features/admin/Specialties/SpecialtiesSlice';
-
+import { UploadImage } from '../../../utilities/cloudinaryImageUpload';
+let Input = styled('input')({
+  display: 'none',
+});
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -54,15 +58,15 @@ BootstrapDialogTitle.propTypes = {
 
 function SpecialitesForm() {
   const [open, setOpen] = React.useState(false);
+  const [pic, setPic] = React.useState('');
   const dispatch = useDispatch();
- 
+
   const [formData, setFormData] = React.useState({
     name: '',
   });
 
-  const { name} = formData;
+  const { name } = formData;
 
-  console.log(formData);
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -70,16 +74,25 @@ function SpecialitesForm() {
     }));
   };
 
+  //dump the image into cloudinary ImageUpload
+  const postDetails = async (pics) => {
+    try {
+      const data = await UploadImage(pics);
+      setPic(data.secure_url.toString());
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 
-  const onSubmit=(e)=>{
+  const onSubmit = (e) => {
     e.preventDefault();
-    console.log("click");
     const Data = {
       name,
+      img: pic,
     };
-    dispatch(addSpecialities(Data)); 
-  }
+    dispatch(addSpecialities(Data));
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -87,7 +100,6 @@ function SpecialitesForm() {
   const handleClose = () => {
     setOpen(false);
   };
-
 
   return (
     <div>
@@ -105,45 +117,57 @@ function SpecialitesForm() {
         >
           Add Speciality
         </BootstrapDialogTitle>
-      <form onSubmit={onSubmit}>  
-        <DialogContent dividers>
-          <React.Fragment>
-            <Grid container spacing={3}>
-              <Grid item xs={12} >
-                <TextField
-                  required
-                  name="name"
-                  label="Name"
-                  value={name}
-                  onChange={onChange}
-                  fullWidth
-                  autoComplete="given-name"
-                  variant="standard"
-                />
+        <form onSubmit={onSubmit}>
+          <DialogContent dividers>
+            <React.Fragment>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    name="name"
+                    label="Name"
+                    value={name}
+                    onChange={onChange}
+                    fullWidth
+                    autoComplete="given-name"
+                    variant="standard"
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  style={{ paddingTop: '25px', textAlign: 'center' }}
+                >
+                  <label htmlFor="icon-button-file">
+                    <Input
+                      accept="image/*"
+                      id="icon-button-file"
+                      type="file"
+                      onChange={(e) => postDetails(e.target.files[0])}
+                    />
+                    <IconButton
+                      color="primary"
+                      aria-label="upload picture"
+                      component="span"
+                    >
+                      <PhotoCamera />
+                    </IconButton>
+                  </label>
+                  <br />
+                  <label>choose your image</label>
+                </Grid>
               </Grid>
-              {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={onChange}
-                  label="password"
-                  fullWidth
-                  autoComplete="shipping address-level2"
-                  variant="standard"
-                />
-              </Grid> */}
-            </Grid>
-          </React.Fragment>
-          <div style={{paddingTop: '25px',textAlign: 'center'}}>
-          <Button variant="contained" size="medium"  type="submit">Save</Button>
-          </div>
-        </DialogContent>
-      </form>  
+            </React.Fragment>
+            <div style={{ paddingTop: '25px', textAlign: 'center' }}>
+              <Button variant="contained" size="medium" type="submit">
+                Save
+              </Button>
+            </div>
+          </DialogContent>
+        </form>
       </BootstrapDialog>
     </div>
-  )
+  );
 }
 
-export default SpecialitesForm
+export default SpecialitesForm;
