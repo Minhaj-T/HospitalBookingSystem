@@ -37,6 +37,10 @@ const List = React.lazy(() => import('./pages/Admin/Lists/List'));
 const AddDoctor = React.lazy(() => import('./pages/Admin/AddDoctor/AddDoctor'));
 const Specialties = React.lazy(() => import('./pages/Admin/Specialties/Specialties'));
 
+// Doctors
+const DoctorLogin = React.lazy(() => import('./components/Doctor/Login/DoctorLogin'));
+
+
 function App() {
   return (
     <>
@@ -58,6 +62,12 @@ function App() {
               <Route path="add-doctor" element={<AddDoctor />} />
               <Route path="specialties" element={<Specialties />} />
             </Route>
+
+            <Route exact path="/doctor-login">
+            <Route path="" element={<DoctorLogin/>} />
+
+            </Route>
+
           </Routes>
         </Router>
       </Suspense>

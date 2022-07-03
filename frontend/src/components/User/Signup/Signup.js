@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import LoginPoster from "../../../images/login-banner.png";
+import SingnupPoster from "../../../images/Homesignup.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -89,13 +89,13 @@ function Signup() {
       <div className="content">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-8 offset-md-2"style={{paddingTop:'50px'}}>
+            <div className="col-md-8 offset-md-2"style={{paddingTop:'55px'}}>
               {/* Login Tab Content  */}
               <div className="account-content">
                 <div className="row align-items-center justify-content-center">
                   <div className="col-md-7 col-lg-6 login-left">
                     <img
-                      src={LoginPoster}
+                      src={SingnupPoster}
                       className="img-fluid"
                       alt="Carewell Login"
                     />
@@ -103,7 +103,7 @@ function Signup() {
                   <div className="col-md-12 col-lg-6 login-right">
                     <div className="login-header">
                       <h3>
-                        <span>Patient Register</span>
+                      Patient<span style={{ color:'#e22f73' }}> Register</span>
                       </h3>
                     </div>
                     <form onSubmit={onSubmit}>

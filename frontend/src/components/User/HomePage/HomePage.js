@@ -6,8 +6,10 @@ import shape7 from "../../../images/shapes-shape-7.png";
 import shape8 from "../../../images/shapes-shape-8.png";
 import bannerChecked from "../../../images/img-banner-check.png";
 import mainBanner from "../../../images/img-banner-img.png";
+import { useSelector } from "react-redux";
 
 function HomePage() {
+  const { specialties } = useSelector((state) => state.allspecialties);
   return (
     <>
       <div className="main-wrapper">
