@@ -1,14 +1,19 @@
 import * as api from '../../../api/admin';
 
-// admin login
+// add-doctors
 export const addDoctor = async (doctorData) => {
   const { data } = await api.addDoctor(doctorData);
   return data;
 };
 
 //getall doctors
-export const getallDoctors = async () => {
-  const { data } = await api.fetchDoctors();
+export const getallDoctors = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const { data } = await api.fetchDoctors(config);
   return data;
 };
 

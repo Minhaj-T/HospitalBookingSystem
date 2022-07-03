@@ -1,10 +1,11 @@
-const asyncHandler = require("express-async-handler");
-const Admin = require("../models/adminModel");
-const bcrypt = require("bcryptjs");
-const { customAlphabet } = require("nanoid");
-const Doctor = require("../models/doctorModel");
-const User= require("../models/userModel");
-const Specialties = require("../models/specialties");
+const asyncHandler = require('express-async-handler');
+const Admin = require('../models/adminModel');
+const bcrypt = require('bcryptjs');
+const { customAlphabet } = require('nanoid');
+const Doctor = require('../models/doctorModel');
+const User = require('../models/userModel');
+const Specialties = require('../models/specialties');
+const jwt = require("jsonwebtoken");
 // const { find, findByIdAndUpdate } = require("../models/adminModel");
 
 // @desc  Authenticate Admin
@@ -15,38 +16,35 @@ const loginAdmin = asyncHandler(async (req, res) => {
   const admin = await Admin.findOne({ email });
   if (admin && (await bcrypt.compare(password, admin.password))) {
     res.status(200).json({
-      admin,
-      email: req.body.email,
-      password: req.body.password,
+      _id: admin.id,
+      name: admin.name,
+      email: admin.email,
+      token: generateToken(admin._id),
     });
   } else {
     res.status(400);
-    throw new Error("invalid the Admin data");
+    throw new Error('invalid the Admin data');
   }
 });
 
-
-
 // @desc  get users
 // @rout  GET /api/admin/fetch-users
-const fetchUsers= asyncHandler(async(req,res)=>{
-  
-  const user= await User.find({})
+const fetchUsers = asyncHandler(async (req, res) => {
+  const user = await User.find({});
   if (user) {
     res.status(200).json({
-      user
-    })
-  }else{
+      user,
+    });
+  } else {
     res.status(400);
-    throw new Error("some error occurred...");
+    throw new Error('some error occurred...');
   }
-})
-
+});
 
 // @desc  edit the users
 // @rout  PUT /api/admin//edit-user/:id
-const editUser= asyncHandler(async(req,res)=>{
-  const userId=req.params.id
+const editUser = asyncHandler(async (req, res) => {
+  const userId = req.params.id;
 
   try {
     const newUserData = {
@@ -60,35 +58,31 @@ const editUser= asyncHandler(async(req,res)=>{
     });
     res.status(200).json({
       success: true,
-      user
+      user,
     });
   } catch (error) {
     res.status(400).json(error);
   }
 });
 
-
-  
-
-
 // @desc  get Doctors
-// @rout  GET /api/admin/fetch-doctors 
-const fetchDoctors=asyncHandler(async(req,res)=>{
-  const doctor=await Doctor.find({})
-  if(doctor){
+// @rout  GET /api/admin/fetch-doctors
+const fetchDoctors = asyncHandler(async (req, res) => {
+  const doctor = await Doctor.find({});
+  if (doctor) {
     res.status(200).json({
-      doctor
-    })
-  }else{
-    res.status(400)
-    throw new Error("some error occurred...");
+      doctor,
+    });
+  } else {
+    res.status(400);
+    throw new Error('some error occurred...');
   }
-})
+});
 
 // @desc  Add Doctors
 // @rout  POST /api/admin/add-doctors
 const addDoctors = asyncHandler(async (req, res) => {
-  const { name,email, password,gender,phone,specialization } = req.body;
+  const { name, email, password, gender, phone, specialization } = req.body;
   // generate a random id for Doctors
   const nanoid = customAlphabet(`123DOC`, 5);
   const doctorID = nanoid();
@@ -98,7 +92,7 @@ const addDoctors = asyncHandler(async (req, res) => {
 
   if (doctorExists) {
     res.status(400);
-    throw new Error("Doctor already exists");
+    throw new Error('Doctor already exists');
   }
 
   // Hash password
@@ -118,21 +112,20 @@ const addDoctors = asyncHandler(async (req, res) => {
   if (doctor) {
     res.status(201).json({
       _id: doctor.id,
-      doctorID:doctor.doctorID,
+      doctorID: doctor.doctorID,
       name: doctor.name,
-      email:doctor.email
-
+      email: doctor.email,
     });
   } else {
     res.status(400);
-    throw new Error("Invalid user data");
+    throw new Error('Invalid user data');
   }
 });
 
 // @desc  edit doctor details
 // @rout  PUT /api/admin/edit-doctor/:id
-const editDoctor= asyncHandler(async(req,res)=>{
-  const doctorId=req.params.id
+const editDoctor = asyncHandler(async (req, res) => {
+  const doctorId = req.params.id;
   try {
     const newUserData = {
       name: req.body.name,
@@ -145,7 +138,7 @@ const editDoctor= asyncHandler(async(req,res)=>{
     });
     res.status(200).json({
       success: true,
-      doctor
+      doctor,
     });
   } catch (error) {
     res.status(400).json(error);
@@ -155,39 +148,70 @@ const editDoctor= asyncHandler(async(req,res)=>{
 // @desc  DELETE the Doctor
 // @rout  DELETE /api/admin/delete-doctor/:id
 
-const deleteDoctor=asyncHandler(async(req,res)=>{
-  const doctorId=req.params.id;
+const deleteDoctor = asyncHandler(async (req, res) => {
+  const doctorId = req.params.id;
   try {
     const doctor = await Doctor.findById(doctorId);
-   const data= await doctor.remove();
-    res.status(200).json({doctorId:data._id});
+    const data = await doctor.remove();
+    res.status(200).json({ doctorId: data._id });
   } catch (error) {
     res.json(error);
   }
-})
+});
+
+// @desc  GET add the Specialties
+// @rout  ERT /api/admin/fetch-specialties
+const fetchSpecialties = asyncHandler(async (req, res) => {
+  const specialties = await Specialties.find({});
+  if (specialties) {
+    res.status(200).json({
+      specialties: specialties,
+    });
+  } else {
+    res.status(400);
+    throw new Error('some error occurred...');
+  }
+});
 
 // @desc  POST add the Specialties
 // @rout  POST /api/admin/add-specialties/
-const addSpecialities = asyncHandler( async (req, res) => {
-  const data =req.body;
-  console.log("client sade data",data.name);
- //Create a specialties
- const specialities = await Specialties.create({
-  name:data.name
-});
-console.log("this is the find",specialities);
-if (specialities) {
-  res.status(201).json({
-    specialities
+const addSpecialities = asyncHandler(async (req, res) => {
+  const data = req.body;
+  console.log('client sade data', data.name);
+  //Create a specialties
+  const specialities = await Specialties.create({
+    name: data.name,
   });
-} else {
-  res.status(400);
-  throw new Error("Invalid data");
-}
-})
+  console.log('this is the find', specialities);
+  if (specialities) {
+    res.status(201).json({
+      specialities,
+    });
+  } else {
+    res.status(400);
+    throw new Error('Invalid data');
+  }
+});
 
+// @desc  DELETE add the Specialties
+// @rout  DELETE /api/admin/delete-specialties
+const deleteSpecialties = asyncHandler(async (req, res) => {
+  console.log('ghghghghg', req.params.id);
+  const Id = req.params.id;
+  try {
+    const specialty = await Specialties.findById(Id);
+    const data = await specialty.remove();
+    res.status(200).json({ specialtyId: data._id });
+  } catch (error) {
+    res.json(error);
+  }
+});
 
-
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "10d",
+  });
+};
 
 module.exports = {
   loginAdmin,
@@ -198,4 +222,6 @@ module.exports = {
   editDoctor,
   deleteDoctor,
   addSpecialities,
+  fetchSpecialties,
+  deleteSpecialties,
 };

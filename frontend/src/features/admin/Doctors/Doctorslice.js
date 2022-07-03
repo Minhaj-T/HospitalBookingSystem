@@ -12,9 +12,10 @@ const initialState = {
 // get all doctors
 export const allDoctors = createAsyncThunk(
   'fetch-doctors',
-  async (thunkAPI) => {
+  async (_,thunkAPI) => {
     try {
-      return Doctorservice.getallDoctors();
+      const token = thunkAPI.getState().adminAuth.admin.token
+      return Doctorservice.getallDoctors(token);
     } catch (error) {
       const message =
         (error.response &&
@@ -32,8 +33,8 @@ export const allDoctors = createAsyncThunk(
 export const addDoctor = createAsyncThunk(
   'add-Doctor',
   async (doctor, thunkAPI) => {
-    console.log('this is doctor details', doctor);
     try {
+      const token = thunkAPI.getState().adminAuth.admin.token
       return Doctorservice.addDoctor(doctor);
     } catch (error) {
       const message =

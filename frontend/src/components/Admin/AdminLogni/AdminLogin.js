@@ -52,7 +52,6 @@ function AdminLogin() {
   
   const onSubmit=(e)=>{
     e.preventDefault();
-    console.log("submitted");
     if(email && password){
       const userData = {
         email,

@@ -1,0 +1,46 @@
+.datatable1 {
+    height: 1100px;
+    padding: 20px;
+    
+    .datatableTitle1{
+      width: 100%;
+      font-size: 24px;
+      color: gray;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  
+      .link1{
+        text-decoration: none;
+        color: green;
+        font-size: 16px;
+        font-weight: 400;
+        border: 1px solid green;
+        padding: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
+  
+    .cellWithImg1 {
+      display: flex;
+      align-items: center;
+  
+      .cellImg1 {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 20px;
+      }
+    }
+  
+  
+    .cellAction1 {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+  
+    }
+  }

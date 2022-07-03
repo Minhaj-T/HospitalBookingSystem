@@ -7,7 +7,7 @@ import DoctorForm from '../../../components/Admin/DoctorForm/DoctorForm';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../../../components/User/Spinner/Spinner';
 import Datatables from '../../../components/Admin/DoctorForm/Datatables';
-import { reset } from '../../../features/admin/Get-all-users/getallUsersSlice';
+import { reset } from '../../../features/admin/Doctors/DoctorSlice';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 

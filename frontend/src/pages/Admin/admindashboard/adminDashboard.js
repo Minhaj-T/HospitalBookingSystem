@@ -6,6 +6,7 @@ import { allDoctors } from '../../../features/admin/Doctors/DoctorSlice';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchUsers } from '../../../features/admin/Get-all-users/getallUsersSlice';
+import {allSpecialties} from '../../../features/admin/Specialties/SpecialtiesSlice'
 
 function AdminDashboard() {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ function AdminDashboard() {
   useEffect(() => {
     dispatch(allDoctors());
     dispatch(fetchUsers());
+    dispatch(allSpecialties())
   });
 
   return (

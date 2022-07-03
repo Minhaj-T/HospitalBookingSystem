@@ -67,8 +67,9 @@ export default function CustomizedDialogs() {
     phone: '',
     specialization: '',
   });
+  
   const { name, email, password, phone, gender, specialization } = formData;
-  console.log(formData);
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
