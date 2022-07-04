@@ -1,6 +1,5 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import LoginPoster from '../../../images/DoctorLogin.jpg';
 import '../../User/Login/Login.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,36 +9,27 @@ import Spinner from '../../User/Spinner/Spinner';
 import { isLoginValid } from '../../../validations/formValidator';
 import classname from 'classnames';
 import Header from '../../User/Header/Header';
-
+import { login, reset } from '../../../features/Doctor/auth/doctorauthSlice';
 
 function DoctorLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // get the current state
-  
+  const { doctor, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.doctorAuth
+  );
 
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-
   const { email, password } = formData;
 
   const [loginErrors, setLoginError] = useState({
     email: '',
     password: '',
   });
-
-//   useEffect(() => {
-//     if (isError) {
-//       toast.error(message);
-//     }
-//     if (isSuccess && user) {
-//       navigate('/');
-//     }
-//     dispatch(reset());
-//   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   // get the data into the form
   const onChange = (e) => {
@@ -53,24 +43,34 @@ function DoctorLogin() {
     }));
   };
 
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess && doctor) {
+      navigate('/');
+    }
+    dispatch(reset());
+  }, [doctor, isError, isSuccess, message, navigate, dispatch]);
+
   // submit the data into server
   const onSubmit = (e) => {
     e.preventDefault();
 
     //form validation section
     if (isLoginValid(formData, setLoginError)) {
-      const userData = {
+      const doctorData = {
         email,
         password,
       };
-    //   dispatch(login(userData));
+      dispatch(login(doctorData));
     }
   };
 
-//   // Loading page
-//   if (isLoading) {
-//     return <Spinner />;
-//   }
+  // Loading page
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <>
       <Header />
@@ -94,7 +94,8 @@ function DoctorLogin() {
                   <div className="col-md-12 col-lg-6 login-right">
                     <div className="login-header">
                       <h3>
-                        Carewell <span style={{ color:'#e22f73' }}>Doctor</span>
+                        Carewell{' '}
+                        <span style={{ color: '#e22f73' }}>Doctor</span>
                       </h3>
                     </div>
                     <form onSubmit={onSubmit}>
@@ -139,7 +140,6 @@ function DoctorLogin() {
                           Login
                         </button>
                       </div>
-
                     </form>
                   </div>
                 </div>

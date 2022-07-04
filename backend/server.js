@@ -16,6 +16,7 @@ app.use(cors({ origin: true, credentials: true }));
 //Routes
 app.use('/api/users',require('./routes/userRoutes'))
 app.use('/api/admin',require('./routes/adminRoutes'));
+app.use('/api/doctor',require('./routes/doctorRoutes'));
 
 
 // Error Middleware
