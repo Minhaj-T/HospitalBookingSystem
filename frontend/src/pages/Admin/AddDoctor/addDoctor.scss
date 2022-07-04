@@ -1,17 +1,9 @@
-.new {
-  display: flex;
-  width: 100%;
-  .newContainer {
-    flex: 6;
-
-    .AddDoctor {
-      float: right;
-      padding: 11px;
-      padding-right: 41px;
-    }
-    .dataTable {
-      margin-top: 42px;
-      padding: 25px;
-    }
-  }
+.AddDoctor {
+  float: right;
+  padding: 11px;
+  padding-right: 41px;
+}
+.dataTable {
+  margin-top: 42px;
+  padding: 25px;
 }

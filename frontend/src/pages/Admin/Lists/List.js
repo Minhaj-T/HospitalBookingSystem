@@ -1,6 +1,4 @@
 import './list.scss';
-import Sidebar from '../../../components/Admin/Sidebar/Sidebar';
-import Navbar from '../../../components/Admin/Navbar/Navbar';
 import Datatable from '../../../components/Admin/Datatable/Datatable';
 import PageHeader from '../../../components/Admin/PageHeader';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
@@ -15,19 +13,13 @@ const List = () => {
   });
 
   return (
-    <div className="list">
-      <Sidebar />
-      <div className="listContainer">
-        <Navbar />
-        <div>
-          <PageHeader
-            title="User Details"
-            subTitle="Modify User Details"
-            icon={<PeopleAltOutlinedIcon fontSize="large" />}
-          />
-          <Datatable />
-        </div>
-      </div>
+    <div>
+      <PageHeader
+        title="User Details"
+        subTitle="Modify User Details"
+        icon={<PeopleAltOutlinedIcon fontSize="large" />}
+      />
+      <Datatable />
     </div>
   );
 };

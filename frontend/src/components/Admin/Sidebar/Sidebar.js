@@ -13,7 +13,7 @@ function Sidebar() {
         <hr></hr>
         <div className="center">
             <ul>
-                <Link to="/adminDashboard" style={{textDecoration: "none" }}>
+                <Link to="/admin" style={{textDecoration: "none" }}>
                 <li>
                 <DashboardIcon className="icon"/>
                     <span>Dashboard</span>
@@ -24,20 +24,20 @@ function Sidebar() {
                     <BookOnlineOutlined className="icon"/>
                     <span>Appointments</span>
                 </li>
-                <Link to="/adminDashboard/specialties" style={{ textDecoration: "none" }}>
+                <Link to="/admin/specialties" style={{ textDecoration: "none" }}>
                 <li>
                     <LocalHospitalIcon className="icon"/>
                     <span>Specialties</span>
                 </li>
                 </Link>
                 <p className="title">MANAGEMENT</p>
-                <Link to="/adminDashboard/users" style={{ textDecoration: "none" }}>
+                <Link to="/admin/users" style={{ textDecoration: "none" }}>
                 <li>
                     <PersonIcon className="icon"/>
                     <span>Users</span>
                 </li>
                 </Link>
-                <Link to='/adminDashboard/add-doctor' style={{ textDecoration: 'none' }}> 
+                <Link to='/admin/doctor' style={{ textDecoration: 'none' }}> 
                 <li>
                     <VaccinesIcon className="icon"/>
                     <span>Doctors</span>

@@ -44,8 +44,7 @@ function AdminLogin() {
       toast.error(message);
     }
     if (isSuccess && admin) {
-      
-      navigate('/adminDashboard');
+      navigate('/admin');
     }
     dispatch(reset());
   }, [admin, isError, isSuccess, message, navigate, dispatch]);
