@@ -1,10 +1,11 @@
 import "./spinner.css";
+import loadingAnim from "../../../images/loader.gif"
 function Spinner() {
   return (
     <>
-      <div className="loadingSpinnerContainer">
-        <div className="loadingSpinner"></div>
-      </div>
+      <div className='loader-wrapper'>
+        <img className='load-anim' src={loadingAnim} alt='' draggable={false}/>
+    </div>
     </>
   );
 }
