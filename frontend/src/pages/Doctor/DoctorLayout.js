@@ -96,7 +96,7 @@ function DoctorLayout({children}) {
                         </Link>
                       </li>
                       <li className="main">
-                        <Link to={""}>
+                        <Link to={"/doctor/profile-settings"}>
                           <span className="fas" style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaUserCog />
@@ -105,7 +105,7 @@ function DoctorLayout({children}) {
                         </Link>
                       </li>
                       <li className="main">
-                        <Link to={""}>
+                        <Link to={"/doctor/change-password"}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaLock />

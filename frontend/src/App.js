@@ -34,6 +34,9 @@ const DoctorDashboard= React.lazy(() => import('./components/Doctor/Dashboard/Do
 const Appointments = React.lazy(() => import('./components/Doctor/Appointments/Appointments'));
 const Mypatients = React.lazy(() => import('./components/Doctor/Mypatients/Mypatients'));
 const ScheduleTiming = React.lazy(() => import('./components/Doctor/ScheduleTiming/ScheduleTiming'));
+const ProfileSettings = React.lazy(() => import('./components/Doctor/ProfileSettings/ProfileSettings'));
+const ChangePassword = React.lazy(() => import('./components/Doctor/ChangePassword/ChangePassword'));
+
 
 
 function App() {
@@ -80,6 +83,12 @@ function App() {
               : <DoctorLogin/> }/>
               <Route path="schedule-timing" element={ doctor 
               ? <DoctorLayout children={<ScheduleTiming/>}/> 
+              : <DoctorLogin/> }/>
+              <Route path="profile-settings" element={ doctor 
+              ? <DoctorLayout children={<ProfileSettings/>}/> 
+              : <DoctorLogin/> }/>
+              <Route path="change-password" element={ doctor 
+              ? <DoctorLayout children={<ChangePassword/>}/> 
               : <DoctorLogin/> }/>
             </Route>
 
