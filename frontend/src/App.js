@@ -31,6 +31,7 @@ const Specialties = React.lazy(() => import('./pages/Admin/Specialties/Specialti
 const DoctorLogin = React.lazy(() => import('./components/Doctor/Login/DoctorLogin'));
 const DoctorLayout = React.lazy(() => import('./pages/Doctor/DoctorLayout'));
 const DoctorDashboard= React.lazy(() => import('./components/Doctor/Dashboard/DoctorDashboard'));
+const Appointments = React.lazy(() => import('./components/Doctor/Appointments/Appointments'));
 
 
 function App() {
@@ -68,6 +69,9 @@ function App() {
             <Route exact path="/doctor">
             <Route path="" element={ doctor 
               ? <DoctorLayout children={<DoctorDashboard/>}/> 
+              : <DoctorLogin/> }/>
+              <Route path="appointments" element={ doctor 
+              ? <DoctorLayout children={<Appointments/>}/> 
               : <DoctorLogin/> }/>
             </Route>
 

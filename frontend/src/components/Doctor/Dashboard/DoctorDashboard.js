@@ -1,92 +1,97 @@
 import './doctorDashboard.css'
 import { Link, } from 'react-router-dom';
 import mm from '../../../images/myImage.jpg'
+import {
+  FaEye,
+  FaCheck,
+  FaTimes
+}  from 'react-icons/fa';
 
 function DoctorDashboard() {
   return (
-    <div class="row">
-      <div class="col-md-12">
-        <h4 class="mb-4">Patient Appoinment</h4>
-        <div class="appointment-tab">
-          <ul class="nav nav-tabs nav-tabs-solid nav-tabs-rounded">
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                href="#upcoming-appointments"
+    <div className="row">
+      <div className="col-md-12">
+        <h4 className="mb-4">Patient Appoinment</h4>
+        <div className="appointment-tab">
+          <ul className="nav nav-tabs nav-tabs-solid nav-tabs-rounded">
+            <li className="nav-item">
+              <Link
+              to={""}
+                className="nav-link active"
                 data-toggle="tab"
               >
                 Upcoming
-              </a>
+              </Link>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#today-appointments" data-toggle="tab">
+            <li className="nav-item">
+              <Link to={""} className="nav-link"  data-toggle="tab">
                 Today
-              </a>
+              </Link>
             </li>
           </ul>
-          <div class="tab-content">
-            <div class="tab-pane show active" id="upcoming-appointments">
-              <div class="card card-table mb-0">
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover table-center mb-0">
+          <div className="tab-content">
+            <div className="tab-pane show active" id="upcoming-appointments">
+              <div className="card card-table mb-0">
+                <div className="card-body">
+                  <div className="table-responsive">
+                    <table className="table table-hover table-center mb-0">
                       <thead>
                         <tr>
                           <th>Patient Name</th>
                           <th>Appt Date</th>
                           <th>Purpose</th>
                           <th>Type</th>
-                          <th class="text-center">Paid Amount</th>
+                          <th className="text-center">Paid Amount</th>
                           <th></th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <td>
-                            <h2 class="table-avatar">
-                              <a
-                                href="patient-profile.html"
-                                class="avatar avatar-sm mr-2"
+                            <h2 className="table-avatar">
+                              <Link
+                              to={""}
+                                className="avatar avatar-sm mr-2"
                               >
                                 <img
-                                  class="avatar-img rounded-circle"
-                                  src={mm}
                                   alt="User Image"
+                                  src={mm}
+                                  className="avatar-img rounded-circle"
                                 />
-                              </a>
-                              <a href="patient-profile.html">
+                              </Link>
+                              <Link to={""}>
                                 Richard Wilson
                                 <span>#PT0016</span>
-                              </a>
+                              </Link>
                             </h2>
                           </td>
                           <td>
                             11 Nov 2019
-                            <span class="d-block text-info">10.00 AM</span>
+                            <span className="d-block text-info">10.00 AM</span>
                           </td>
                           <td>General</td>
                           <td>New Patient</td>
-                          <td class="text-center">$150</td>
-                          <td class="text-right">
-                            <div class="table-action pe-5">
+                          <td className="text-center">$150</td>
+                          <td className="text-right">
+                            <div className="table-action pe-5">
                               <Link 
                                 to={""}
-                                class="btn btn-sm bg-info-light"
+                                className="btn btn-sm bg-info-light"
                               >
-                                <i class="far fa-eye"></i> View
+                                <FaEye/> View
                               </Link>
 
                               <Link
                                 to={""}
-                                class="btn btn-sm bg-success-light"
+                                className="btn btn-sm bg-success-light"
                               >
-                                <i class="fas fa-check"></i> Accept
+                                <FaCheck/> Accept
                               </Link>
                               <Link
                                 to={""}
-                                class="btn btn-sm bg-danger-light"
+                                className="btn btn-sm bg-danger-light"
                               >
-                                <i class="fas fa-times"></i> Cancel
+                                <FaTimes/> Cancel
                               </Link>
                             </div>
                           </td>
