@@ -1,4 +1,6 @@
 import './doctorLayout.css';
+import { Link, } from 'react-router-dom';
+import mm from '../../images/myImage.jpg'
 import {
   FaColumns,
   FaCalendarCheck,
@@ -21,9 +23,9 @@ function DoctorLayout({children}) {
               <div className="profile-sidebar">
                 <div className="widget-profile pro-widget-content">
                   <div className="profile-info-widget">
-                    {/* <a href="#" className="booking-doc-img">
-											<img src="" alt="User Image"/>
-										</a> */}
+                    <Link to={""} className="booking-doc-img">
+											<img src={mm} alt="User Image"/>
+										</Link>
                     <div className="profile-det-info">
                       <h3>Dr. Darren Elder</h3>
 
@@ -39,86 +41,86 @@ function DoctorLayout({children}) {
                   <nav className="dashboard-menu">
                     <ul>
                       <li className="main active">
-                        <a href="doctor-dashboard.html">
+                        <Link to={"/doctor"}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaColumns />
                           </span>
                           <span>DoctorDashboard</span>
-                        </a>
+                        </Link>
                       </li>
                       <li className="main">
-                        <a href="appointments.html">
+                        <Link to={"/doctor/appointments"}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaCalendarCheck />
                           </span>
                           <span>Appointments</span>
-                        </a>
+                        </Link>
                       </li>
                       <li className="main">
-                        <a href="my-patients.html">
+                        <Link to={"/doctor/my-patients"}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaUserInjured />
                           </span>
                           <span>My Patients</span>
-                        </a>
+                        </Link>
                       </li>
                       <li className="main">
-                        <a href="schedule-timings.html">
+                        <Link to={"/doctor/schedule-timing"}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaHourglassStart />
                           </span>
                           <span>Schedule Timings</span>
-                        </a>
+                        </Link>
                       </li>
                       <li className="main">
-                        <a href="invoices.html">
+                        <Link to={""}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaFileInvoice />
                           </span>
                           <span>Invoices</span>
-                        </a>
+                        </Link>
                       </li>
                       <li className="main">
-                        <a href="chat-doctor.html">
+                        <Link to={''}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaComments />
                           </span>
                           <span>Message</span>
                           <small className="unread-msg">23</small>
-                        </a>
+                        </Link>
                       </li>
                       <li className="main">
-                        <a href="doctor-profile-settings.html">
+                        <Link to={""}>
                           <span className="fas" style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaUserCog />
                           </span>
                           <span>Profile Settings</span>
-                        </a>
+                        </Link>
                       </li>
                       <li className="main">
-                        <a href="doctor-change-password.html">
+                        <Link to={""}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaLock />
                           </span>
                           <span>Change Password</span>
-                        </a>
+                        </Link>
                       </li>
                       <li className="main">
-                        <a href="index.html">
+                        <Link to={""}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaSignOutAlt />
                           </span>
                           <span>Logout</span>
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </nav>

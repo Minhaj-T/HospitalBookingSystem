@@ -1,0 +1,91 @@
+.widget-profile {
+  background-color: #fff;
+  border-bottom: 1px solid #f0f0f0;
+}
+.widget-profile .profile-info-widget {
+  display: block;
+  text-align: center;
+}
+.widget-profile .profile-info-widget .booking-doc-img {
+  display: inline-block;
+  margin: 0 0 15px;
+  width: auto;
+  padding: 8px;
+  background-color: #f7f7f7;
+  border-radius: 50%;
+}
+.widget-profile .profile-info-widget .booking-doc-img img {
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+}
+.widget-profile.pat-widget-profile .profile-info-widget .booking-doc-img img {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+}
+.pro-widget-content {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 20px;
+  text-align: center;
+}
+
+.profile-info-widget {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: left;
+}
+.profile-info-widget .booking-doc-img {
+  margin-right: 15px;
+}
+.profile-info-widget .booking-doc-img img {
+  border-radius: 4px;
+  height: 90px;
+  width: 90px;
+  object-fit: cover;
+}
+.profile-det-info {
+  overflow: hidden;
+}
+.profile-det-info h3 {
+  font-size: 17px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.patient-details h5 {
+  color: #757575;
+  font-size: 13px;
+  font-weight: normal;
+  margin-bottom: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.patient-details h5 i {
+  width: 18px;
+}
+.patient-info {
+  margin-top: 15px;
+}
+.patient-info ul {
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  margin: 0;
+}
+.patient-info ul li {
+  position: relative;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #272b41;
+  text-transform: capitalize;
+}
+.patient-info ul li + li {
+  margin-top: 15px;
+}
+.patient-info ul li span {
+  color: #757575;
+  float: right;
+}
