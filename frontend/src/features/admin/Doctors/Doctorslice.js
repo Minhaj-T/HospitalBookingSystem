@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import Doctorservice from './Doctorservice';
+import { errorHandler } from '../../../utilities/errorMessege';
 
 const initialState = {
   doctors: [],
@@ -17,14 +18,7 @@ export const allDoctors = createAsyncThunk(
       const token = thunkAPI.getState().adminAuth.admin.token
       return Doctorservice.getallDoctors(token);
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString() ||
-        'Something wrong. Please check your network';
-      return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(errorHandler(error));
     }
   }
 );
@@ -37,14 +31,7 @@ export const addDoctor = createAsyncThunk(
       const token = thunkAPI.getState().adminAuth.admin.token
       return Doctorservice.addDoctor(doctor);
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString() ||
-        'Something wrong. Please check your network';
-      return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(errorHandler(error));
     }
   }
 );
@@ -56,14 +43,7 @@ export const deleteDoctor = createAsyncThunk(
     try {
       return await Doctorservice.deleteDoctor(doctorId);
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString() ||
-        'Something wrong. Please check your network';
-      return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(errorHandler(error));
     }
   }
 );

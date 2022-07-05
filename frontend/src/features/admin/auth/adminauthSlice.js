@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import adminauthService from "./adminauthService";
-
+import { errorHandler } from '../../../utilities/errorMessege';
 // Get admin from localStorage
 const admin = JSON.parse(localStorage.getItem("admininfo"));
 
@@ -18,14 +18,7 @@ export const login = createAsyncThunk(
     try {
       return adminauthService.login(admin);
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString() ||
-        "Something wrong. Please check your network";
-      return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(errorHandler(error));
     }
   }
 );

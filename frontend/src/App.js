@@ -30,15 +30,17 @@ const Specialties = React.lazy(() => import('./pages/Admin/Specialties/Specialti
 // Doctors
 const DoctorLogin = React.lazy(() => import('./components/Doctor/Login/DoctorLogin'));
 const DoctorLayout = React.lazy(() => import('./pages/Doctor/DoctorLayout'));
+const DoctorDashboard= React.lazy(() => import('./components/Doctor/Dashboard/DoctorDashboard'));
 
 
 function App() {
   // const user = useSelector((state) => state.auth.user);
   const admin = useSelector((state) => state.adminAuth.admin);
+  const doctor=useSelector((state) =>state.doctorAuth.doctor);
   
   return (
     <>
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<Spinner/>}>
         <Router>
           <Routes>
             <Route exact path="/" element={<HomePage />} />
@@ -64,18 +66,9 @@ function App() {
             </Route>
 
             <Route exact path="/doctor">
-            <Route path="" element={ admin 
-              ? <DoctorLayout children={<AdminDashboard/>}/> 
+            <Route path="" element={ doctor 
+              ? <DoctorLayout children={<DoctorDashboard/>}/> 
               : <DoctorLogin/> }/>
-            </Route>
-
-            <Route exact path="/doctor-login" element={<DoctorLogin />} />
-            <Route exact path="/doctor-home">
-            <Route path="" element={<DoctorLayout/>} />
-            
-
-
-
             </Route>
 
           </Routes>

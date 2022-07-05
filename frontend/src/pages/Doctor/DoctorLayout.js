@@ -11,7 +11,7 @@ import {
   FaSignOutAlt,
 } from 'react-icons/fa';
 
-function DoctorLayout() {
+function DoctorLayout({children}) {
   return (
     <>
       <div className="content">
@@ -124,6 +124,10 @@ function DoctorLayout() {
                   </nav>
                 </div>
               </div>
+            </div>
+            <div class="col-md-7 col-lg-8 col-xl-9">
+              {children}
+
             </div>
           </div>
         </div>

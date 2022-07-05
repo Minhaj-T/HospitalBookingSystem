@@ -48,7 +48,7 @@ function DoctorLogin() {
       toast.error(message);
     }
     if (isSuccess && doctor) {
-      navigate('/');
+      navigate('/doctor');
     }
     dispatch(reset());
   }, [doctor, isError, isSuccess, message, navigate, dispatch]);

@@ -1,0 +1,109 @@
+.appointment-tab {
+  margin-bottom: 30px;
+}
+.appointment-tab .nav-tabs {
+  background-color: #fff;
+  padding: 1.5rem;
+  border: 1px solid #f0f0f0;
+  border-radius: 0.25rem 0.25rem 0 0 !important;
+  border-bottom: 0;
+}
+.appointment-tab .tab-content {
+  padding-top: 0;
+}
+.appointment-tab .card {
+  border-radius: 0;
+}
+
+.table {
+  color: #272b41;
+  max-width: 100%;
+  margin-bottom: 0;
+  width: 100%;
+}
+table.table td h2 {
+  display: inline-block;
+  font-size: inherit;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+table.table td h2.table-avatar {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: inherit;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+table.table td h2 a {
+  color: #272b41;
+}
+table.table td h2 a:hover {
+  color: #09dca4;
+}
+table.table td h2 span {
+  color: #888;
+  display: block;
+  font-size: 12px;
+  margin-top: 3px;
+}
+.table thead {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+.table thead tr th {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.table tbody tr {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.table tbody tr:last-child {
+  border-color: transparent;
+}
+.table.table-center td,
+.table.table-center th {
+  vertical-align: middle;
+}
+
+.card-table .card-body {
+  padding: 0;
+}
+.card-table .card-body .table > thead > tr > th {
+  border-top: 0;
+}
+.card-table .table tr td:first-child,
+.card-table .table tr th:first-child {
+  padding-left: 1.5rem;
+}
+.card-table .table tr td:last-child,
+.card-table .table tr th:last-child {
+  padding-right: 1.5rem;
+}
+.card-table .table td,
+.card-table .table th {
+  border-top: 1px solid #e2e5e8;
+  padding: 1rem 0.75rem;
+  white-space: nowrap;
+}
+.card {
+  margin-bottom: 0.9375rem;
+}
+.card-body {
+  padding: 1.25rem;
+}
+
+.avatar-sm {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.tab-content {
+  padding-top: 20px;
+}

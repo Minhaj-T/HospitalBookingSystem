@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import * as api from '../../../api/doctors';
+import { errorHandler } from '../../../utilities/errorMessege';
 
 // Get doctor from localStorage
 const doctor = JSON.parse(localStorage.getItem('doctorinfo'));
@@ -22,14 +23,7 @@ export const login = createAsyncThunk(
       }
       return data;
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString() ||
-        'Something wrong. Please check your network';
-      return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(errorHandler(error));
     }
   }
 );

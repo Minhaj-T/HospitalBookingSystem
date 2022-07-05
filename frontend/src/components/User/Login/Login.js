@@ -93,7 +93,7 @@ function Login() {
                   <div className="col-md-12 col-lg-6 login-right">
                     <div className="login-header">
                       <h3>
-                        Login <span style={{ color:'#e22f73' }}>Carewell</span>
+                        Login <span style={{ color:'#e22f73' }}>Carewell</span> <Link style={{ textDecoration: 'none' }} to={"/doctor"} >Are you a Doctor?</Link>
                       </h3>
                     </div>
                     <form onSubmit={onSubmit}>
