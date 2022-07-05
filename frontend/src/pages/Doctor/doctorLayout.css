@@ -1,3 +1,41 @@
+.widget-profile .profile-info-widget {
+  display: block;
+  text-align: center;
+}
+.widget-profile .profile-info-widget .booking-doc-img {
+  display: inline-block;
+  margin: 0 0 15px;
+  width: auto;
+  padding: 8px;
+  background-color: #f7f7f7;
+  border-radius: 50%;
+}
+.widget-profile .profile-info-widget .booking-doc-img img {
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+}
+.pro-widget-content {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 20px;
+  text-align: center;
+}
+
+.profile-info-widget {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: left;
+}
+.profile-info-widget .booking-doc-img {
+  margin-right: 15px;
+}
+.profile-info-widget .booking-doc-img img {
+  border-radius: 4px;
+  height: 90px;
+  width: 90px;
+  object-fit: cover
+}
 .profile-sidebar {
   background-color: #fff;
   border: 1px solid #f0f0f0;
@@ -43,9 +81,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-.patient-details h5 i {
-  width: 18px;
 }
 .dashboard-menu ul {
   color: #757575;
@@ -167,3 +202,4 @@ avatar-sm {
 .avatar-sm.avatar-online::before {
 	border-width: 2px;
 }
+
