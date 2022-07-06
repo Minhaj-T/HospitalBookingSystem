@@ -3,7 +3,11 @@ import "./Header11.css";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, reset } from "../../../features/users/auth/authSlice";
 import Mainlogo from "../../../images/logo.png";
-import { FaHospital } from 'react-icons/fa'
+import { FaHospital,
+        FaUserInjured,
+        FaSignOutAlt } from 'react-icons/fa'
+import mm from '../../../images/myImage.jpg'
+
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -60,13 +64,17 @@ function Header() {
             </li>
             <li className="nav-item">
               {user ? (
-                <Link
-                  className="nav-link header-login"
-                  onClick={onLogout}
-                  to={''}
-                >
-                  Logout
-                </Link>
+                 
+                <div className="dropdown">
+                <div className="profile"> <img className="dropbtn" src="https://i.imgur.com/ywRonqz.jpg"/>
+                    <div className="dropdown-content">
+                        <ul>
+                            <Link to={""}><FaUserInjured size={15} style={{ marginRight: '8px', }}/><span>Profiles</span></Link>
+                            <Link  onClick={onLogout} to={''} ><FaSignOutAlt size={15} style={{ marginRight: '8px', }}/><span>Logout</span></Link>
+                        </ul>
+                    </div>
+                </div>
+            </div>
               ) : (
                 <Link className="nav-link header-login" to={"/login"}>
                   login / Signup

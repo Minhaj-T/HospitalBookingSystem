@@ -19,6 +19,11 @@ const SignupPage2 = React.lazy(() =>import('./components/User/Signup/SignupPage2
 const SignupPage3 = React.lazy(() =>import('./components/User/Signup/SignupPage3'));
 const SignupPage4 = React.lazy(() =>import('./components/User/Signup/SignupPage4'));
 
+// User
+const UserDashBoard = React.lazy(()=>import('./components/User/DashBoard/UserDashBoard'));
+const UserLayout = React.lazy(() => import('./pages/user/UserLayout'));
+const UserProfileSettings = React.lazy(()=>import('./components/User/ProfileSettings/UserProfileSettings'))
+
 // Admin
 const AdminLogin = React.lazy(() =>import('./components/Admin/AdminLogni/AdminLogin'));
 const Layout = React.lazy(()=> import("./pages/Admin/Layout"));
@@ -36,11 +41,11 @@ const Mypatients = React.lazy(() => import('./components/Doctor/Mypatients/Mypat
 const ScheduleTiming = React.lazy(() => import('./components/Doctor/ScheduleTiming/ScheduleTiming'));
 const ProfileSettings = React.lazy(() => import('./components/Doctor/ProfileSettings/ProfileSettings'));
 const ChangePassword = React.lazy(() => import('./components/Doctor/ChangePassword/ChangePassword'));
-
+const UserChangePassword = React.lazy(()=>import('./components/User/ChangePassword/UserChangePassword'));
 
 
 function App() {
-  // const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.user);
   const admin = useSelector((state) => state.adminAuth.admin);
   const doctor=useSelector((state) =>state.doctorAuth.doctor);
   
@@ -55,6 +60,20 @@ function App() {
             <Route exact path="/signup2" element={<SignupPage2 />} />
             <Route exact path="/signup3" element={<SignupPage3 />} />
             <Route exact path="/signup4" element={<SignupPage4 />} />
+            
+
+            <Route exact path="/user">
+            <Route path="" element={ user 
+              ? <UserLayout children={<UserDashBoard/>}/> 
+              : <Login/> }/>
+            <Route path="user-edit" element={ user 
+              ? <UserLayout children={<UserProfileSettings/>}/> 
+              : <Login/> }/>
+            <Route path="change-password" element={ user 
+              ? <UserLayout children={<UserChangePassword/>}/> 
+              : <Login/> }/>
+            </Route>
+
 
             <Route exact path="/admin">
             <Route path="" element={ admin 
