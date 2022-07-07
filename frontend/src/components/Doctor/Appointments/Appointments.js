@@ -17,7 +17,7 @@ function Appointments() {
         <div className="appointment-list">
           <div className="profile-info-widget">
             <Link to={""} className="booking-doc-img">
-              <img src={mm} alt="User Image" style={{marginBottom: "1rem"}} />
+              <img src={mm} alt="User" style={{marginBottom: "1rem"}} />
             </Link>
             <div className="profile-det-info">
               <h3>

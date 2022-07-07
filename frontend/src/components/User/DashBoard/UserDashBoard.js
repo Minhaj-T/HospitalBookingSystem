@@ -4,54 +4,56 @@ import {
   FaPrint,
   FaEye
 } from 'react-icons/fa';
+import { Link } from "react-router-dom";
+
 function UserDashBoard() {
   return (
     <>
-      <div class="card">
-        <div class="card-body pt-0">
+      <div className="card">
+        <div className="card-body pt-0">
           {/* Tab Menu  */}
-          <nav class="user-tabs mb-4">
-            <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
-              <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  href="#pat_appointments"
+          <nav className="user-tabs mb-4">
+            <ul className="nav nav-tabs nav-tabs-bottom nav-justified">
+              <li className="nav-item">
+                <Link
+                  to={"#pat_appointments"}
+                  className="nav-link active"
                   data-bs-toggle="tab"
                 >
                   Appointments
-                </a>
+                </Link>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#pat_prescriptions" data-bs-toggle="tab">
+              <li className="nav-item">
+                <Link to={"#pat_prescriptions"} className="nav-link" data-bs-toggle="tab">
                   Prescriptions
-                </a>
+                </Link>
               </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  href="#pat_medical_records"
+              <li className="nav-item">
+                <Link
+                  to={"#pat_medical_records"}
+                  className="nav-link"
                   data-bs-toggle="tab"
                 >
-                  <span class="med-records">Medical Records</span>
-                </a>
+                  <span className="med-records">Medical Records</span>
+                </Link>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#pat_billing" data-bs-toggle="tab">
+              <li className="nav-item">
+                <Link to={"#pat_billing"} className="nav-link" data-bs-toggle="tab">
                   Billing
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
           {/* /Tab Menu  */}
 
           {/* Tab Content  */}
-          <div class="tab-content pt-0">
+          <div className="tab-content pt-0">
             {/* Appointment Tab  */}
-            <div id="pat_appointments" class="tab-pane fade show active">
-              <div class="card card-table mb-0">
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover table-center mb-0">
+            <div id="pat_appointments" className="tab-pane fade show active">
+              <div className="card card-table mb-0">
+                <div className="card-body">
+                  <div className="table-responsive">
+                    <table className="table table-hover table-center mb-0">
                       <thead>
                         <tr>
                           <th>Doctor</th>
@@ -65,47 +67,47 @@ function UserDashBoard() {
                       <tbody>
                         <tr>
                           <td>
-                            <h2 class="table-avatar">
-                              <a
-                                href="doctor-profile.html"
-                                class="avatar avatar-sm mr-2"
+                            <h2 className="table-avatar">
+                              <Link
+                                to={""}
+                                className="avatar avatar-sm mr-2"
                               >
                                 <img
-                                  class="avatar-img rounded-circle"
+                                  className="avatar-img rounded-circle"
                                   src={mm}
-                                  alt="User Image"
+                                  alt="User"
                                 />
-                              </a>
-                              <a href="doctor-profile.html">
+                              </Link>
+                              <Link to={""}>
                                 Dr. Olga Barlow <span>Dental</span>
-                              </a>
+                              </Link>
                             </h2>
                           </td>
                           <td>
                             5 Nov 2019{' '}
-                            <span class="d-block text-info">5.00 PM</span>
+                            <span className="d-block text-info">5.00 PM</span>
                           </td>
                           <td>1 Nov 2019</td>
                           <td>$100</td>
                           <td>
-                            <span class="badge badge-pill bg-success-light">
+                            <span className="badge badge-pill bg-success-light">
                               Confirm
                             </span>
                           </td>
-                          <td class="text-right">
-                            <div class="table-action">
-                              <a
-                                href="javascript:void(0);"
-                                class="btn btn-sm bg-primary-light"
+                          <td className="text-right">
+                            <div className="table-action">
+                              <Link
+                                to={""}
+                                className="btn btn-sm bg-primary-light"
                               >
                                 <FaPrint/> Print
-                              </a>
-                              <a
-                                href="javascript:void(0);"
-                                class="btn btn-sm bg-info-light"
+                              </Link>
+                              <Link
+                                to={""}
+                                className="btn btn-sm bg-info-light"
                               >
                                 <FaEye/> View
-                              </a>
+                              </Link>
                             </div>
                           </td>
                         </tr>
@@ -118,11 +120,11 @@ function UserDashBoard() {
             {/* /Appointment Tab  */}
 
             {/* Prescription Tab */}
-            <div class="tab-pane fade" id="pat_prescriptions">
-              <div class="card card-table mb-0">
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover table-center mb-0">
+            <div className="tab-pane fade" id="pat_prescriptions">
+              <div className="card card-table mb-0">
+                <div className="card-body">
+                  <div className="table-responsive">
+                    <table className="table table-hover table-center mb-0">
                       <thead>
                         <tr>
                           <th>Date </th>
@@ -136,36 +138,36 @@ function UserDashBoard() {
                           <td>5 Nov 2019</td>
                           <td>Prescription 10</td>
                           <td>
-                            <h2 class="table-avatar">
-                              <a
-                                href="doctor-profile.html"
-                                class="avatar avatar-sm mr-2"
+                            <h2 className="table-avatar">
+                              <Link
+                                to={""}
+                                className="avatar avatar-sm mr-2"
                               >
                                 <img
-                                  class="avatar-img rounded-circle"
+                                  className="avatar-img rounded-circle"
                                   src={mm}
-                                  alt="User Image"
+                                  alt="User"
                                 />
-                              </a>
-                              <a href="doctor-profile.html">
+                              </Link>
+                              <Link to={""}>
                                 Dr. Olga Barlow <span>Dental</span>
-                              </a>
+                              </Link>
                             </h2>
                           </td>
-                          <td class="text-right">
-                            <div class="table-action">
-                              <a
-                                href="javascript:void(0);"
-                                class="btn btn-sm bg-primary-light"
+                          <td className="text-right">
+                            <div className="table-action">
+                              <Link
+                                to={""}
+                                className="btn btn-sm bg-primary-light"
                               >
                                 <FaPrint/> Print
-                              </a>
-                              <a
-                                href="javascript:void(0);"
-                                class="btn btn-sm bg-info-light"
+                              </Link>
+                              <Link
+                                to={""}
+                                className="btn btn-sm bg-info-light"
                               >
                                 <FaEye/> View
-                              </a>
+                              </Link>
                             </div>
                           </td>
                         </tr>
@@ -178,11 +180,11 @@ function UserDashBoard() {
             {/* /Prescription Tab */}
 
             {/* Medical Records Tab  */}
-            <div id="pat_medical_records" class="tab-pane fade">
-              <div class="card card-table mb-0">
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover table-center mb-0">
+            <div id="pat_medical_records" className="tab-pane fade">
+              <div className="card card-table mb-0">
+                <div className="card-body">
+                  <div className="table-responsive">
+                    <table className="table table-hover table-center mb-0">
                       <thead>
                         <tr>
                           <th>ID</th>
@@ -196,44 +198,44 @@ function UserDashBoard() {
                       <tbody>
                         <tr>
                           <td>
-                            <a href="javascript:void(0);">#MR-0002</a>
+                            <Link to={""} >#MR-0002</Link>
                           </td>
                           <td>6 Nov 2019</td>
                           <td>Dental Removing</td>
                           <td>
-                            <a href="#">dental-test.pdf</a>
+                            <Link to={""}>dental-test.pdf</Link>
                           </td>
                           <td>
-                            <h2 class="table-avatar">
-                              <a
-                                href="doctor-profile.html"
-                                class="avatar avatar-sm mr-2"
+                            <h2 className="table-avatar">
+                              <Link
+                                to={""}
+                                className="avatar avatar-sm mr-2"
                               >
                                 <img
-                                  class="avatar-img rounded-circle"
+                                  className="avatar-img rounded-circle"
                                   src={mm}
-                                  alt="User Image"
+                                  alt="User"
                                 />
-                              </a>
-                              <a href="doctor-profile.html">
+                              </Link>
+                              <Link to={""}>
                                 Dr. John Gibbs <span>Dental</span>
-                              </a>
+                              </Link>
                             </h2>
                           </td>
-                          <td class="text-right">
-                            <div class="table-action">
-                              <a
-                                href="javascript:void(0);"
-                                class="btn btn-sm bg-info-light"
+                          <td className="text-right">
+                            <div className="table-action">
+                              <Link
+                                to={""}
+                                className="btn btn-sm bg-info-light"
                               >
                                 <FaEye/> View
-                              </a>
-                              <a
-                                href="javascript:void(0);"
-                                class="btn btn-sm bg-primary-light"
+                              </Link>
+                              <Link
+                                to={""}
+                                className="btn btn-sm bg-primary-light"
                               >
                                 <FaPrint/> Print
-                              </a>
+                              </Link>
                             </div>
                           </td>
                         </tr>
@@ -246,11 +248,11 @@ function UserDashBoard() {
             {/* /Medical Records Tab  */}
 
             {/* Billing Tab  */}
-            <div id="pat_billing" class="tab-pane fade">
-              <div class="card card-table mb-0">
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover table-center mb-0">
+            <div id="pat_billing" className="tab-pane fade">
+              <div className="card card-table mb-0">
+                <div className="card-body">
+                  <div className="table-responsive">
+                    <table className="table table-hover table-center mb-0">
                       <thead>
                         <tr>
                           <th>Invoice No</th>
@@ -263,41 +265,41 @@ function UserDashBoard() {
                       <tbody>
                         <tr>
                           <td>
-                            <a href="invoice-view.html">#INV-0001</a>
+                            <Link to={""}>#INV-0001</Link>
                           </td>
                           <td>
-                            <h2 class="table-avatar">
-                              <a
-                                href="doctor-profile.html"
-                                class="avatar avatar-sm mr-2"
+                            <h2 className="table-avatar">
+                              <Link
+                                to={""}
+                                className="avatar avatar-sm mr-2"
                               >
                                 <img
-                                  class="avatar-img rounded-circle"
+                                  className="avatar-img rounded-circle"
                                   src={mm}
-                                  alt="User Image"
+                                  alt="User"
                                 />
-                              </a>
-                              <a href="doctor-profile.html">
+                              </Link>
+                              <Link to={""}>
                                 Dr. Olga Barlow <span>#0010</span>
-                              </a>
+                              </Link>
                             </h2>
                           </td>
                           <td>$550</td>
                           <td>5 Nov 2019</td>
-                          <td class="text-right">
-                            <div class="table-action">
-                              <a
-                                href="invoice-view.html"
-                                class="btn btn-sm bg-info-light"
+                          <td className="text-right">
+                            <div className="table-action">
+                              <Link
+                                to={""}
+                                className="btn btn-sm bg-info-light"
                               >
                                 <FaEye/> View
-                              </a>
-                              <a
-                                href="javascript:void(0);"
-                                class="btn btn-sm bg-primary-light"
+                              </Link>
+                              <Link
+                                to={""}
+                                className="btn btn-sm bg-primary-light"
                               >
                                 <FaPrint/> Print
-                              </a>
+                              </Link>
                             </div>
                           </td>
                         </tr>

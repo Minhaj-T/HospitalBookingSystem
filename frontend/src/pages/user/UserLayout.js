@@ -23,7 +23,7 @@ function UserLayout({children}) {
                 <div className="widget-profile pro-widget-content">
                   <div className="profile-info-widget">
                     <Link to={''} className="booking-doc-img">
-                      <img src={mm} alt="User Image" />
+                      <img src={mm} alt="User" />
                     </Link>
                     <div class="profile-det-info">
                       <h3>Richard Wilson</h3>
@@ -51,7 +51,7 @@ function UserLayout({children}) {
                         </Link>
                       </li>
                       <li className="main">
-                        <Link to={'/doctor/appointments'}>
+                        <Link to={'/user/favourites'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaBookmark />

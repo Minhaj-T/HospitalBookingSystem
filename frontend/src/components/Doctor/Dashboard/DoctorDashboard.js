@@ -54,7 +54,7 @@ function DoctorDashboard() {
                                 className="avatar avatar-sm mr-2"
                               >
                                 <img
-                                  alt="User Image"
+                                  alt="User"
                                   src={mm}
                                   className="avatar-img rounded-circle"
                                 />

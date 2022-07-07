@@ -11,7 +11,7 @@ function Mypatients() {
               <div className="pro-widget-content">
                 <div className="profile-info-widget">
                   <Link to={""}  className="booking-doc-img">
-                    <img src={mm} alt="User Image" />
+                    <img src={mm} alt="User" />
                   </Link>
                   <div className="profile-det-info">
                     <h3>

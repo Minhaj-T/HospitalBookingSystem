@@ -24,7 +24,7 @@ function DoctorLayout({children}) {
                 <div className="widget-profile pro-widget-content">
                   <div className="profile-info-widget">
                     <Link to={""} className="booking-doc-img">
-											<img src={mm} alt="User Image"/>
+											<img src={mm} alt="User"/>
 										</Link>
                     <div className="profile-det-info">
                       <h3>Dr. Darren Elder</h3>

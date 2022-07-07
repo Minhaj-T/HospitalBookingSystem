@@ -18,6 +18,7 @@ const Login = React.lazy(() => import('./components/User/Login/Login'));
 const SignupPage2 = React.lazy(() =>import('./components/User/Signup/SignupPage2'));
 const SignupPage3 = React.lazy(() =>import('./components/User/Signup/SignupPage3'));
 const SignupPage4 = React.lazy(() =>import('./components/User/Signup/SignupPage4'));
+const Favourites = React.lazy(() =>import('./components/User/FavouriteDoctor/Favourites'));
 
 // User
 const UserDashBoard = React.lazy(()=>import('./components/User/DashBoard/UserDashBoard'));
@@ -72,6 +73,9 @@ function App() {
             <Route path="change-password" element={ user 
               ? <UserLayout children={<UserChangePassword/>}/> 
               : <Login/> }/>
+            <Route path="favourites" element={ user 
+              ? <UserLayout children={<Favourites/>}/> 
+              : <Login/> }/>  
             </Route>
 
 
