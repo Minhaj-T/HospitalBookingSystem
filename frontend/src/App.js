@@ -19,6 +19,7 @@ const SignupPage2 = React.lazy(() =>import('./components/User/Signup/SignupPage2
 const SignupPage3 = React.lazy(() =>import('./components/User/Signup/SignupPage3'));
 const SignupPage4 = React.lazy(() =>import('./components/User/Signup/SignupPage4'));
 const Favourites = React.lazy(() =>import('./components/User/FavouriteDoctor/Favourites'));
+const DoctorSerch = React.lazy(() => import('./components/User/Doctorsearch/Doctorsearch'));
 
 // User
 const UserDashBoard = React.lazy(()=>import('./components/User/DashBoard/UserDashBoard'));
@@ -61,6 +62,7 @@ function App() {
             <Route exact path="/signup2" element={<SignupPage2 />} />
             <Route exact path="/signup3" element={<SignupPage3 />} />
             <Route exact path="/signup4" element={<SignupPage4 />} />
+            <Route exact path="/doctor-search" element={<DoctorSerch />} />
             
 
             <Route exact path="/user">

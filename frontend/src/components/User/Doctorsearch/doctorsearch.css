@@ -1,0 +1,216 @@
+
+.cal-icon {
+	position: relative;
+	width: 100%;
+}
+.cal-icon:after {
+	color: #979797;
+    content: '\f073';
+	display: block;
+    font-family: "Font Awesome 5 Free";
+    font-size: 16px;
+    font-weight: 400;
+    margin: auto;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+}
+.custom_radio {
+	color: #555;
+	display: inline-block;
+	position: relative;
+	font-size: 14px;
+	font-size: 0.9375rem;
+	padding-left: 30px;
+	margin-bottom: 10px;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none
+}
+.radio_input .custom_radio + .custom_radio {
+	margin-left: 15px;
+}
+.custom_radio input {
+	position: absolute;
+	opacity: 0
+}
+.custom_radio input:checked ~ .checkmark:after {
+	opacity: 1
+}
+.custom_radio .checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 20px;
+	width: 20px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 50%
+}
+.custom_radio .checkmark:after {
+	display: block;
+	content: "";
+	position: absolute;
+	opacity: 0;
+	top: 3px;
+	left: 3px;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: #09e5ab;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out
+}
+
+.filter-widget {
+	margin-bottom: 20px;
+}
+.filter-widget h4 {
+	font-size: 1rem;
+	margin-bottom: 15px;
+}
+.filter-widget .custom_check {
+	line-height: 18px;
+}
+.btn-search .btn {
+    background-color: #0de0fe;
+    border: 1px solid #0de0fe;
+    color: #fff;
+    height: 46px;
+	font-weight:500;
+	font-size:16px;
+}
+.doctor-widget {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+}
+.doc-info-left {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+}
+.doc-info-right {
+    margin-left: auto;
+    -ms-flex: 0 0 200px;
+    flex: 0 0 200px;
+    max-width: 200px;
+}
+.doctor-img {
+    -ms-flex: 0 0 150px;
+    flex: 0 0 150px;
+    margin-right: 20px;
+    width: 150px;
+}
+.doctor-img img {
+	border-radius: 5px;
+}
+.doc-department {
+    color: #20c0f3;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+.doc-department img {
+    width: 19px;
+    display: inline-block;
+    margin-right: 10px;
+}
+.doc-location {
+    color: #757575;
+	font-size: 14px;
+    margin-bottom: 25px;
+}
+.pharmacy-location, 
+.pharmacy-title{
+	color: #2E3842;
+}
+.doc-location a {
+    color: #09e5ab;
+    font-weight: 500;
+}
+.doctor-widget .doc-name {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 3px;
+}
+.doc-speciality {
+    font-size: 14px;
+    color: #757575;
+    margin-bottom: 15px;
+}
+.doctor-widget .rating i {
+	font-size: 14px;
+}
+.doctor-widget .average-rating {
+	font-size: 14px;
+	font-weight: 500;
+}
+.clinic-details {
+	margin-bottom: 15px;
+}
+.clini-infos {
+    margin-bottom: 15px;
+}
+.clini-infos h2 b.strike{
+	text-decoration: line-through;
+	font-weight: 500;
+}
+.clini-infos ul {
+	font-size: 14px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.clini-infos ul li {
+    display: block;
+    line-height: 30px;
+    color: #4E4852;
+}
+.clini-infos ul li i {
+    font-size: 15px;
+    min-width: 30px;
+}
+.clinic-booking a + a {
+	margin-top: 15px;
+}
+.clinic-booking a {
+    background-color: #fff;
+    border: 2px solid #20c0f3;
+    border-radius: 4px;
+    color: #20c0f3;
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    padding: 10px 18px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+}
+.clinic-booking a.view-pro-btn:hover, .clinic-booking a.view-pro-btn:focus {
+	background: #20c0f3; 
+	color: #fff;
+}
+.clinic-booking a.apt-btn {
+    background-color: #20c0f3;
+    color: #fff;
+}
+.clinic-booking a.apt-btn:hover, .clinic-booking a.apt-btn:focus {
+	background-color: #0db9f2;
+	border-color: #0db9f2;
+	color: #fff;
+}
+.load-more {
+	margin-bottom: 30px;
+}
+.doctor-img1{
+	margin-right: 20px;
+}
+.doctor-img1 img{
+	border-radius: 4px;
+}

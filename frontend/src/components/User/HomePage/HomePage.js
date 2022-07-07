@@ -1,12 +1,11 @@
-import "./HomePage.css";
-import "./home.css";
-import shape10 from "../../../images/shapes-shape-10.png";
-import shape6 from "../../../images/shapes-shape-6.png";
-import shape7 from "../../../images/shapes-shape-7.png";
-import shape8 from "../../../images/shapes-shape-8.png";
-import bannerChecked from "../../../images/img-banner-check.png";
-import mainBanner from "../../../images/img-banner-img.png";
-import { useSelector } from "react-redux";
+import './home.css';
+import shape10 from '../../../images/shapes-shape-10.png';
+import shape6 from '../../../images/shapes-shape-6.png';
+import shape7 from '../../../images/shapes-shape-7.png';
+import shape8 from '../../../images/shapes-shape-8.png';
+import bannerChecked from '../../../images/img-banner-check.png';
+import mainBanner from '../../../images/img-banner-img.png';
+import { useSelector } from 'react-redux';
 
 function HomePage() {
   const { specialties } = useSelector((state) => state.allspecialties);
@@ -14,7 +13,7 @@ function HomePage() {
     <>
       <div className="main-wrapper">
         {/* Main Banner */}
-        <div className="home-one-banner" style={{paddingTop:'50px'}}>
+        <div className="home-one-banner" style={{ paddingTop: '50px' }}>
           <div className="bg-shapes">
             <img
               src={shape10}
