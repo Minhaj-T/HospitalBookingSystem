@@ -1,11 +1,11 @@
 import './doctorsearch.css';
 import mm from '../../../images/myImage.jpg';
 import { Link } from 'react-router-dom';
-import { FcOk, FcInfo } from 'react-icons/fc';
-import { FaMapMarkerAlt, FaClock, FaMoneyBillAlt } from 'react-icons/fa';
+import { FcInfo } from 'react-icons/fc';
+import { FaMapMarkerAlt, FaMoneyBillAlt,FaThumbsUp } from 'react-icons/fa';
 
-function Doctorsearch() {
-  return (
+function Doctorsearch() { 
+  return ( 
     <>
       <div className="content">
         <div className="container-fluid">
@@ -112,7 +112,7 @@ function Doctorsearch() {
                       </div>
                       <div className="doc-info-cont">
                         <h4 className="doc-name">
-                          <Link to={""}>Dr. Ruby Perrin</Link>
+                          <Link to={""}>Dr. Minhaj</Link>
                         </h4>
                         <p className="doc-speciality">
                           MDS - Periodontology and Oral Implantology, BDS
@@ -137,7 +137,7 @@ function Doctorsearch() {
                         </div> */}
                         <div className="clinic-details">
                           <p className="doc-location">
-                            <FaMapMarkerAlt/> Florida, USA
+                            <FaMapMarkerAlt/> Kerala, India
                           </p>
                         </div>
                         
@@ -147,22 +147,22 @@ function Doctorsearch() {
                       <div className="clini-infos">
                         <ul>
                           <li>
-                            <i className="far fa-thumbs-up"></i> 98%
+                            <FaThumbsUp/> 98%
                           </li>
                           <li>
-                            <FaMapMarkerAlt/> Florida, USA
+                            <FaMapMarkerAlt/> Malppuram, Kerala
                           </li>
                           <li>
-                            <FaMoneyBillAlt/> $300 - $1000{' '}
+                            <FaMoneyBillAlt/> ₹300 - ₹1000{' '}
                             <FcInfo size={18} data-toggle="tooltip" title="cellWithImg" />
                           </li>
                         </ul>
                       </div>
                       <div className="clinic-booking">
-                        <Link className="view-pro-btn" to={""}>
+                        <Link className="view-pro-btn" to={"/doctor-profile"}>
                           View Profile
                         </Link>
-                        <Link className="apt-btn" to={""}>
+                        <Link className="apt-btn" to={"/user/book-appoinment"}>
                           Book Appointment
                         </Link>
                       </div>

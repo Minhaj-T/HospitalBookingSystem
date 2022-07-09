@@ -59,7 +59,7 @@ function DoctorDashboard() {
                                   className="avatar-img rounded-circle"
                                 />
                               </Link>
-                              <Link to={""} style={{marginLeft: '6px'}}>
+                              <Link to={"/doctor/patient-profile"} style={{marginLeft: '6px'}}>
                                 Richard Wilson
                                 <span>#PT0016</span>
                               </Link>

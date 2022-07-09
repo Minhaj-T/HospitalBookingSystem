@@ -5,8 +5,9 @@ import { logout, reset } from "../../../features/users/auth/authSlice";
 import Mainlogo from "../../../images/logo.png";
 import { FaHospital,
         FaUserInjured,
-        FaSignOutAlt } from 'react-icons/fa'
-import mm from '../../../images/myImage.jpg'
+        FaSignOutAlt 
+      } from 'react-icons/fa'
+
 
 function Header() {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className=" nav-link" to={""}>
+                <Link className=" nav-link" to={"/doctor-search"}>
                   Search-Doctors
                 </Link>
               </li>
@@ -66,10 +67,10 @@ function Header() {
               {user ? (
                  
                 <div className="dropdown">
-                <div className="profile"> <img className="dropbtn" src="https://i.imgur.com/ywRonqz.jpg"/>
+                <div className="profile"> <img className="dropbtn"  src="https://i.imgur.com/ywRonqz.jpg"/>
                     <div className="dropdown-content">
                         <ul>
-                            <Link to={""}><FaUserInjured size={15} style={{ marginRight: '8px', }}/><span>Profiles</span></Link>
+                            <Link to={"/user"}><FaUserInjured size={15} style={{ marginRight: '8px', }}/><span>Profiles</span></Link>
                             <Link  onClick={onLogout} to={''} ><FaSignOutAlt size={15} style={{ marginRight: '8px', }}/><span>Logout</span></Link>
                         </ul>
                     </div>

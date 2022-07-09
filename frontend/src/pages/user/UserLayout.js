@@ -25,13 +25,13 @@ function UserLayout({children}) {
                     <Link to={''} className="booking-doc-img">
                       <img src={mm} alt="User" />
                     </Link>
-                    <div class="profile-det-info">
+                    <div className="profile-det-info">
                       <h3>Richard Wilson</h3>
-                      <div class="patient-details">
+                      <div className="patient-details">
                         <h5>
                           <FaBirthdayCake /> 24 Jul 1983, 38 years
                         </h5>
-                        <h5 class="mb-0">
+                        <h5 className="mb-0">
                           <FaMapMarkerAlt /> Newyork, USA
                         </h5>
                       </div>
@@ -101,7 +101,7 @@ function UserLayout({children}) {
                 </div>
               </div>
             </div>
-            <div class="col-md-7 col-lg-8 col-xl-9">
+            <div className="col-md-7 col-lg-8 col-xl-9">
             {children}
             </div>
           </div>

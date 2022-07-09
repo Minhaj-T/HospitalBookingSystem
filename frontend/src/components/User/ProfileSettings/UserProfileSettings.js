@@ -1,5 +1,6 @@
 import '../../Doctor/ProfileSettings/profilesettings.css'
 import mm from '../../../images/myImage.jpg';
+import { FaUpload } from 'react-icons/fa';
 function UserProfileSettings() {
   return (
     <>
@@ -19,7 +20,7 @@ function UserProfileSettings() {
                     <div className="upload-img">
                       <div className="change-photo-btn">
                         <span>
-                          <i className="fa fa-upload"></i> Upload Photo
+                         <FaUpload/> Upload Photo
                         </span>
                         <input type="file" className="upload" />
                       </div>

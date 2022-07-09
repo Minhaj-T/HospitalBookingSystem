@@ -1,0 +1,99 @@
+.pat-widget-profile .pro-widget-content {
+  padding: 0 0 20px;
+}
+.pat-widget-profile .booking-date li {
+  font-size: 0.875rem;
+}
+.pat-widget-profile .booking-date li span {
+  font-size: 0.875rem;
+}
+
+.widget-profile {
+  background-color: #fff;
+  border-bottom: 1px solid #f0f0f0;
+}
+.widget-profile .profile-info-widget {
+  display: block;
+  text-align: center;
+}
+.widget-profile .profile-info-widget .booking-doc-img {
+  display: inline-block;
+  margin: 0 0 15px;
+  width: auto;
+  padding: 8px;
+  background-color: #f7f7f7;
+  border-radius: 50%;
+}
+.widget-profile .profile-info-widget .booking-doc-img img {
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+}
+
+.widget-profile.pat-widget-profile .profile-info-widget .booking-doc-img {
+  padding: 0;
+}
+.widget-profile.pat-widget-profile .profile-info-widget .booking-doc-img img {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+}
+
+.pro-widget-content {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 20px;
+  text-align: center;
+}
+
+.add-new-btn {
+  background-color: #0de0fe;
+  border-radius: 30px;
+  color: #fff;
+  display: inline-block;
+  font-weight: 500;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+}
+.add-new-btn:focus,
+.add-new-btn:hover,
+.add-new-btn:active {
+  background-color: #0de0fe;
+  color: #fff;
+}
+.patient-info {
+  margin-top: 15px;
+}
+.patient-info ul {
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  margin: 0;
+}
+.patient-info ul li {
+  position: relative;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #272b41;
+  text-transform: capitalize;
+}
+.patient-info ul li + li {
+  margin-top: 15px;
+}
+.patient-info ul li i {
+  width: 18px;
+}
+.patient-info ul li span {
+  color: #757575;
+  float: right;
+  font-weight: 400;
+}
+.main{
+    display: flex;
+    gap: 13px;
+}
+.text-right{
+  display: flex;
+  justify-content:flex-end;
+  width:100%;
+   padding:0;
+}

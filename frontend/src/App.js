@@ -18,13 +18,16 @@ const Login = React.lazy(() => import('./components/User/Login/Login'));
 const SignupPage2 = React.lazy(() =>import('./components/User/Signup/SignupPage2'));
 const SignupPage3 = React.lazy(() =>import('./components/User/Signup/SignupPage3'));
 const SignupPage4 = React.lazy(() =>import('./components/User/Signup/SignupPage4'));
-const Favourites = React.lazy(() =>import('./components/User/FavouriteDoctor/Favourites'));
 const DoctorSerch = React.lazy(() => import('./components/User/Doctorsearch/Doctorsearch'));
+
 
 // User
 const UserDashBoard = React.lazy(()=>import('./components/User/DashBoard/UserDashBoard'));
 const UserLayout = React.lazy(() => import('./pages/user/UserLayout'));
 const UserProfileSettings = React.lazy(()=>import('./components/User/ProfileSettings/UserProfileSettings'))
+const Favourites = React.lazy(() =>import('./components/User/FavouriteDoctor/Favourites'));
+const DoctorProfile = React.lazy(() => import('./components/User/DoctorProfile/DoctorProfile'));
+const BookAppoinment = React.lazy(() => import('./components/User/BookAppoinment/BookAppoinment'));
 
 // Admin
 const AdminLogin = React.lazy(() =>import('./components/Admin/AdminLogni/AdminLogin'));
@@ -44,6 +47,7 @@ const ScheduleTiming = React.lazy(() => import('./components/Doctor/ScheduleTimi
 const ProfileSettings = React.lazy(() => import('./components/Doctor/ProfileSettings/ProfileSettings'));
 const ChangePassword = React.lazy(() => import('./components/Doctor/ChangePassword/ChangePassword'));
 const UserChangePassword = React.lazy(()=>import('./components/User/ChangePassword/UserChangePassword'));
+const UserProfile = React.lazy(() =>import('./components/Doctor/UserProfile/UserProfile'));
 
 
 function App() {
@@ -63,6 +67,8 @@ function App() {
             <Route exact path="/signup3" element={<SignupPage3 />} />
             <Route exact path="/signup4" element={<SignupPage4 />} />
             <Route exact path="/doctor-search" element={<DoctorSerch />} />
+            <Route exact path="/doctor-profile" element={<DoctorProfile />} />
+
             
 
             <Route exact path="/user">
@@ -77,7 +83,10 @@ function App() {
               : <Login/> }/>
             <Route path="favourites" element={ user 
               ? <UserLayout children={<Favourites/>}/> 
-              : <Login/> }/>  
+              : <Login/> }/>
+              <Route path="book-appoinment" element={ user 
+              ? <BookAppoinment/> 
+              : <Login/> }/> 
             </Route>
 
 
@@ -114,6 +123,9 @@ function App() {
               : <DoctorLogin/> }/>
               <Route path="change-password" element={ doctor 
               ? <DoctorLayout children={<ChangePassword/>}/> 
+              : <DoctorLogin/> }/>
+              <Route path="patient-profile" element={ doctor 
+              ? <UserProfile/> 
               : <DoctorLogin/> }/>
             </Route>
 

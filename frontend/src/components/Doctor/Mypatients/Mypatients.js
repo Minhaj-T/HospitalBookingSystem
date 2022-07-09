@@ -1,6 +1,7 @@
 import './mypatients.css';
 import { Link, } from 'react-router-dom';
 import mm from '../../../images/myImage.jpg';
+import { FaMapMarkedAlt } from 'react-icons/fa';
 function Mypatients() {
   return (
     <>
@@ -23,7 +24,7 @@ function Mypatients() {
                         <b>Patient ID :</b> P0016
                       </h5>
                       <h5 className="mb-0">
-                        <i className="fas fa-map-marker-alt"></i> Alabama, USA
+                        <FaMapMarkedAlt/> Alabama, USA
                       </h5>
                     </div>
                   </div>

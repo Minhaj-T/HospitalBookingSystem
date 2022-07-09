@@ -1,5 +1,6 @@
 import './scheduletiming.css';
 import { Link } from 'react-router-dom';
+import { FaEdit, FaPlusCircle, FaTimes } from 'react-icons/fa';
 function ScheduleTiming() {
   return (
     <>
@@ -118,7 +119,7 @@ function ScheduleTiming() {
                               className="edit-link"
                               data-toggle="modal"
                             >
-                              <i className="fa fa-plus-circle"></i> Add Slot
+                              <FaPlusCircle/> Add Slot
                             </Link>
                           </h4>
                           <p className="text-muted mb-0">Not Available</p>
@@ -137,7 +138,7 @@ function ScheduleTiming() {
                               className="edit-link"
                               data-toggle="modal"
                             >
-                              <i className="fa fa-edit mr-1"></i>Edit
+                              <FaEdit/>Edit
                             </Link>
                           </h4>
 
@@ -146,25 +147,25 @@ function ScheduleTiming() {
                             <div className="doc-slot-list">
                               8:00 pm - 11:30 pm
                               <Link to={''} className="delete_schedule">
-                                <i className="fa fa-times"></i>
+                               <FaTimes/>
                               </Link>
                             </div>
                             <div className="doc-slot-list">
                               11:30 pm - 1:30 pm
                               <Link to={''} className="delete_schedule">
-                                <i className="fa fa-times"></i>
+                                <FaTimes/>
                               </Link>
                             </div>
                             <div className="doc-slot-list">
                               3:00 pm - 5:00 pm
                               <Link to={''} className="delete_schedule">
-                                <i className="fa fa-times"></i>
+                                <FaTimes/>
                               </Link>
                             </div>
                             <div className="doc-slot-list">
                               6:00 pm - 11:00 pm
                               <Link to={''} className="delete_schedule">
-                                <i className="fa fa-times"></i>
+                                <FaTimes/>
                               </Link>
                             </div>
                           </div>
@@ -181,7 +182,7 @@ function ScheduleTiming() {
                               className="edit-link"
                               data-toggle="modal"
                             >
-                              <i className="fa fa-plus-circle"></i> Add Slot
+                              <FaPlusCircle/> Add Slot
                             </Link>
                           </h4>
                           <p className="text-muted mb-0">Not Available</p>
@@ -197,7 +198,7 @@ function ScheduleTiming() {
                               className="edit-link"
                               data-toggle="modal"
                             >
-                              <i className="fa fa-plus-circle"></i> Add Slot
+                              <FaPlusCircle/> Add Slot
                             </Link>
                           </h4>
                           <p className="text-muted mb-0">Not Available</p>
@@ -213,7 +214,7 @@ function ScheduleTiming() {
                               className="edit-link"
                               data-toggle="modal"
                             >
-                              <i className="fa fa-plus-circle"></i> Add Slot
+                             <FaPlusCircle/> Add Slot
                             </Link>
                           </h4>
                           <p className="text-muted mb-0">Not Available</p>
@@ -229,7 +230,7 @@ function ScheduleTiming() {
                               className="edit-link"
                               data-toggle="modal"
                             >
-                              <i className="fa fa-plus-circle"></i> Add Slot
+                             <FaPlusCircle/> Add Slot
                             </Link>
                           </h4>
                           <p className="text-muted mb-0">Not Available</p>
@@ -245,7 +246,7 @@ function ScheduleTiming() {
                               className="edit-link"
                               data-toggle="modal"
                             >
-                              <i className="fa fa-plus-circle"></i> Add Slot
+                           <FaPlusCircle/> Add Slot
                             </Link>
                           </h4>
                           <p className="text-muted mb-0">Not Available</p>
