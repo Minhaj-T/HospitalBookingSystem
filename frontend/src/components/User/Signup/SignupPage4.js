@@ -1,9 +1,61 @@
-import { Link } from "react-router-dom"
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { register, reset } from '../../../features/users/auth/authSlice';
+import { toast } from 'react-toastify';
+import Spinner from '../Spinner/Spinner';
 
 function SignupPage4() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { user, form1, form2, form3, isLoading, isError, isSuccess, message } =
+    useSelector((state) => state.auth);
+
+  const [formData, setFormData] = useState({
+    state: '',
+    city: '',
+  });
+  const { state, city } = formData;
+
+  // get the data into the form
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess && user) {
+      navigate('/');
+    }
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const Data = {
+      ...form1,
+      ...form2,
+      ...form3,
+      state,
+      city,
+    };
+    dispatch(register(Data));
+  };
+
+  // Loading page
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
     <>
-     <div className="content login-page pt-0">
+      <div className="content login-page pt-0">
         <div className="container-fluid">
           <div className="account-content">
             <div className="row align-items-center">
@@ -15,25 +67,39 @@ function SignupPage4() {
                     </div>
                     <div className="step-list">
                       <ul>
-                        {/* <li><a href="#" className="active-done">1</a></li>
-                        <li><a href="#" className="active-done">2</a></li>
-                        <li><a href="#" className="active">3</a></li> */}
+                        <li>
+                          <Link to={''} className="active-done">
+                            1
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to={''} className="active-done">
+                            2
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to={''} className="active">
+                            3
+                          </Link>
+                        </li>
                       </ul>
                     </div>
-                    <form method="post">
+                    <form onSubmit={onSubmit}>
                       <h3 className="my-4">Your Location</h3>
                       <div className="form-group">
                         <label>Select City</label>
                         <select
                           className="form-select form-control"
                           id="heart_rate"
-                          name="heart_rate"
+                          name="city"
                           tabIndex="-1"
+                          value={city}
+                          onChange={onChange}
                           aria-hidden="true"
                         >
                           <option value="">Select Your City</option>
-                          <option value="1">Malappuram</option>
-                          <option value="2">City 2</option>
+                          <option value="Malappuram">Malappuram</option>
+                          <option value="Kozhikod">Kozhikod</option>
                         </select>
                       </div>
                       <div className="form-group">
@@ -41,21 +107,24 @@ function SignupPage4() {
                         <select
                           className="form-select form-control"
                           id="bp"
-                          name="bp"
+                          name="state"
+                          value={state}
+                          onChange={onChange}
                           tabIndex="-1"
                           aria-hidden="true"
                         >
                           <option value="">Select Your State</option>
-                          <option value="1">Kerala</option>
-                          <option value="2">State 2</option>
+                          <option value="Kerala">Kerala</option>
+                          <option value="Thamilnadu">Thamilnadu</option>
                         </select>
                       </div>
                       <div className="mt-5">
-                        <Link
-                          to={""}
+                        <button
+                          type="submit"
                           className="btn btn-primary w-100 btn-lg login-btn step5_submit"
-                          >continue
-                        </Link>
+                        >
+                          finish
+                        </button>
                       </div>
                     </form>
                   </div>
@@ -69,7 +138,7 @@ function SignupPage4() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default SignupPage4
+export default SignupPage4;

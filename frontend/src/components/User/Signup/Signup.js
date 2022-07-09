@@ -1,50 +1,33 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import SingnupPoster from "../../../images/Homesignup.jpg";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import classname from "classnames";
-import { register, reset } from "../../../features/users/auth/authSlice"; 
-import "./Signup.css";
-import Spinner from "../../User/Spinner/Spinner";
-import { isRegisterValid } from "../../../validations/formValidator";
-import Header from "../Header/Header";
-
-
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import SingnupPoster from '../../../images/Homesignup.jpg';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import classname from 'classnames';
+import { form1 } from '../../../features/users/auth/authSlice';
+import './Signup.css';
+import { isRegisterValid } from '../../../validations/formValidator';
+import Header from '../Header/Header';
 
 function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // get the current state
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.auth
-  );
 
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    password2: "",
+    name: '',
+    email: '',
+    password: '',
+    password2: '',
   });
   const { name, email, password, password2 } = formData;
 
   const [registerErrors, setRegisterError] = useState({
-    name: "",
-    email: "",
-    password: "",
-    password2: "",
+    name: '',
+    email: '',
+    password: '',
+    password2: '',
   });
-
-  useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
-    if (isSuccess && user) {
-      navigate("/");
-    }
-    dispatch(reset());
-  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   // get the data into the form
   const onChange = (e) => {
@@ -54,7 +37,7 @@ function Signup() {
     }));
     setRegisterError((prevState) => ({
       ...prevState,
-      [e.target.name]: "",
+      [e.target.name]: '',
     }));
   };
 
@@ -66,30 +49,29 @@ function Signup() {
     if (isRegisterValid(formData, setRegisterError)) {
       // Check password one equal to password2
       if (password !== password2) {
-        toast.error("passwords do not match");
+        toast.error('passwords do not match');
       } else {
         const userData = {
           name,
           email,
           password,
         };
-        dispatch(register(userData));
+        dispatch(form1(userData));
+        navigate('/signup2');
       }
     }
   };
 
-  // Loading page
-  if (isLoading) {
-    return <Spinner />;
-  }
-
   return (
     <>
-    <Header/>
+      <Header />
       <div className="content">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-8 offset-md-2"style={{paddingTop:'55px'}}>
+            <div
+              className="col-md-8 offset-md-2"
+              style={{ paddingTop: '55px' }}
+            >
               {/* Login Tab Content  */}
               <div className="account-content">
                 <div className="row align-items-center justify-content-center">
@@ -103,7 +85,8 @@ function Signup() {
                   <div className="col-md-12 col-lg-6 login-right">
                     <div className="login-header">
                       <h3>
-                      Patient<span style={{ color:'#e22f73' }}> Register</span>
+                        Patient
+                        <span style={{ color: '#e22f73' }}> Register</span>
                       </h3>
                     </div>
                     <form onSubmit={onSubmit}>
@@ -113,8 +96,8 @@ function Signup() {
                           name="name"
                           value={name}
                           onChange={onChange}
-                          className={classname("form-control", {
-                            "is-invalid": registerErrors.name,
+                          className={classname('form-control', {
+                            'is-invalid': registerErrors.name,
                           })}
                           placeholder="name@example.com"
                         />
@@ -131,8 +114,8 @@ function Signup() {
                           name="email"
                           value={email}
                           onChange={onChange}
-                          className={classname("form-control", {
-                            "is-invalid": registerErrors.email,
+                          className={classname('form-control', {
+                            'is-invalid': registerErrors.email,
                           })}
                           placeholder="Email"
                         />
@@ -149,8 +132,8 @@ function Signup() {
                           name="password"
                           value={password}
                           onChange={onChange}
-                          className={classname("form-control", {
-                            "is-invalid": registerErrors.password,
+                          className={classname('form-control', {
+                            'is-invalid': registerErrors.password,
                           })}
                           placeholder="****"
                         />
@@ -166,8 +149,8 @@ function Signup() {
                           type="password"
                           name="password2"
                           value={password2}
-                          className={classname("form-control", {
-                            "is-invalid": registerErrors.password2,
+                          className={classname('form-control', {
+                            'is-invalid': registerErrors.password2,
                           })}
                           onChange={onChange}
                           placeholder="****"
@@ -189,8 +172,8 @@ function Signup() {
                         <span className="span-or">or</span>
                       </div>
                       <div className="text-center dont-have">
-                        Already have an account?{" "}
-                        <Link to={"/login"}>Login</Link>
+                        Already have an account?{' '}
+                        <Link to={'/login'}>Login</Link>
                       </div>
                     </form>
                   </div>
