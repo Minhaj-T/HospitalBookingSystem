@@ -7,10 +7,10 @@ const user = JSON.parse(localStorage.getItem('user'));
 
 const initialState = {
   user: user ? user : null,
-  form1:null,
-  form2:null,
-  form3:null,
-  form4:null,
+  form1: null,
+  form2: null,
+  form3: null,
+  form4: null,
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -37,6 +37,19 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
     return thunkAPI.rejectWithValue(errorHandler(error));
   }
 });
+
+//editUser
+export const editUser_Details = createAsyncThunk(
+  'auth/editUserDetails',
+  async (userDetails, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await authService.editUser(token, userDetails);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(errorHandler(error));
+    }
+  }
+);
 
 // Logout the user
 export const logout = createAsyncThunk('auth/logout', async () => {
@@ -78,7 +91,6 @@ const authSlice = createSlice({
       state.message = action.payload;
       state.user = null;
     },
-    // ........................................
     [login.pending]: (state) => {
       state.isLoading = true;
     },
@@ -93,7 +105,20 @@ const authSlice = createSlice({
       state.message = action.payload;
       state.user = null;
     },
-    // ........................................
+    [editUser_Details.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [editUser_Details.fulfilled]: (state, action) => {
+      state.user = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    },
+    [editUser_Details.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload;
+      state.user = null;
+    },
     [logout.fulfilled]: (state) => {
       state.user = null;
       state.isSuccess = false;
@@ -101,5 +126,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { reset, form1,form2,form3,form4 } = authSlice.actions;
+export const { reset, form1, form2, form3, form4 } = authSlice.actions;
 export default authSlice.reducer;

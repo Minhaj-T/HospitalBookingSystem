@@ -25,6 +25,8 @@ function SignupPage3() {
     weight,
     gender,
     height,
+    address,
+    mobile,
     age,
     allergies,
     weight_unit,
@@ -49,6 +51,8 @@ function SignupPage3() {
       weight,
       gender,
       height,
+      address,
+      mobile,
       age,
       allergies,
       weight_unit,
@@ -185,6 +189,28 @@ function SignupPage3() {
                                 </select>
                               </div>
                             </div>
+                          </div>
+                          <div className="form-group">
+                            <label>Address</label>
+                            <textarea
+                              type="text"
+                              name="address"
+                              value={address}
+                              onChange={onChange}
+                              className="form-control"
+                              id="age"
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>Mobile</label>
+                            <input
+                              type="text"
+                              name="mobile"
+                              value={mobile}
+                              onChange={onChange}
+                              className="form-control"
+                              id="age"
+                            />
                           </div>
                           <div className="form-group">
                             <label>Your Age</label>

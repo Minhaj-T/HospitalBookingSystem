@@ -13,6 +13,12 @@ const userSchema = mongoose.Schema({
         type:String,
         required:[true,'Please add a Password']
     },
+    address:{
+        type:String,
+    },
+    mobile:{
+        type:String,
+    },
     age:{
         type:String,
     },
@@ -55,6 +61,9 @@ const userSchema = mongoose.Schema({
     weight_unit:{
         type:String,
     },
+    zip_code:{
+        type:String,
+    }
 },
     {
         timestamps:true

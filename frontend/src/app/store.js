@@ -16,4 +16,8 @@ export const store = configureStore({
     fetchAlluser:getallUsersSlice,
     allspecialties:getallSpecialties,
   },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });

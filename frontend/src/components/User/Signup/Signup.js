@@ -164,7 +164,7 @@ function Signup() {
                       </div>
                       <div className="d-grid mx-auto">
                         <button className="btn btn-primary" type="submit">
-                          Signup
+                        Continue
                         </button>
                       </div>
                       <div className="login-or">

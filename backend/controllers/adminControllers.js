@@ -42,7 +42,7 @@ const fetchUsers = asyncHandler(async (req, res) => {
 });
 
 // @desc  edit the users
-// @rout  PUT /api/admin//edit-user/:id
+// @rout  PUT /api/admin/edit-user/:id
 const editUser = asyncHandler(async (req, res) => {
   const userId = req.params.id;
 
@@ -99,7 +99,7 @@ const addDoctors = asyncHandler(async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  //Create a user
+  //Create a doctor
   const doctor = await Doctor.create({
     doctorID,
     name,

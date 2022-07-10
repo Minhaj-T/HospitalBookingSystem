@@ -1,6 +1,5 @@
 import '../Doctor/doctorLayout.css';
 import { Link } from 'react-router-dom';
-import mm from '../../images/myImage.jpg';
 import {
   FaColumns,
   FaComments,
@@ -10,29 +9,33 @@ import {
   FaMapMarkerAlt,
   FaBirthdayCake,
   FaBookmark,
-} from 'react-icons/fa';
+} from 'react-icons/fa'
+import Header from "../../components/User/Header/Header";
+import { useSelector } from 'react-redux';
 
 function UserLayout({children}) {
+  const { user } = useSelector((state) => state.auth);
   return (
     <>
+    <Header/>
       <div className="content">
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
-              <div className="profile-sidebar">
+              <div className="profile-sidebar mt-5">
                 <div className="widget-profile pro-widget-content">
                   <div className="profile-info-widget">
                     <Link to={''} className="booking-doc-img">
-                      <img src={mm} alt="User" />
+                      <img src={user.profile_image} alt="User" />
                     </Link>
                     <div className="profile-det-info">
-                      <h3>Richard Wilson</h3>
+                      <h3>{user.name}</h3>
                       <div className="patient-details">
                         <h5>
-                          <FaBirthdayCake /> 24 Jul 1983, 38 years
+                          <FaBirthdayCake /> {user.age} years old
                         </h5>
                         <h5 className="mb-0">
-                          <FaMapMarkerAlt /> Newyork, USA
+                          <FaMapMarkerAlt /> {user.city}, {user.state}
                         </h5>
                       </div>
                     </div>
@@ -101,7 +104,7 @@ function UserLayout({children}) {
                 </div>
               </div>
             </div>
-            <div className="col-md-7 col-lg-8 col-xl-9">
+            <div className="col-md-7 col-lg-8 col-xl-9 mt-5">
             {children}
             </div>
           </div>

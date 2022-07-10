@@ -36,7 +36,6 @@ function Login() {
       toast.error(message);
     }
     if (isSuccess && user) {
-      console.log("this useeffect",isSuccess,user);
       navigate("/");
     }
     dispatch(reset());

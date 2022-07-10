@@ -10,6 +10,8 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    address,
+    mobile,
     age,
     allergies,
     blood_group,
@@ -24,6 +26,7 @@ const registerUser = asyncHandler(async (req, res) => {
     state,
     weight,
     weight_unit,
+    zip_code
   } = req.body;
 
   if (!name || !email || !password) {
@@ -48,6 +51,8 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password: hashedPassword,
+    address,
+    mobile,
     age,
     allergies,
     blood_group,
@@ -62,6 +67,7 @@ const registerUser = asyncHandler(async (req, res) => {
     state,
     weight,
     weight_unit,
+    zip_code
   });
 
   if (user) {
@@ -70,6 +76,8 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       token: generateToken(user._id),
+      address:user.address,
+      mobile: user.mobile,
       age: user.age,
       allergies: user.allergies,
       blood_group: user.blood_group,
@@ -84,6 +92,7 @@ const registerUser = asyncHandler(async (req, res) => {
       state: user.state,
       weight: user.weight,
       weight_unit: user.weight,
+      zip_code:user.zip_code,
     });
   } else {
     res.status(400);
@@ -98,13 +107,29 @@ const loginUser = asyncHandler(async (req, res) => {
 
   //get for user email
   const user = await User.findOne({ email });
-  console.log('this is the find email user', user);
   if (user && (await bcrypt.compare(password, user.password))) {
     res.status(200).json({
       _id: user.id,
       name: user.name,
       email: user.email,
       token: generateToken(user._id),
+      address: user.address,
+      mobile: user.mobile,
+      age: user.age,
+      allergies: user.allergies,
+      blood_group: user.blood_group,
+      bp: user.bp,
+      city: user.city,
+      gender: user.gender,
+      glucose: user.glucose,
+      heart_rate: user.heart_rate,
+      height: user.height,
+      height_unit: user.height_unit,
+      profile_image: user.profile_image,
+      state: user.state,
+      weight: user.weight,
+      weight_unit: user.weight,
+      zip_code: user.zip_code,
     });
   } else {
     res.status(400);
@@ -112,11 +137,60 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc  get the data into User
-// @rout  POST /api/users/signup
-const getUser = asyncHandler(async (req, res) => {
-  res.status(200).json(req.user);
+// @desc  Edit User Details
+// @rout  PUT /api/edit-userDetails/:id
+const editUser = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  try {
+    const newUserData = {
+      name: req.body.name,
+      email: req.body.email,
+      mobile: req.body.mobile,
+      age: req.body.age,
+      address: req.body.address,
+      city: req.body.city,
+      state: req.body.state,
+      zip_code: req.body.zip_code,
+      profile_image:req.body.profile_image,
+    };
+    const user = await User.findByIdAndUpdate(userId, newUserData, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+    res.status(200).json({
+      _id: user.id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id),
+      address: user.address,
+      mobile: user.mobile,
+      age: user.age,
+      allergies: user.allergies,
+      blood_group: user.blood_group,
+      bp: user.bp,
+      city: user.city,
+      gender: user.gender,
+      glucose: user.glucose,
+      heart_rate: user.heart_rate,
+      height: user.height,
+      height_unit: user.height_unit,
+      profile_image: user.profile_image,
+      state: user.state,
+      weight: user.weight,
+      weight_unit: user.weight,
+      zip_code: user.zip_code,
+    });
+  } catch (error) {
+    res.status(400).json(error);
+  }
 });
+
+// // @desc  get the data into User
+// // @rout  POST /api/users/signup
+// const getUser = asyncHandler(async (req, res) => {
+//   res.status(200).json(req.user);
+// });
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -127,5 +201,5 @@ const generateToken = (id) => {
 module.exports = {
   registerUser,
   loginUser,
-  getUser,
+  editUser,
 };

@@ -15,8 +15,9 @@ function SignupPage4() {
   const [formData, setFormData] = useState({
     state: '',
     city: '',
+    zip_code: '',
   });
-  const { state, city } = formData;
+  const { state, city, zip_code } = formData;
 
   // get the data into the form
   const onChange = (e) => {
@@ -44,6 +45,7 @@ function SignupPage4() {
       ...form3,
       state,
       city,
+      zip_code,
     };
     dispatch(register(Data));
   };
@@ -85,7 +87,19 @@ function SignupPage4() {
                       </ul>
                     </div>
                     <form onSubmit={onSubmit}>
-                      <h3 className="my-4">Your Location</h3>
+                    <h3 className="my-4">Your Location</h3>
+                      <div className="form-group">
+                        <label>Zip Code</label>
+                        <input
+                          type="text"
+                          name="zip_code"
+                          value={zip_code}
+                          onChange={onChange}
+                          className="form-control"
+                          id="age"
+                        />
+                      </div>
+                      
                       <div className="form-group">
                         <label>Select City</label>
                         <select
@@ -118,12 +132,13 @@ function SignupPage4() {
                           <option value="Thamilnadu">Thamilnadu</option>
                         </select>
                       </div>
+
                       <div className="mt-5">
                         <button
                           type="submit"
                           className="btn btn-primary w-100 btn-lg login-btn step5_submit"
                         >
-                          finish
+                          Finish
                         </button>
                       </div>
                     </form>

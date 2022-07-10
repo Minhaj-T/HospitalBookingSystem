@@ -1,28 +1,108 @@
-import '../../Doctor/ProfileSettings/profilesettings.css'
-import mm from '../../../images/myImage.jpg';
+import '../../Doctor/ProfileSettings/profilesettings.css';
 import { FaUpload } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import {
+  reset,
+  editUser_Details,
+} from '../../../features/users/auth/authSlice';
+import Spinner from '../Spinner/Spinner';
+import { UploadImage } from '../../../utilities/cloudinaryImageUpload';
+
 function UserProfileSettings() {
+  const dispatch = useDispatch();
+  const [Pic, setPic] = useState(null);
+  const [Loading, setLoading] = useState(false);
+
+  // get the current state
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  const [formData, setFormData] = useState({
+    name: user.name || '',
+    mobile: user.mobile || '',
+    age: user.age || '',
+    email: user.email || '',
+    address: user.address || '',
+    city: user.city || '',
+    state: user.state || '',
+    zip_code: user.zip_code || '',
+  });
+  const { name, mobile, age, email, address, city, state, zip_code } = formData;
+
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  //dump the image into cloudinary ImageUpload
+  const postDetails = async (ProfilePicture) => {
+    try {
+      setLoading(true);
+      const data = await UploadImage(ProfilePicture);
+      setPic(data.secure_url.toString());
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, dispatch]);
+
+  // submit the data into server
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const userData = {
+      name,
+      mobile,
+      age,
+      email,
+      address,
+      city,
+      state,
+      zip_code,
+      profile_image: Pic ? Pic : user.profile_image,
+    };
+    dispatch(editUser_Details(userData));
+  };
+
+  // Loading page
+  if (Loading || isLoading) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <div className="card">
         <div className="card-body">
-          <form>
+          <form onSubmit={onSubmit}>
             <div className="row form-row">
               <div className="col-12 col-md-12">
                 <div className="form-group">
                   <div className="change-avatar">
                     <div className="profile-img">
-                      <img
-                        src={mm}
-                        alt="User"
-                      />
+                      <img src={Pic || user.profile_image} alt="User" />
                     </div>
                     <div className="upload-img">
                       <div className="change-photo-btn">
                         <span>
-                         <FaUpload/> Upload Photo
+                          <FaUpload /> Upload Photo
                         </span>
-                        <input type="file" className="upload" />
+                        <input
+                          type="file"
+                          class="upload"
+                          name="profile_image"
+                          onChange={(e) => postDetails(e.target.files[0])}
+                        />
                       </div>
                       <small className="form-text text-muted">
                         Allowed JPG, GIF or PNG. Max size of 2MB
@@ -33,50 +113,13 @@ function UserProfileSettings() {
               </div>
               <div className="col-12 col-md-6">
                 <div className="form-group">
-                  <label>First Name</label>
-                  <input type="text" className="form-control" value="Richard" />
-                </div>
-              </div>
-              <div className="col-12 col-md-6">
-                <div className="form-group">
-                  <label>Last Name</label>
-                  <input type="text" className="form-control" value="Wilson" />
-                </div>
-              </div>
-              <div className="col-12 col-md-6">
-                <div className="form-group">
-                  <label>Date of Birth</label>
-                  <div className="cal-icon">
-                    <input
-                      type="text"
-                      className="form-control datetimepicker"
-                      value="24-07-1983"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="col-12 col-md-6">
-                <div className="form-group">
-                  <label>Blood Group</label>
-                  <select className="form-control select">
-                    <option>A-</option>
-                    <option>A+</option>
-                    <option>B-</option>
-                    <option>B+</option>
-                    <option>AB-</option>
-                    <option>AB+</option>
-                    <option>O-</option>
-                    <option>O+</option>
-                  </select>
-                </div>
-              </div>
-              <div className="col-12 col-md-6">
-                <div className="form-group">
-                  <label>Email ID</label>
+                  <label>Name</label>
                   <input
-                    type="email"
+                    type="text"
                     className="form-control"
-                    value="richard@example.com"
+                    name="name"
+                    onChange={onChange}
+                    value={name}
                   />
                 </div>
               </div>
@@ -85,46 +128,84 @@ function UserProfileSettings() {
                   <label>Mobile</label>
                   <input
                     type="text"
-                    value="+1 202-555-0125"
                     className="form-control"
+                    name="mobile"
+                    onChange={onChange}
+                    value={mobile}
                   />
                 </div>
               </div>
-              <div className="col-12">
+              <div className="col-12 col-md-6">
+                <div className="form-group">
+                  <label>Age</label>
+                  <div className="cal-icon">
+                    <input
+                      type="text"
+                      className="form-control datetimepicker"
+                      name="age"
+                      onChange={onChange}
+                      value={age}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 col-md-6">
+                <div className="form-group">
+                  <label>Email ID</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    name="email"
+                    onChange={onChange}
+                    value={email}
+                  />
+                </div>
+              </div>
+              <div className="col-12 ">
                 <div className="form-group">
                   <label>Address</label>
-                  <input
+                  <textarea
                     type="text"
+                    name="address"
+                    onChange={onChange}
+                    value={address}
                     className="form-control"
-                    value="806 Twin Willow Lane"
                   />
                 </div>
               </div>
               <div className="col-12 col-md-6">
                 <div className="form-group">
                   <label>City</label>
-                  <input type="text" className="form-control" value="Old Forge" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="city"
+                    onChange={onChange}
+                    value={city}
+                  />
                 </div>
               </div>
               <div className="col-12 col-md-6">
                 <div className="form-group">
                   <label>State</label>
-                  <input type="text" className="form-control" value="Newyork" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="state"
+                    onChange={onChange}
+                    value={state}
+                  />
                 </div>
               </div>
               <div className="col-12 col-md-6">
                 <div className="form-group">
                   <label>Zip Code</label>
-                  <input type="text" className="form-control" value="13420" />
-                </div>
-              </div>
-              <div className="col-12 col-md-6">
-                <div className="form-group">
-                  <label>Country</label>
                   <input
                     type="text"
                     className="form-control"
-                    value="United States"
+                    name="zip_code"
+                    onChange={onChange}
+                    value={zip_code}
                   />
                 </div>
               </div>

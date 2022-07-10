@@ -67,7 +67,7 @@ function Header() {
               {user ? (
                  
                 <div className="dropdown">
-                <div className="profile"> <img className="dropbtn"  src="https://i.imgur.com/ywRonqz.jpg"/>
+                <div className="profile"> <img className="dropbtn"  src={user.profile_image}/>
                     <div className="dropdown-content">
                         <ul>
                             <Link to={"/user"}><FaUserInjured size={15} style={{ marginRight: '8px', }}/><span>Profiles</span></Link>

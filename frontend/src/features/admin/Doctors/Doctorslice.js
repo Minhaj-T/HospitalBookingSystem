@@ -111,5 +111,5 @@ const getAllDoctors = createSlice({
   },
 });
 
-export const { reset, removeItem } = getAllDoctors.actions;
+export const { reset} = getAllDoctors.actions;
 export default getAllDoctors.reducer;

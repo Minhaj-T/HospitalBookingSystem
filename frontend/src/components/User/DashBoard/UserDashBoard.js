@@ -1,14 +1,86 @@
 import './userdashboard.css';
 import mm from '../../../images/myImage.jpg';
-import {
-  FaPrint,
-  FaEye
-} from 'react-icons/fa';
-import { Link } from "react-router-dom";
+import { FaPrint, FaEye } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import heart_rate from '../../../images/pt-dashboard-01.png'
+import body_temp from '../../../images/pt-dashboard-02.png'
+import glucose_level from '../../../images/pt-dashboard-03.png'
+import blood_pressure from '../../../images/pt-dashboard-04.png'
+import { useSelector } from 'react-redux';
+
 
 function UserDashBoard() {
+  const { user } = useSelector((state) => state.auth);
   return (
     <>
+      <div className="row">
+        <div className="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
+          <div className="card">
+            <div className="card-body text-center">
+              <div className="mb-3">
+                <img
+                  src={heart_rate} 
+                  alt=""
+                  width="55"
+                />
+              </div>
+              <h5>Heart Rate</h5>
+              <h6>
+                {user.heart_rate}
+              </h6>
+            </div>
+          </div>
+        </div>
+        <div className="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
+          <div className="card">
+            <div className="card-body text-center">
+              <div className="mb-3">
+                <img
+                  src={body_temp}
+                  alt=""
+                  width="55"
+                />
+              </div>
+              <h5>Body Temperature</h5>
+              <h6>
+                18 C
+              </h6>
+            </div>
+          </div>
+        </div>
+        <div className="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
+          <div className="card">
+            <div className="card-body text-center">
+              <div className="mb-3">
+                <img
+                  src={glucose_level}
+                  alt=""
+                  width="55"
+                />
+              </div>
+              <h5>Glucose Level</h5>
+              <h6>{user.glucose}</h6>
+            </div>
+          </div>
+        </div>
+        <div className="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
+          <div className="card">
+            <div className="card-body text-center">
+              <div className="mb-3">
+                <img
+                  src={blood_pressure}
+                  alt=""
+                  width="55"
+                />
+              </div>
+              <h5>Blood Pressure</h5>
+              <h6>
+                {user.bp}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="card">
         <div className="card-body pt-0">
           {/* Tab Menu  */}
@@ -16,7 +88,7 @@ function UserDashBoard() {
             <ul className="nav nav-tabs nav-tabs-bottom nav-justified">
               <li className="nav-item">
                 <Link
-                  to={"#pat_appointments"}
+                  to={'#pat_appointments'}
                   className="nav-link active"
                   data-bs-toggle="tab"
                 >
@@ -24,13 +96,17 @@ function UserDashBoard() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to={"#pat_prescriptions"} className="nav-link" data-bs-toggle="tab">
+                <Link
+                  to={'#pat_prescriptions'}
+                  className="nav-link"
+                  data-bs-toggle="tab"
+                >
                   Prescriptions
                 </Link>
               </li>
               <li className="nav-item">
                 <Link
-                  to={"#pat_medical_records"}
+                  to={'#pat_medical_records'}
                   className="nav-link"
                   data-bs-toggle="tab"
                 >
@@ -38,7 +114,11 @@ function UserDashBoard() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to={"#pat_billing"} className="nav-link" data-bs-toggle="tab">
+                <Link
+                  to={'#pat_billing'}
+                  className="nav-link"
+                  data-bs-toggle="tab"
+                >
                   Billing
                 </Link>
               </li>
@@ -68,17 +148,14 @@ function UserDashBoard() {
                         <tr>
                           <td>
                             <h2 className="table-avatar">
-                              <Link
-                                to={""}
-                                className="avatar avatar-sm mr-2"
-                              >
+                              <Link to={''} className="avatar avatar-sm mr-2">
                                 <img
                                   className="avatar-img rounded-circle"
                                   src={mm}
                                   alt="User"
                                 />
                               </Link>
-                              <Link to={""}>
+                              <Link to={''}>
                                 Dr. Olga Barlow <span>Dental</span>
                               </Link>
                             </h2>
@@ -97,16 +174,16 @@ function UserDashBoard() {
                           <td className="text-right">
                             <div className="table-action">
                               <Link
-                                to={""}
+                                to={''}
                                 className="btn btn-sm bg-primary-light"
                               >
-                                <FaPrint/> Print
+                                <FaPrint /> Print
                               </Link>
                               <Link
-                                to={""}
+                                to={''}
                                 className="btn btn-sm bg-info-light"
                               >
-                                <FaEye/> View
+                                <FaEye /> View
                               </Link>
                             </div>
                           </td>
@@ -139,17 +216,14 @@ function UserDashBoard() {
                           <td>Prescription 10</td>
                           <td>
                             <h2 className="table-avatar">
-                              <Link
-                                to={""}
-                                className="avatar avatar-sm mr-2"
-                              >
+                              <Link to={''} className="avatar avatar-sm mr-2">
                                 <img
                                   className="avatar-img rounded-circle"
                                   src={mm}
                                   alt="User"
                                 />
                               </Link>
-                              <Link to={""}>
+                              <Link to={''}>
                                 Dr. Olga Barlow <span>Dental</span>
                               </Link>
                             </h2>
@@ -157,22 +231,22 @@ function UserDashBoard() {
                           <td className="text-right">
                             <div className="table-action">
                               <Link
-                                to={""}
+                                to={''}
                                 className="btn btn-sm bg-primary-light"
                               >
-                                <FaPrint/> Print
+                                <FaPrint /> Print
                               </Link>
                               <Link
-                                to={""}
+                                to={''}
                                 className="btn btn-sm bg-info-light"
                               >
-                                <FaEye/> View
+                                <FaEye /> View
                               </Link>
                             </div>
                           </td>
                         </tr>
                       </tbody>
-                    </table> 
+                    </table>
                   </div>
                 </div>
               </div>
@@ -198,26 +272,23 @@ function UserDashBoard() {
                       <tbody>
                         <tr>
                           <td>
-                            <Link to={""} >#MR-0002</Link>
+                            <Link to={''}>#MR-0002</Link>
                           </td>
                           <td>6 Nov 2019</td>
                           <td>Dental Removing</td>
                           <td>
-                            <Link to={""}>dental-test.pdf</Link>
+                            <Link to={''}>dental-test.pdf</Link>
                           </td>
                           <td>
                             <h2 className="table-avatar">
-                              <Link
-                                to={""}
-                                className="avatar avatar-sm mr-2"
-                              >
+                              <Link to={''} className="avatar avatar-sm mr-2">
                                 <img
                                   className="avatar-img rounded-circle"
                                   src={mm}
                                   alt="User"
                                 />
                               </Link>
-                              <Link to={""}>
+                              <Link to={''}>
                                 Dr. John Gibbs <span>Dental</span>
                               </Link>
                             </h2>
@@ -225,16 +296,16 @@ function UserDashBoard() {
                           <td className="text-right">
                             <div className="table-action">
                               <Link
-                                to={""}
+                                to={''}
                                 className="btn btn-sm bg-info-light"
                               >
-                                <FaEye/> View
+                                <FaEye /> View
                               </Link>
                               <Link
-                                to={""}
+                                to={''}
                                 className="btn btn-sm bg-primary-light"
                               >
-                                <FaPrint/> Print
+                                <FaPrint /> Print
                               </Link>
                             </div>
                           </td>
@@ -265,21 +336,18 @@ function UserDashBoard() {
                       <tbody>
                         <tr>
                           <td>
-                            <Link to={""}>#INV-0001</Link>
+                            <Link to={''}>#INV-0001</Link>
                           </td>
                           <td>
                             <h2 className="table-avatar">
-                              <Link
-                                to={""}
-                                className="avatar avatar-sm mr-2"
-                              >
+                              <Link to={''} className="avatar avatar-sm mr-2">
                                 <img
                                   className="avatar-img rounded-circle"
                                   src={mm}
                                   alt="User"
                                 />
                               </Link>
-                              <Link to={""}>
+                              <Link to={''}>
                                 Dr. Olga Barlow <span>#0010</span>
                               </Link>
                             </h2>
@@ -289,16 +357,16 @@ function UserDashBoard() {
                           <td className="text-right">
                             <div className="table-action">
                               <Link
-                                to={""}
+                                to={''}
                                 className="btn btn-sm bg-info-light"
                               >
-                                <FaEye/> View
+                                <FaEye /> View
                               </Link>
                               <Link
-                                to={""}
+                                to={''}
                                 className="btn btn-sm bg-primary-light"
                               >
-                                <FaPrint/> Print
+                                <FaPrint /> Print
                               </Link>
                             </div>
                           </td>
