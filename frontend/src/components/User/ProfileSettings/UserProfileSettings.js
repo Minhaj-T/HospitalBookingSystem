@@ -99,7 +99,7 @@ function UserProfileSettings() {
                         </span>
                         <input
                           type="file"
-                          class="upload"
+                          className="upload"
                           name="profile_image"
                           onChange={(e) => postDetails(e.target.files[0])}
                         />

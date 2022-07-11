@@ -26,7 +26,7 @@ const registerUser = asyncHandler(async (req, res) => {
     state,
     weight,
     weight_unit,
-    zip_code
+    zip_code,
   } = req.body;
 
   if (!name || !email || !password) {
@@ -67,7 +67,7 @@ const registerUser = asyncHandler(async (req, res) => {
     state,
     weight,
     weight_unit,
-    zip_code
+    zip_code,
   });
 
   if (user) {
@@ -76,7 +76,7 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       token: generateToken(user._id),
-      address:user.address,
+      address: user.address,
       mobile: user.mobile,
       age: user.age,
       allergies: user.allergies,
@@ -92,7 +92,7 @@ const registerUser = asyncHandler(async (req, res) => {
       state: user.state,
       weight: user.weight,
       weight_unit: user.weight,
-      zip_code:user.zip_code,
+      zip_code: user.zip_code,
     });
   } else {
     res.status(400);
@@ -151,7 +151,7 @@ const editUser = asyncHandler(async (req, res) => {
       city: req.body.city,
       state: req.body.state,
       zip_code: req.body.zip_code,
-      profile_image:req.body.profile_image,
+      profile_image: req.body.profile_image,
     };
     const user = await User.findByIdAndUpdate(userId, newUserData, {
       new: true,
@@ -186,11 +186,34 @@ const editUser = asyncHandler(async (req, res) => {
   }
 });
 
-// // @desc  get the data into User
-// // @rout  POST /api/users/signup
-// const getUser = asyncHandler(async (req, res) => {
-//   res.status(200).json(req.user);
-// });
+// @desc  change the user password
+// @rout  POST /api/users/edit-password
+const editUserPassword = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  
+  const { oldPassword, NewPassword } = req.body;
+  const user = await User.findById(userId);
+  
+  if (!user) throw new Error('invalid the user data');
+
+  const Password = await bcrypt.compare(oldPassword, user.password);
+ 
+
+  if (!Password) throw new Error('invalid Your Current  password');
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(NewPassword, salt);
+  const newUserData = {
+    password: hashedPassword,
+  };
+
+  const  Data= await User.findByIdAndUpdate(userId, newUserData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+  res.status(200).json({Data})
+});
+
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -202,4 +225,5 @@ module.exports = {
   registerUser,
   loginUser,
   editUser,
+  editUserPassword
 };
