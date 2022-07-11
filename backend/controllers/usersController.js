@@ -190,30 +190,30 @@ const editUser = asyncHandler(async (req, res) => {
 // @rout  POST /api/users/edit-password
 const editUserPassword = asyncHandler(async (req, res) => {
   const userId = req.user._id;
-  
+
   const { oldPassword, NewPassword } = req.body;
+
   const user = await User.findById(userId);
-  
+
   if (!user) throw new Error('invalid the user data');
 
   const Password = await bcrypt.compare(oldPassword, user.password);
- 
 
   if (!Password) throw new Error('invalid Your Current  password');
+
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(NewPassword, salt);
   const newUserData = {
     password: hashedPassword,
   };
 
-  const  Data= await User.findByIdAndUpdate(userId, newUserData, {
+  const Data = await User.findByIdAndUpdate(userId, newUserData, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
   });
-  res.status(200).json({Data})
+  res.status(200).json({ Data });
 });
-
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -225,5 +225,5 @@ module.exports = {
   registerUser,
   loginUser,
   editUser,
-  editUserPassword
+  editUserPassword,
 };

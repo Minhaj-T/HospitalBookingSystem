@@ -12,7 +12,6 @@ const register = async (userData) => {
 // Login user
 const login = async (userData) => {
   const { data } = await api.login(userData);
-
   if (data) {
     localStorage.setItem('user', JSON.stringify(data));
   }
@@ -36,11 +35,23 @@ const editUser = async (token, userData) => {
   return data;
 };
 
+// Edit password
+const editPassword = async(token,Data) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const { data } = await api.editUserPassword(Data, config);
+  return data;
+}
+
 const authService = {
   register,
   logout,
   login,
   editUser,
+  editPassword,
 };
 
 export default authService;

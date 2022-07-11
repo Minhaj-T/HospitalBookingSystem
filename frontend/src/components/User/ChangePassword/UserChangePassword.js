@@ -1,19 +1,72 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { changePass } from '../../../validations/formValidator';
+import classname from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import {editUser_Password, reset, logout} from '../../../features/users/auth/authSlice';
+import Spinner from '../Spinner/Spinner';
 
 function UserChangePassword() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
   const [FormData, setFormData] = useState({
     old_password: '',
-    new_password1: '',
-    new_password2: '',
+    password: '',
+    password2: '',
   });
-  const {oldPassword, new_password1, new_password2} =FormData;
-  console.log(FormData);
+  const { old_password, password, password2 } = FormData;
+
+  const [registerErrors, setRegisterError] = useState({
+    old_password: '',
+    password: '',
+    password2: '',
+  });
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess) {
+      dispatch(logout());
+      navigate('/login');
+    }
+    dispatch(reset());
+  }, [isError, isSuccess, message, navigate, dispatch]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value
-    }))
+      [e.target.name]: e.target.value,
+    }));
+    setRegisterError((prevState) => ({
+      ...prevState,
+      [e.target.name]: '',
+    }));
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    if (changePass(FormData, setRegisterError)) {
+      if (password !== password2) {
+        toast.error('new password and confirm password must match');
+      } else {
+        const data = {
+          oldPassword: old_password,
+          NewPassword: password,
+        };
+        dispatch(editUser_Password(data));
+      }
+    }
+  };
+
+  // Loading page
+  if (isLoading) {
+    return <Spinner />;
   }
 
   return (
@@ -23,36 +76,57 @@ function UserChangePassword() {
           <div className="row">
             <div className="col-md-12 col-lg-6">
               {/* Change Password Form  */}
-              <form>
+              <form onSubmit={onSubmit}>
                 <div className="form-group">
                   <label>Old Password</label>
                   <input
                     type="password"
                     name="old_password"
                     onChange={onChange}
-                    value={oldPassword}
-                    className="form-control"
+                    value={old_password}
+                    className={classname('form-control', {
+                      'is-invalid': registerErrors.old_password,
+                    })}
                   />
+                  {registerErrors.old_password && (
+                    <div className="invalid-feedback">
+                      {registerErrors.old_password}
+                    </div>
+                  )}
                 </div>
                 <div className="form-group">
                   <label>New Password</label>
                   <input
-                  onChange={onChange}
-                  value={new_password1}
+                    onChange={onChange}
+                    value={password}
                     type="password"
-                    name="new_password1"
-                    className="form-control"
+                    name="password"
+                    className={classname('form-control', {
+                      'is-invalid': registerErrors.password,
+                    })}
                   />
+                  {registerErrors.password && (
+                    <div className="invalid-feedback">
+                      {registerErrors.password}
+                    </div>
+                  )}
                 </div>
                 <div className="form-group">
                   <label>Confirm Password</label>
                   <input
-                  onChange={onChange}
-                  values={new_password2}
+                    onChange={onChange}
+                    values={password2}
                     type="password"
-                    name="new_password2"
-                    className="form-control"
+                    name="password2"
+                    className={classname('form-control', {
+                      'is-invalid': registerErrors.password2,
+                    })}
                   />
+                  {registerErrors.password2 && (
+                    <div className="invalid-feedback">
+                      {registerErrors.password2}
+                    </div>
+                  )}
                 </div>
                 <div className="submit-section">
                   <button type="submit" className="btn btn-primary submit-btn">

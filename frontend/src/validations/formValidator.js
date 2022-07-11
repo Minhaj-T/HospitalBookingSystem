@@ -8,31 +8,31 @@ export const isRegisterValid = (fields, setRegisterError) => {
   if (!pattern.test(email)) {
     setRegisterError((prevState) => ({
       ...prevState,
-      email: "Email not valid",
+      email: 'Email not valid',
     }));
     isValid = false;
   }
 
-  if (name === "" || name[0] === " ") {
+  if (name === '' || name[0] === ' ') {
     setRegisterError((prevState) => ({
       ...prevState,
-      name: "Please check this field",
+      name: 'Please check this field',
     }));
     isValid = false;
   }
 
-  if (password.length < 6 || password === "" || password.includes(" ")) {
+  if (password.length < 6 || password === '' || password.includes(' ')) {
     setRegisterError((prevState) => ({
       ...prevState,
-      password: "Invalid password (Note: atleast 6 characters)",
+      password: 'Invalid password (Note: atleast 6 characters)',
     }));
     isValid = false;
   }
 
-  if (password2.length < 6 || password2 === "" || password2.includes(" ")) {
+  if (password2.length < 6 || password2 === '' || password2.includes(' ')) {
     setRegisterError((prevState) => ({
       ...prevState,
-      password2: "Invalid password (Note: atleast 6 characters)",
+      password2: 'Invalid password (Note: atleast 6 characters)',
     }));
     isValid = false;
   }
@@ -48,21 +48,57 @@ export const isRegisterValid = (fields, setRegisterError) => {
 export const isLoginValid = (fields, setLoginError) => {
   const { email, password } = fields;
   let isValid = true;
-  
+
   let pattern =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (!pattern.test(email)) {
     setLoginError((prevState) => ({
       ...prevState,
-      email: "Email not valid",
+      email: 'Email not valid',
     }));
     isValid = false;
   }
 
-  if (password === "" || password.includes(" ")) {
+  if (password === '' || password.includes(' ')) {
     setLoginError((prevState) => ({
       ...prevState,
-      password: "Please check this field",
+      password: 'Please check this field',
+    }));
+    isValid = false;
+  }
+
+  if (!isValid) {
+    return false;
+  }
+
+  return true;
+};
+
+// login form validation
+export const changePass = (fields, setLoginError) => {
+  const { old_password, password, password2 } = fields;
+  let isValid = true;
+
+  if (old_password === '' || old_password.includes(' ')) {
+    setLoginError((prevState) => ({
+      ...prevState,
+      old_password: 'Please check this field',
+    }));
+    isValid = false;
+  }
+
+  if (password.length < 6 || password === '' || password.includes(' ')) {
+    setLoginError((prevState) => ({
+      ...prevState,
+      password: 'Invalid password (Note: atleast 6 characters)',
+    }));
+    isValid = false;
+  }
+
+  if (password2.length < 6 || password2 === '' || password2.includes(' ')) {
+    setLoginError((prevState) => ({
+      ...prevState,
+      password2: 'Invalid password (Note: atleast 6 characters)',
     }));
     isValid = false;
   }

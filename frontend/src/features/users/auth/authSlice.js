@@ -51,6 +51,19 @@ export const editUser_Details = createAsyncThunk(
   }
 );
 
+// editUser_Password
+export const editUser_Password = createAsyncThunk(
+  'auth/userPassword',
+  async (Data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await authService.editPassword(token, Data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(errorHandler(error));
+    }
+  }
+);
+
 // Logout the user
 export const logout = createAsyncThunk('auth/logout', async () => {
   await authService.logout();
@@ -118,6 +131,18 @@ const authSlice = createSlice({
       state.isError = true;
       state.message = action.payload;
       state.user = null;
+    },
+    [editUser_Password.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [editUser_Password.fulfilled]: (state) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+    },
+    [editUser_Password.rejected]: (state, action) => {
+      state.message = action.payload;
+      state.isLoading = false;
+      state.isError = true;
     },
     [logout.fulfilled]: (state) => {
       state.user = null;
