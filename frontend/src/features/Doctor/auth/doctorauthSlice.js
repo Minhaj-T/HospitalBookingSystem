@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import * as api from '../../../api/doctors';
 import { errorHandler } from '../../../utilities/errorMessege';
+import doctorService from './doctorService';
 
 // Get doctor from localStorage
 const doctor = JSON.parse(localStorage.getItem('doctorinfo'));
@@ -13,20 +13,31 @@ const initialState = {
   message: '',
 };
 
+//Doctors login
 export const login = createAsyncThunk(
   'auth/doctorlogin',
   async (doctorData, thunkAPI) => {
     try {
-      const { data } = await api.loginDoctor(doctorData);
-      if (data) {
-        localStorage.setItem('doctorinfo', JSON.stringify(data));
-      }
-      return data;
+      return await doctorService.login(doctorData);
     } catch (error) {
       return thunkAPI.rejectWithValue(errorHandler(error));
     }
   }
 );
+
+//Edit-doctors-details
+export const editDoctor_Details = createAsyncThunk(
+  'auth/editdoctor_details',
+  async(Data,thunkAPI)=>{
+  try {
+    const token = thunkAPI.getState().doctorAuth.doctor.token;
+    return await doctorService.EditDoctor(Data,token)
+  } catch (error) {
+    return thunkAPI.rejectWithValue(errorHandler(error));
+    
+  }}
+);
+
 
 const doctorAuth = createSlice({
   name: 'doctorAuth',
@@ -44,12 +55,25 @@ const doctorAuth = createSlice({
         state.isLoading = true;
       },
       [login.fulfilled]: (state, action) => {
-        console.log("This is the fetche data from server", action);
         state.isLoading = false;
         state.isSuccess = true;
         state.doctor = action.payload;
       },
       [login.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.doctor = null;
+      },
+      [editDoctor_Details.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [editDoctor_Details.fulfilled]: (state, action) => {
+        state.doctor = action.payload;
+        state.isLoading = false;
+        state.isSuccess = true;
+      },
+      [editDoctor_Details.rejected]: (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

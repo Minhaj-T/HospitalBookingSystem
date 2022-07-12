@@ -2231,3 +2231,13 @@ button.bg-danger:hover {
 		margin-bottom: 10px;
 	}
 }
+.form-select {
+    border-color: #dcdcdc;
+    color: #333;
+	font-size: 15px;
+    min-height: 46px;
+	padding: 6px 15px;
+}
+.form-group {
+	margin-bottom: 1.25rem;
+}

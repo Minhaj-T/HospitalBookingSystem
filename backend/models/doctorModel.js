@@ -29,6 +29,63 @@ const doctorSchema = mongoose.Schema({
         type:String,
         required:[true,'Please add Doctors specialization ']
     },
+    profile_image:{
+        type:String,
+    },
+    lastname:{
+        type:String,
+    },
+    address1:{
+        type:String,
+    },
+    address2:{
+        type:String,
+    },
+    phone:{
+        type:String,
+    },
+    gender:{
+        type:String,
+    },
+    age:{
+        type:String,
+    },
+    biography:{
+        type:String,
+    },
+    city:{
+        type:String,
+    },
+    state:{
+        type:String,
+    },
+    country:{
+        type:String,
+    },
+    postalCode:{
+        type:String,
+    },
+    degree:{
+        type:String,
+    },
+    college:{
+        type:String,
+    },
+    completion:{
+        type:String,
+    },
+    hospitalname:{
+        type:String,
+    },
+    from:{
+        type:String,
+    },
+    to:{
+        type:String,
+    },
+    designation:{
+        type:String,
+    },
 },
     {
         timestamps:true
