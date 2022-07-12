@@ -133,7 +133,7 @@ function ProfileSettings() {
               <div className="form-group">
                 <div className="change-avatar">
                   <div className="profile-img">
-                    <img src={Pic || doctor.profile_image} alt="User Image" />
+                    <img src={Pic || doctor.profile_image} alt="User" />
                   </div>
                   <div className="upload-img">
                     <div className="change-photo-btn">
