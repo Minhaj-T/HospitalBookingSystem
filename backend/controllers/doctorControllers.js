@@ -98,6 +98,35 @@ const editDoctorDetails = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc  change the doctor password
+// @rout  POST /api/doctor/edit-password
+const editDoctorPassword = asyncHandler(async (req, res) => {
+  const doctorId = req.doctor.id;
+
+  const { oldPassword, NewPassword } = req.body;
+
+  const doctor = await Doctor.findById(doctorId);
+
+  if (!doctor) throw new Error('invalid the doctor data');
+
+  const Password = await bcrypt.compare(oldPassword, doctor.password);
+
+  if (!Password) throw new Error('invalid Your Current  password');
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(NewPassword, salt);
+  const DoctorData = {
+    password: hashedPassword,
+  };
+
+  const Data = await Doctor.findByIdAndUpdate(doctorId, DoctorData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+  res.status(200).json({ Data });
+});
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '10d',
@@ -107,4 +136,5 @@ const generateToken = (id) => {
 module.exports = {
   loginDoctor,
   editDoctorDetails,
+  editDoctorPassword,
 };

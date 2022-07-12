@@ -38,6 +38,19 @@ export const editDoctor_Details = createAsyncThunk(
   }}
 );
 
+// editDoctor_Password
+export const editDoctor_Password = createAsyncThunk(
+  'auth/EditDoctor_Password',
+  async (Data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().doctorAuth.doctor.token;
+      return await doctorService.editPassword(token, Data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(errorHandler(error));
+    }
+  }
+);
+
 
 const doctorAuth = createSlice({
   name: 'doctorAuth',
@@ -78,6 +91,18 @@ const doctorAuth = createSlice({
         state.isError = true;
         state.message = action.payload;
         state.doctor = null;
+      },
+      [editDoctor_Password.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [editDoctor_Password.fulfilled]: (state) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      },
+      [editDoctor_Password.rejected]: (state, action) => {
+        state.message = action.payload;
+        state.isLoading = false;
+        state.isError = true;
       },
   },
 });
