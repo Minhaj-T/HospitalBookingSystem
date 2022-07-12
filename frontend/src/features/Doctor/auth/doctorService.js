@@ -34,8 +34,12 @@ const editPassword = async(token,Data) => {
   return data;
 }
 
+// Logout doctor
+const logout = () => [localStorage.removeItem('doctorinfo')];
+
 const doctorService = {
   login,
+  logout,
   EditDoctor,
   editPassword
 };

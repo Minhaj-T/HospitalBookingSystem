@@ -1,6 +1,7 @@
 import './doctorLayout.css';
-import { Link, } from 'react-router-dom';
-import mm from '../../images/myImage.jpg'
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout, reset } from '../../features/Doctor/auth/doctorauthSlice';
 import {
   FaColumns,
   FaCalendarCheck,
@@ -12,8 +13,26 @@ import {
   FaLock,
   FaSignOutAlt,
 } from 'react-icons/fa';
+import { useEffect } from 'react';
 
-function DoctorLayout({children}) {
+function DoctorLayout({ children }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { doctor } = useSelector((state) => state.doctorAuth);
+
+  const logOut = () => {
+    dispatch(logout());
+    dispatch(reset());
+    navigate('/doctor');
+  };
+
+  useEffect(() => {
+    if (doctor?.token) {
+      navigate("/doctor/");
+    }
+  }, [doctor]);
+  
+
   return (
     <>
       <div className="content">
@@ -23,16 +42,14 @@ function DoctorLayout({children}) {
               <div className="profile-sidebar">
                 <div className="widget-profile pro-widget-content">
                   <div className="profile-info-widget">
-                    <Link to={""} className="booking-doc-img">
-											<img src={mm} alt="User"/>
-										</Link>
+                    <Link to={''} className="booking-doc-img">
+                      <img src={doctor.profile_image} alt="User" />
+                    </Link>
                     <div className="profile-det-info">
-                      <h3>Dr. Darren Elder</h3>
+                      <h3>{doctor.name}</h3>
 
                       <div className="patient-details">
-                        <h5 className="mb-0">
-                          BDS, MDS - Oral & Maxillofacial Surgery
-                        </h5>
+                        <h5 className="mb-0">{doctor.specialization}</h5>
                       </div>
                     </div>
                   </div>
@@ -41,7 +58,7 @@ function DoctorLayout({children}) {
                   <nav className="dashboard-menu">
                     <ul>
                       <li className="main active">
-                        <Link to={"/doctor"}>
+                        <Link to={'/doctor'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaColumns />
@@ -50,7 +67,7 @@ function DoctorLayout({children}) {
                         </Link>
                       </li>
                       <li className="main">
-                        <Link to={"/doctor/appointments"}>
+                        <Link to={'/doctor/appointments'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaCalendarCheck />
@@ -59,7 +76,7 @@ function DoctorLayout({children}) {
                         </Link>
                       </li>
                       <li className="main">
-                        <Link to={"/doctor/my-patients"}>
+                        <Link to={'/doctor/my-patients'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaUserInjured />
@@ -68,7 +85,7 @@ function DoctorLayout({children}) {
                         </Link>
                       </li>
                       <li className="main">
-                        <Link to={"/doctor/schedule-timing"}>
+                        <Link to={'/doctor/schedule-timing'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaHourglassStart />
@@ -77,7 +94,7 @@ function DoctorLayout({children}) {
                         </Link>
                       </li>
                       <li className="main">
-                        <Link to={""}>
+                        <Link to={''}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaFileInvoice />
@@ -96,7 +113,7 @@ function DoctorLayout({children}) {
                         </Link>
                       </li>
                       <li className="main">
-                        <Link to={"/doctor/profile-settings"}>
+                        <Link to={'/doctor/profile-settings'}>
                           <span className="fas" style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaUserCog />
@@ -105,7 +122,7 @@ function DoctorLayout({children}) {
                         </Link>
                       </li>
                       <li className="main">
-                        <Link to={"/doctor/change-password"}>
+                        <Link to={'/doctor/change-password'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaLock />
@@ -114,7 +131,7 @@ function DoctorLayout({children}) {
                         </Link>
                       </li>
                       <li className="main">
-                        <Link to={""}>
+                        <Link onClick={logOut} to={''}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaSignOutAlt />
@@ -127,10 +144,7 @@ function DoctorLayout({children}) {
                 </div>
               </div>
             </div>
-            <div className="col-md-7 col-lg-8 col-xl-9">
-              {children}
-
-            </div>
+            <div className="col-md-7 col-lg-8 col-xl-9">{children}</div>
           </div>
         </div>
       </div>

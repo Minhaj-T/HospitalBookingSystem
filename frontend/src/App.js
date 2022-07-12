@@ -74,7 +74,7 @@ function App() {
             <Route exact path="/user">
             <Route path="" element={ user 
               ? <UserLayout children={<UserDashBoard/>}/> 
-              : <Login/> }/>
+              : <Login /> }/>
             <Route path="user-edit" element={ user 
               ? <UserLayout children={<UserProfileSettings/>}/> 
               : <Login/> }/>
@@ -108,7 +108,7 @@ function App() {
             <Route exact path="/doctor">
             <Route path="" element={ doctor 
               ? <DoctorLayout children={<DoctorDashboard/>}/> 
-              : <DoctorLogin/> }/>
+              : <DoctorLogin /> }/>
               <Route path="appointments" element={ doctor 
               ? <DoctorLayout children={<Appointments/>}/> 
               : <DoctorLogin/> }/>

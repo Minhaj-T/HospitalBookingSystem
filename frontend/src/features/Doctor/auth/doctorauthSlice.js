@@ -51,6 +51,11 @@ export const editDoctor_Password = createAsyncThunk(
   }
 );
 
+// Logout the Doctor
+export const logout = createAsyncThunk('auth/logout_Doctor', async () => {
+  await doctorService.logout();
+});
+
 
 const doctorAuth = createSlice({
   name: 'doctorAuth',
@@ -103,6 +108,10 @@ const doctorAuth = createSlice({
         state.message = action.payload;
         state.isLoading = false;
         state.isError = true;
+      },
+      [logout.fulfilled]: (state) => {
+        state.doctor = null;
+        state.isSuccess = false;
       },
   },
 });

@@ -18,8 +18,7 @@ const login = async (userData) => {
   return data;
 };
 
-// Logout user
-const logout = () => [localStorage.removeItem('user')];
+
 
 // Edituser
 const editUser = async (token, userData) => {
@@ -45,6 +44,9 @@ const editPassword = async(token,Data) => {
   const { data } = await api.editUserPassword(Data, config);
   return data;
 }
+
+// Logout user
+const logout = () => [localStorage.removeItem('user')];
 
 const authService = {
   register,

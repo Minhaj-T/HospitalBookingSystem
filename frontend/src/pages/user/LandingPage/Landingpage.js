@@ -12,10 +12,10 @@ function Landingpage() {
     console.log("this is the users",user);
 
   useEffect(() => {
-    if (user) {
+    if (user?.token) {
       navigate("/");
     }
-  }, [navigate,user]);
+  }, [user]);
 
 
   return (
