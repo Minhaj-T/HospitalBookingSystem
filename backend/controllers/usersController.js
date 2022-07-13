@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
-
+const Doctor = require('../models/doctorModel');
 // @desc  Register New User
 // @rout  POST /api/users/signup
 const registerUser = asyncHandler(async (req, res) => {
@@ -215,6 +215,32 @@ const editUserPassword = asyncHandler(async (req, res) => {
   res.status(200).json({ Data });
 });
 
+// @desc  get Doctors
+// @rout  GET /api/users/fetch-allDoctors
+const fetchAllDoctors = asyncHandler(async (req, res) => {
+  const { skip, limit } = req.query;
+  const doctor = await Doctor.find({}).limit(limit);
+  if (doctor) {
+    res.status(200).json({
+      doctor,
+    });
+  } else {
+    res.status(400);
+    throw new Error('some error occurred...');
+  }
+});
+
+// @desc  get a Doctor using id
+// @rout  GET /api/users/get-doctor/:id
+const getDoctor = asyncHandler(async (req, res) => {
+  const { id } = req.query;
+  const data = await Doctor.findById(id);
+  if (!data) throw new Error(`Couldn't find ${id}`);
+  res.status(200).json({
+    data,
+  });
+});
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '10d',
@@ -226,4 +252,6 @@ module.exports = {
   loginUser,
   editUser,
   editUserPassword,
+  fetchAllDoctors,
+  getDoctor,
 };

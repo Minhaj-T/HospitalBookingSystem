@@ -1,7 +1,8 @@
 import './doctorprofile.css';
 import '../Doctorsearch/doctorsearch.css';
+import * as api from '../../../api/index'
 import mm from '../../../images/myImage.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
   FaMapMarkerAlt,
   FaMoneyBillAlt,
@@ -10,8 +11,37 @@ import {
   FaCommentAlt,
   FaPhone,
 } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import Spinner from '../Spinner/Spinner';
 
 function DoctorProfile() {
+  const { id } = useParams();
+  
+  const [Doctor, setDoctor] = useState({ loading: false, done: false });
+ 
+
+  useEffect(() => {
+    !Doctor.done && getDoctor(id);
+  }, []);
+
+  const getDoctor = async (id) => {
+    setDoctor((prev) => ({ ...prev, loading: true }));
+    let {data} = await api.getDoctor(id)
+    
+    if (data?.data) {
+      setDoctor((prev) => ({
+        ...prev,
+        ...data?.data,
+        loading: false,
+        done: true,
+      }));
+    }
+  };
+  // Loading page
+  if (Doctor.loading) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <div className="content">
@@ -21,14 +51,14 @@ function DoctorProfile() {
               <div className="doctor-widget">
                 <div className="doc-info-left">
                   <div className="doctor-img">
-                    <img src={mm} className="img-fluid" alt="User" />
+                    <img src={Doctor?.profile_image}className="img-fluid" alt="User" />
                   </div>
                   <div className="doc-info-cont">
-                    <h4 className="doc-name">Dr. Darren Elder</h4>
+                    <h4 className="doc-name">Dr.{Doctor?.name}</h4>
                     <p className="doc-speciality">
-                      BDS, MDS - Oral & Maxillofacial Surgery
+                    {Doctor?.degree}
                     </p>
-                    <p className="doc-department">Dentist</p>
+                    <p className="doc-department">{Doctor?.specialization}</p>
                     {/* <div className="rating">
                       <i className="fas fa-star filled"></i>
                       <i className="fas fa-star filled"></i>
@@ -39,7 +69,7 @@ function DoctorProfile() {
                     </div> */}
                     <div className="clinic-details">
                       <p className="doc-location">
-                        <FaMapMarkerAlt /> Newyork, USA - <Link to={""}>Get Directions</Link>
+                        <FaMapMarkerAlt /> {Doctor?.state},{Doctor?.country} - <Link to={""}>Get Directions</Link>
                       </p>
                     </div>
                   </div>
@@ -51,10 +81,10 @@ function DoctorProfile() {
                         <FaThumbsUp /> 99%
                       </li>
                       <li>
-                        <FaMapMarkerAlt /> Newyork, USA
+                        <FaMapMarkerAlt /> {Doctor?.city}, {Doctor?.state}
                       </li>
                       <li>
-                        <FaMoneyBillAlt /> $100 per hour{' '}
+                        <FaMoneyBillAlt /> ₹100 per hour{' '}
                       </li>
                     </ul>
                   </div>
@@ -122,7 +152,7 @@ function DoctorProfile() {
                       <div className="widget about-widget">
                         <h4 className="widget-title">About Me</h4>
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                        {Doctor?.biography}
                           
                         </p>
                       </div>
@@ -140,24 +170,10 @@ function DoctorProfile() {
                               <div className="experience-content">
                                 <div className="timeline-content">
                                   <Link to={""} className="name">
-                                    American Dental Medical University
+                                    {Doctor?.college}
                                   </Link>
-                                  <div>BDS</div>
-                                  <span className="time">1998 - 2003</span>
-                                </div>
-                              </div>
-                            </li>
-                            <li>
-                              <div className="experience-user">
-                                <div className="before-circle"></div>
-                              </div>
-                              <div className="experience-content">
-                                <div className="timeline-content">
-                                  <Link to={""} className="name">
-                                    American Dental Medical University
-                                  </Link>
-                                  <div>MDS</div>
-                                  <span className="time">2003 - 2005</span>
+                                  <div>{Doctor?.degree}</div>
+                                  <span className="time">{Doctor?.completion}</span>
                                 </div>
                               </div>
                             </li>
@@ -178,40 +194,10 @@ function DoctorProfile() {
                               <div className="experience-content">
                                 <div className="timeline-content">
                                   <Link to={""} className="name">
-                                    Glowing Smiles Family Dental Clinic
+                                    {Doctor?.hospitalname}
                                   </Link>
                                   <span className="time">
-                                    2010 - Present (5 years)
-                                  </span>
-                                </div>
-                              </div>
-                            </li>
-                            <li>
-                              <div className="experience-user">
-                                <div className="before-circle"></div>
-                              </div>
-                              <div className="experience-content">
-                                <div className="timeline-content">
-                                  <Link to={""} className="name">
-                                    Comfort Care Dental Clinic
-                                  </Link>
-                                  <span className="time">
-                                    2007 - 2010 (3 years)
-                                  </span>
-                                </div>
-                              </div>
-                            </li>
-                            <li>
-                              <div className="experience-user">
-                                <div className="before-circle"></div>
-                              </div>
-                              <div className="experience-content">
-                                <div className="timeline-content">
-                                  <Link to={""} className="name">
-                                    Dream Smile Dental Practice
-                                  </Link>
-                                  <span className="time">
-                                    2005 - 2007 (2 years)
+                                     {Doctor?.from}-{Doctor?.to}
                                   </span>
                                 </div>
                               </div>
@@ -222,7 +208,7 @@ function DoctorProfile() {
                       {/* /Experience Details  */}
 
                       {/* Awards Details  */}
-                      <div className="widget awards-widget">
+                      {/* <div className="widget awards-widget">
                         <h4 className="widget-title">Awards</h4>
                         <div className="experience-box">
                           <ul className="experience-list">
@@ -284,11 +270,11 @@ function DoctorProfile() {
                             </li>
                           </ul>
                         </div>
-                      </div>
+                      </div> */}
                       {/* /Awards Details  */}
 
                       {/* Services List  */}
-                      <div className="service-list">
+                      {/* <div className="service-list">
                         <h4>Services</h4>
                         <ul className="clearfix">
                           <li>Tooth cleaning </li>
@@ -298,11 +284,11 @@ function DoctorProfile() {
                           <li>Fissure Sealants</li>
                           <li>Surgical Extractions</li>
                         </ul>
-                      </div>
+                      </div> */}
                       {/* /Services List  */}
 
                       {/* Specializations List  */}
-                      <div className="service-list">
+                      {/* <div className="service-list">
                         <h4>Specializations</h4>
                         <ul className="clearfix">
                           <li>Children Care</li>
@@ -312,12 +298,12 @@ function DoctorProfile() {
                           <li>Periodontist</li>
                           <li>Prosthodontics</li>
                         </ul>
-                      </div>
+                      </div> */}
                       {/* /Specializations List  */}
                     </div>
                   </div>
                 </div>
-                {/* /Overview Content  */}
+                
 
                 {/* Business Hours Content  */}
                 <div

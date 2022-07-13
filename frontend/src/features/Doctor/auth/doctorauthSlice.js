@@ -51,6 +51,7 @@ export const editDoctor_Password = createAsyncThunk(
   }
 );
 
+
 // Logout the Doctor
 export const logout = createAsyncThunk('auth/logout_Doctor', async () => {
   await doctorService.logout();

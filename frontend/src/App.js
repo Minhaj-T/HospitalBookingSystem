@@ -67,7 +67,7 @@ function App() {
             <Route exact path="/signup3" element={<SignupPage3 />} />
             <Route exact path="/signup4" element={<SignupPage4 />} />
             <Route exact path="/doctor-search" element={<DoctorSerch />} />
-            <Route exact path="/doctor-profile" element={<DoctorProfile />} />
+            <Route exact path="/doctor-profile/:id" element={<DoctorProfile />} />
 
             
 

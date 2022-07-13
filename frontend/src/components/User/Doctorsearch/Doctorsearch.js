@@ -1,11 +1,37 @@
 import './doctorsearch.css';
-import mm from '../../../images/myImage.jpg';
+import * as api from '../../../api/index';
 import { Link } from 'react-router-dom';
 import { FcInfo } from 'react-icons/fc';
-import { FaMapMarkerAlt, FaMoneyBillAlt,FaThumbsUp } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaMoneyBillAlt, FaThumbsUp } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import Spinner from '../Spinner/Spinner';
 
-function Doctorsearch() { 
-  return ( 
+function Doctorsearch() {
+  const [fullData, setFullData] = useState({ loading: false, done: false });
+
+  useEffect(() => {
+    !fullData.done && fetchAllDoctors(0, 10);
+  }, []);
+
+  const fetchAllDoctors = async (skip, limit) => {
+    setFullData((prev) => ({ ...prev, loading: true }));
+    let { data } = await api.getAllDoctors(skip, limit);
+    if (data?.doctor) {
+      setFullData((prev) => ({
+        ...prev,
+        ...data,
+        loading: false,
+        done: true,
+      }));
+    }
+  };
+
+  // Loading page
+  if (fullData.loading) {
+    return <Spinner />;
+  }
+
+  return (
     <>
       <div className="content">
         <div className="container-fluid">
@@ -29,7 +55,7 @@ function Doctorsearch() {
                     <h4>Gender</h4>
                     <div>
                       <label className="custom_radio">
-                      <input type="checkbox" name="gender_type" />
+                        <input type="checkbox" name="gender_type" />
                         <span className="checkmark"></span> Male Doctor
                       </label>
                     </div>
@@ -97,35 +123,35 @@ function Doctorsearch() {
             </div>
 
             <div className="col-md-12 col-lg-8 col-xl-9">
-              <div className="card">
-                <div className="card-body">
-                  <div className="doctor-widget">
-                    <div className="doc-info-left">
-                      <div className="doctor-img">
-                        <Link to={""}>
-                          <img
-                            src={mm}
-                            className="img-fluid"
-                            alt="User"
-                          />
-                        </Link>
-                      </div>
-                      <div className="doc-info-cont">
-                        <h4 className="doc-name">
-                          <Link to={""}>Dr. Minhaj</Link>
-                        </h4>
-                        <p className="doc-speciality">
-                          MDS - Periodontology and Oral Implantology, BDS
-                        </p>
-                        <h5 className="doc-department">
-                          {/* <img
+              {fullData?.doctor &&
+                fullData.doctor.map((row) => (
+                  <div key={row._id} className="card">
+                    <div className="card-body">
+                      <div className="doctor-widget">
+                        <div className="doc-info-left">
+                          <div className="doctor-img">
+                            <Link to={''}>
+                              <img
+                                src={row.profile_image}
+                                className="img-fluid"
+                                alt="User"
+                              />
+                            </Link>
+                          </div>
+                          <div className="doc-info-cont">
+                            <h4 className="doc-name">
+                              <Link to={''}>Dr.{row.name}</Link>
+                            </h4>
+                            <p className="doc-speciality">{row.degree}</p>
+                            <h5 className="doc-department">
+                              {/* <img
                             src="assets/img/specialities/specialities-05.png"
                             className="img-fluid"
                             alt="Speciality"
                           /> */}
-                          Dentist
-                        </h5>
-                        {/* <div className="rating">
+                              {row.specialization}
+                            </h5>
+                            {/* <div className="rating">
                           <i className="fas fa-star filled"></i>
                           <i className="fas fa-star filled"></i>
                           <i className="fas fa-star filled"></i>
@@ -135,44 +161,55 @@ function Doctorsearch() {
                             (17)
                           </span>
                         </div> */}
-                        <div className="clinic-details">
-                          <p className="doc-location">
-                            <FaMapMarkerAlt/> Kerala, India
-                          </p>
+                            <div className="clinic-details">
+                              <p className="doc-location">
+                                <FaMapMarkerAlt />
+                                {row.state},{row.country}
+                              </p>
+                            </div>
+                          </div>
                         </div>
-                        
-                      </div>
-                    </div>
-                    <div className="doc-info-right">
-                      <div className="clini-infos">
-                        <ul>
-                          <li>
-                            <FaThumbsUp/> 98%
-                          </li>
-                          <li>
-                            <FaMapMarkerAlt/> Malppuram, Kerala
-                          </li>
-                          <li>
-                            <FaMoneyBillAlt/> ₹300 - ₹1000{' '}
-                            <FcInfo size={18} data-toggle="tooltip" title="cellWithImg" />
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="clinic-booking">
-                        <Link className="view-pro-btn" to={"/doctor-profile"}>
-                          View Profile
-                        </Link>
-                        <Link className="apt-btn" to={"/user/book-appoinment"}>
-                          Book Appointment
-                        </Link>
+                        <div className="doc-info-right">
+                          <div className="clini-infos">
+                            <ul>
+                              <li>
+                                <FaThumbsUp /> 98%
+                              </li>
+                              <li>
+                                <FaMapMarkerAlt /> {row.city}, {row.state}
+                              </li>
+                              <li>
+                                <FaMoneyBillAlt /> ₹300 - ₹1000{' '}
+                                <FcInfo
+                                  size={18}
+                                  data-toggle="tooltip"
+                                  title="cellWithImg"
+                                />
+                              </li>
+                            </ul>
+                          </div>
+                          <div className="clinic-booking">
+                            <Link
+                              className="view-pro-btn"
+                              to={`/doctor-profile/${row._id}`}
+                            >
+                              View Profile
+                            </Link>
+                            <Link
+                              className="apt-btn"
+                              to={'/user/book-appoinment'}
+                            >
+                              Book Appointment
+                            </Link>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                ))}
 
               <div className="load-more text-center">
-                <Link className="btn btn-primary btn-sm" to={""}>
+                <Link className="btn btn-primary btn-sm" to={''}>
                   Load More
                 </Link>
               </div>
