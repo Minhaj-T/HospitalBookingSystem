@@ -7,7 +7,15 @@ import { useEffect, useState } from 'react';
 import Spinner from '../Spinner/Spinner';
 
 function Doctorsearch() {
+  const [Date, setDate] = useState(null)
+
   const [fullData, setFullData] = useState({ loading: false, done: false });
+  const [formData, setformData] = useState({
+    date:'',
+    gender: '',
+    specialization:''
+  })
+  const{date,gender,specialization} =formData;
 
   useEffect(() => {
     !fullData.done && fetchAllDoctors(0, 10);
@@ -26,11 +34,18 @@ function Doctorsearch() {
     }
   };
 
+  const onChange = (e) => {
+    setformData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   // Loading page
   if (fullData.loading) {
     return <Spinner />;
   }
-
+ console.log(formData);
   return (
     <>
       <div className="content">
@@ -42,38 +57,43 @@ function Doctorsearch() {
                   <h4 className="card-title mb-0">Search Filter</h4>
                 </div>
                 <div className="card-body">
-                  <div className="filter-widget">
-                    <div className="cal-icon">
-                      <input
-                        type="text"
-                        className="form-control datetimepicker"
-                        placeholder="Select Date"
-                      />
-                    </div>
+                  <div className="filter-widget"onChange={onChange}>
+                    <input
+                      type="date"
+                      className="form-control datetimepicker"
+                      placeholder="Select Date"
+                      name='date'
+                    />
                   </div>
-                  <div className="filter-widget">
+                  <div className="filter-widget"onChange={onChange}>
                     <h4>Gender</h4>
                     <div>
                       <label className="custom_radio">
-                        <input type="checkbox" name="gender_type" />
+                        <input type="radio"
+                         name="gender"
+                          value="Male"
+                          />
                         <span className="checkmark"></span> Male Doctor
                       </label>
                     </div>
                     <div>
                       <label className="custom_radio">
-                        <input type="checkbox" name="gender_type" />
-                        <span className="checkmark"></span> Female Doctor
+                        <input type="radio"
+                         name="gender"
+                         value='Female'
+                         />
+                        <span   className="checkmark"></span> Female Doctor
                       </label>
                     </div>
                   </div>
-                  <div className="filter-widget">
+                  <div className="filter-widget" onChange={onChange}>
                     <h4>Select Specialist</h4>
                     <div>
                       <label className="custom_radio">
                         <input
-                          type="checkbox"
-                          name="select_specialist"
-                          checked
+                          type="radio"
+                          name="specialization"
+                          value="Urology"
                         />
                         <span className="checkmark"></span> Urology
                       </label>
@@ -81,34 +101,40 @@ function Doctorsearch() {
                     <div>
                       <label className="custom_radio">
                         <input
-                          type="checkbox"
-                          name="select_specialist"
-                          checked
+                          type="radio"
+                          name="specialization"
+                          value="Neurology"
                         />
                         <span className="checkmark"></span> Neurology
                       </label>
                     </div>
                     <div>
                       <label className="custom_radio">
-                        <input type="checkbox" name="select_specialist" />
+                        <input 
+                        type="radio" 
+                        name="specialization"
+                        value="Dentist"
+                        />
                         <span className="checkmark"></span> Dentist
                       </label>
                     </div>
                     <div>
                       <label className="custom_radio">
-                        <input type="checkbox" name="select_specialist" />
+                        <input 
+                        type="radio" 
+                        name="specialization"
+                        value="Orthopedic"
+                        />
                         <span className="checkmark"></span> Orthopedic
                       </label>
                     </div>
                     <div>
                       <label className="custom_radio">
-                        <input type="checkbox" name="select_specialist" />
-                        <span className="checkmark"></span> Cardiologist
-                      </label>
-                    </div>
-                    <div>
-                      <label className="custom_radio">
-                        <input type="checkbox" name="select_specialist" />
+                        <input 
+                        type="radio" 
+                        name="specialization" 
+                        value="Cardiologist"
+                        />
                         <span className="checkmark"></span> Cardiologist
                       </label>
                     </div>
@@ -140,7 +166,7 @@ function Doctorsearch() {
                           </div>
                           <div className="doc-info-cont">
                             <h4 className="doc-name">
-                              <Link to={''}>Dr.{row.name}</Link>
+                              <Link to={''}>Dr.{row.name}.{row.lastname}</Link>
                             </h4>
                             <p className="doc-speciality">{row.degree}</p>
                             <h5 className="doc-department">
