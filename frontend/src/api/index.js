@@ -12,3 +12,4 @@ export const editUserDetails = (userData,config) => API.put(`/edit-userDetails`,
 export const editUserPassword = (NewPassword,config) => API.post(`/edit-password`, NewPassword,config);
 export const getAllDoctors = (skip,limit) => API.get(`/fetch-allDoctors?limit=${limit}&skip=${skip}`)
 export const getDoctor = (id) => API.get(`/get-doctor?id=${id}`)
+export const getAllSpecialites=()=> API.get ('/fetch-specialties');

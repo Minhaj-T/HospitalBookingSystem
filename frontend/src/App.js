@@ -8,6 +8,7 @@ import Signup from './components/User/Signup/Signup';
 //Utilities and Components
 // const Loader = React.lazy(() => import("./components/Loader/Loader"));
 import Spinner from './components/User/Spinner/Spinner';
+const ErrorPage= React.lazy(() => import('./components/User/ErrorPage/ErrorPage'));
 
 
 // Pages
@@ -128,6 +129,8 @@ function App() {
               ? <UserProfile/> 
               : <DoctorLogin/> }/>
             </Route>
+
+            <Route exact path="*" element={<ErrorPage/>}></Route>
 
           </Routes>
         </Router>

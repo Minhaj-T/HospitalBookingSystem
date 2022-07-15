@@ -7,33 +7,55 @@ import { useEffect, useState } from 'react';
 import Spinner from '../Spinner/Spinner';
 
 function Doctorsearch() {
-  const [Date, setDate] = useState(null)
-
   const [fullData, setFullData] = useState({ loading: false, done: false });
+  const [Data, setData] = useState(fullData.doctor);
   const [formData, setformData] = useState({
-    date:'',
+    date: '',
     gender: '',
-    specialization:''
-  })
-  const{date,gender,specialization} =formData;
+    specialization: '',
+  });
+  const { date, gender, specialization } = formData;
 
   useEffect(() => {
-    !fullData.done && fetchAllDoctors(0, 10);
+    !fullData.done && fetchAllDetails(0, 10);
   }, []);
 
-  const fetchAllDoctors = async (skip, limit) => {
+  //  fetch the all doctors data
+  const fetchAllDetails = async (skip, limit) => {
     setFullData((prev) => ({ ...prev, loading: true }));
     let { data } = await api.getAllDoctors(skip, limit);
-    if (data?.doctor) {
+    let Specialites = await api.getAllSpecialites();
+    if (data?.doctor && Specialites.data) {
       setFullData((prev) => ({
         ...prev,
+        ...Specialites.data,
         ...data,
         loading: false,
         done: true,
       }));
+      setData(data.doctor);
     }
   };
 
+  const applyFilters = async () => {
+    let updatedList = await fullData.doctor;
+    if (gender) {
+      updatedList = updatedList.filter((item) => item.gender === gender);
+    }
+    if (specialization) {
+      console.log(specialization);
+      updatedList = updatedList.filter(
+        (item) => item.specialization === specialization
+      );
+    }
+    setData(updatedList);
+  };
+
+  useEffect(() => {
+    applyFilters();
+  }, [date, gender, specialization]);
+
+  //  fetch the input form doctor serch section
   const onChange = (e) => {
     setformData((prevState) => ({
       ...prevState,
@@ -45,7 +67,7 @@ function Doctorsearch() {
   if (fullData.loading) {
     return <Spinner />;
   }
- console.log(formData);
+  console.log(fullData, '..///');
   return (
     <>
       <div className="content">
@@ -57,87 +79,44 @@ function Doctorsearch() {
                   <h4 className="card-title mb-0">Search Filter</h4>
                 </div>
                 <div className="card-body">
-                  <div className="filter-widget"onChange={onChange}>
+                  <div className="filter-widget" onChange={onChange}>
                     <input
                       type="date"
                       className="form-control datetimepicker"
                       placeholder="Select Date"
-                      name='date'
+                      name="date"
                     />
                   </div>
-                  <div className="filter-widget"onChange={onChange}>
+                  <div className="filter-widget" onChange={onChange}>
                     <h4>Gender</h4>
                     <div>
                       <label className="custom_radio">
-                        <input type="radio"
-                         name="gender"
-                          value="Male"
-                          />
+                        <input type="radio" name="gender" value="Male" />
                         <span className="checkmark"></span> Male Doctor
                       </label>
                     </div>
                     <div>
                       <label className="custom_radio">
-                        <input type="radio"
-                         name="gender"
-                         value='Female'
-                         />
-                        <span   className="checkmark"></span> Female Doctor
+                        <input type="radio" name="gender" value="Female" />
+                        <span className="checkmark"></span> Female Doctor
                       </label>
                     </div>
                   </div>
                   <div className="filter-widget" onChange={onChange}>
                     <h4>Select Specialist</h4>
-                    <div>
-                      <label className="custom_radio">
-                        <input
-                          type="radio"
-                          name="specialization"
-                          value="Urology"
-                        />
-                        <span className="checkmark"></span> Urology
-                      </label>
-                    </div>
-                    <div>
-                      <label className="custom_radio">
-                        <input
-                          type="radio"
-                          name="specialization"
-                          value="Neurology"
-                        />
-                        <span className="checkmark"></span> Neurology
-                      </label>
-                    </div>
-                    <div>
-                      <label className="custom_radio">
-                        <input 
-                        type="radio" 
-                        name="specialization"
-                        value="Dentist"
-                        />
-                        <span className="checkmark"></span> Dentist
-                      </label>
-                    </div>
-                    <div>
-                      <label className="custom_radio">
-                        <input 
-                        type="radio" 
-                        name="specialization"
-                        value="Orthopedic"
-                        />
-                        <span className="checkmark"></span> Orthopedic
-                      </label>
-                    </div>
-                    <div>
-                      <label className="custom_radio">
-                        <input 
-                        type="radio" 
-                        name="specialization" 
-                        value="Cardiologist"
-                        />
-                        <span className="checkmark"></span> Cardiologist
-                      </label>
-                    </div>
+                    {fullData?.specialties &&
+                      fullData.specialties.map((row) => (
+                        <div key={row._id}>
+                          <label className="custom_radio">
+                            <input
+                              type="radio"
+                              name="specialization"
+                              value={row.name}
+                            />
+                            <span className="checkmark"></span> {row.name}
+                          </label>
+                        </div>
+                      ))}
                   </div>
                   <div className="btn-search">
                     <button type="button" className="btn btn-block">
@@ -150,7 +129,7 @@ function Doctorsearch() {
 
             <div className="col-md-12 col-lg-8 col-xl-9">
               {fullData?.doctor &&
-                fullData.doctor.map((row) => (
+                Data.map((row) => (
                   <div key={row._id} className="card">
                     <div className="card-body">
                       <div className="doctor-widget">
@@ -166,7 +145,9 @@ function Doctorsearch() {
                           </div>
                           <div className="doc-info-cont">
                             <h4 className="doc-name">
-                              <Link to={''}>Dr.{row.name}.{row.lastname}</Link>
+                              <Link to={''}>
+                                Dr.{row.name}.{row.lastname}
+                              </Link>
                             </h4>
                             <p className="doc-speciality">{row.degree}</p>
                             <h5 className="doc-department">
