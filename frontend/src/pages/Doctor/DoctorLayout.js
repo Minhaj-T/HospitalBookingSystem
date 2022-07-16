@@ -1,5 +1,5 @@
 import './doctorLayout.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, reset } from '../../features/Doctor/auth/doctorauthSlice';
 import {
@@ -42,9 +42,9 @@ function DoctorLayout({ children }) {
               <div className="profile-sidebar">
                 <div className="widget-profile pro-widget-content">
                   <div className="profile-info-widget">
-                    <Link to={''} className="booking-doc-img">
+                    <NavLink to={''} className="booking-doc-img">
                       <img src={doctor.profile_image} alt="User" />
-                    </Link>
+                    </NavLink>
                     <div className="profile-det-info">
                       <h3>{doctor.name}</h3>
 
@@ -57,87 +57,87 @@ function DoctorLayout({ children }) {
                 <div className="dashboard-widget">
                   <nav className="dashboard-menu">
                     <ul>
-                      <li className="main active">
-                        <Link to={'/doctor'}>
+                      <li className="main">
+                        <NavLink to={'/doctor/'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaColumns />
                           </span>
                           <span>DoctorDashboard</span>
-                        </Link>
+                        </NavLink>
                       </li>
                       <li className="main">
-                        <Link to={'/doctor/appointments'}>
+                        <NavLink to={'/doctor/appointments'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaCalendarCheck />
                           </span>
                           <span>Appointments</span>
-                        </Link>
+                        </NavLink>
                       </li>
                       <li className="main">
-                        <Link to={'/doctor/my-patients'}>
+                        <NavLink to={'/doctor/my-patients'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaUserInjured />
                           </span>
                           <span>My Patients</span>
-                        </Link>
+                        </NavLink>
                       </li>
                       <li className="main">
-                        <Link to={'/doctor/schedule-timing'}>
+                        <NavLink to={'/doctor/schedule-timing'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaHourglassStart />
                           </span>
                           <span>Schedule Timings</span>
-                        </Link>
+                        </NavLink>
                       </li>
                       <li className="main">
-                        <Link to={''}>
+                        <NavLink to={'/inv'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaFileInvoice />
                           </span>
                           <span>Invoices</span>
-                        </Link>
+                        </NavLink>
                       </li>
                       <li className="main">
-                        <Link to={''}>
+                        <NavLink to={'/msg'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaComments />
                           </span>
                           <span>Message</span>
                           <small className="unread-msg">23</small>
-                        </Link>
+                        </NavLink>
                       </li>
                       <li className="main">
-                        <Link to={'/doctor/profile-settings'}>
+                        <NavLink to={'/doctor/profile-settings'}>
                           <span className="fas" style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaUserCog />
                           </span>
                           <span>Profile Settings</span>
-                        </Link>
+                        </NavLink>
                       </li>
                       <li className="main">
-                        <Link to={'/doctor/change-password'}>
+                        <NavLink to={'/doctor/change-password'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaLock />
                           </span>
                           <span>Change Password</span>
-                        </Link>
+                        </NavLink>
                       </li>
                       <li className="main">
-                        <Link onClick={logOut} to={''}>
+                        <NavLink onClick={logOut} to={'/login'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaSignOutAlt />
                           </span>
                           <span>Logout</span>
-                        </Link>
+                        </NavLink>
                       </li>
                     </ul>
                   </nav>

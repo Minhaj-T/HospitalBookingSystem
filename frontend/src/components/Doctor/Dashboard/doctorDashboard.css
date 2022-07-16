@@ -1,6 +1,4 @@
-.appointment-tab {
-  margin-bottom: 30px;
-}
+
 .appointment-tab .nav-tabs {
   background-color: #fff;
   padding: 1.5rem;
@@ -8,9 +6,7 @@
   border-radius: 0.25rem 0.25rem 0 0 !important;
   border-bottom: 0;
 }
-.appointment-tab .tab-content {
-  padding-top: 0;
-}
+
 .appointment-tab .card {
   border-radius: 0;
 }
@@ -98,12 +94,41 @@ table.table td h2 span {
 .card-body {
   padding: 1.25rem;
 }
-
 .avatar-sm {
   width: 2.5rem;
   height: 2.5rem;
 }
 
-.tab-content {
-  padding-top: 20px;
+
+.nav-tabs > li > a {
+	margin-right: 0;
+	color: rgb(19, 18, 18);
+	border-radius: 0;
 }
+
+.nav-tabs .nav-link {
+	border-radius: 0;
+}
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+    background-color: #eee;
+    border-color: transparent;
+	color: #272b41;
+}
+
+
+.nav-tabs.nav-tabs-solid > li > a.active,
+.nav-tabs.nav-tabs-solid > li > a.active:hover,
+.nav-tabs.nav-tabs-solid > li > a.active:focus {
+	background-color: #20c0f3;
+	border-color: #20c0f3;
+	color: #fff;
+}
+.nav-tabs.nav-tabs-solid.nav-tabs-rounded {
+	border-radius: 50px;
+}
+.nav-tabs.nav-tabs-solid.nav-tabs-rounded > li > a {
+	border-radius: 50px;
+}
+
+
+

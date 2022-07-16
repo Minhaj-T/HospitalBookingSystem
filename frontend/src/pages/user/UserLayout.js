@@ -1,5 +1,5 @@
 import '../Doctor/doctorLayout.css';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import {
   FaColumns,
   FaComments,
@@ -25,9 +25,9 @@ function UserLayout({children}) {
               <div className="profile-sidebar mt-5">
                 <div className="widget-profile pro-widget-content">
                   <div className="profile-info-widget">
-                    <Link to={''} className="booking-doc-img">
+                    <NavLink to={''} className="booking-doc-img">
                       <img src={user.profile_image} alt="User" />
-                    </Link>
+                    </NavLink>
                     <div className="profile-det-info">
                       <h3>{user.name}</h3>
                       <div className="patient-details">
@@ -45,59 +45,59 @@ function UserLayout({children}) {
                   <nav className="dashboard-menu">
                     <ul>
                       <li className="main active">
-                        <Link to={'/user'}>
+                        <NavLink to={'/user/'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaColumns />
                           </span>
                           <span>Dashboard</span>
-                        </Link>
+                        </NavLink>
                       </li>
                       <li className="main">
-                        <Link to={'/user/favourites'}>
+                        <NavLink to={'/user/favourites'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaBookmark />
                           </span>
                           <span>Favourites</span>
-                        </Link>
+                        </NavLink>
                       </li>
                       <li className="main">
-                        <Link to={''}>
+                        <NavLink to={'/#'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaComments />
                           </span>
                           <span>Message</span>
                           <small className="unread-msg">23</small>
-                        </Link>
+                        </NavLink>
                       </li>
                       <li className="main">
-                        <Link to={'/user/user-edit'}>
+                        <NavLink to={'/user/user-edit'}>
                           <span className="fas" style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaUserCog />
                           </span>
                           <span>Profile Settings</span>
-                        </Link>
+                        </NavLink>
                       </li>
                       <li className="main">
-                        <Link to={'/user/change-password'}>
+                        <NavLink to={'/user/change-password'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaLock />
                           </span>
                           <span>Change Password</span>
-                        </Link>
+                        </NavLink>
                       </li>
                       <li className="main">
-                        <Link to={''}>
+                        <NavLink to={'/login'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaSignOutAlt />
                           </span>
                           <span>Logout</span>
-                        </Link>
+                        </NavLink>
                       </li>
                     </ul>
                   </nav>

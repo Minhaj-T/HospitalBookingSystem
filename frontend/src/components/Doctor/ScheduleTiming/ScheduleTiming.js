@@ -11,24 +11,6 @@ function ScheduleTiming() {
               <h4 className="card-title">Schedule Timings</h4>
               <div className="profile-box">
                 <div className="row">
-                  <div className="col-lg-4">
-                    <div className="form-group">
-                      <label>Timing Slot Duration</label>
-                      <select defaultValue="" className="select form-control">
-                        <option value="" disabled>
-                          Choose salutation ...
-                        </option>
-                        <option value="">15 mins</option>
-                        <option value="" selected="selected">
-                          30 mins
-                        </option>
-                        <option value="">45 mins</option>
-                        <option value="">1 Hour</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
                   <div className="col-md-12">
                     <div className="card schedule-widget mb-0">
                       {/* Schedule Header  */}
@@ -117,9 +99,9 @@ function ScheduleTiming() {
                             <Link
                               to={'#add_time_slot'}
                               className="edit-link"
-                              data-toggle="modal"
+                              data-bs-toggle="modal"
                             >
-                              <FaPlusCircle/> Add Slot
+                              <FaPlusCircle /> Add Slot
                             </Link>
                           </h4>
                           <p className="text-muted mb-0">Not Available</p>
@@ -136,9 +118,10 @@ function ScheduleTiming() {
                             <Link
                               to={'#edit_time_slot'}
                               className="edit-link"
-                              data-toggle="modal"
+                              data-bs-toggle="modal"
                             >
-                              <FaEdit/>Edit
+                              <FaEdit />
+                              Edit
                             </Link>
                           </h4>
 
@@ -147,25 +130,25 @@ function ScheduleTiming() {
                             <div className="doc-slot-list">
                               8:00 pm - 11:30 pm
                               <Link to={''} className="delete_schedule">
-                               <FaTimes/>
+                                <FaTimes />
                               </Link>
                             </div>
                             <div className="doc-slot-list">
                               11:30 pm - 1:30 pm
                               <Link to={''} className="delete_schedule">
-                                <FaTimes/>
+                                <FaTimes />
                               </Link>
                             </div>
                             <div className="doc-slot-list">
                               3:00 pm - 5:00 pm
                               <Link to={''} className="delete_schedule">
-                                <FaTimes/>
+                                <FaTimes />
                               </Link>
                             </div>
                             <div className="doc-slot-list">
                               6:00 pm - 11:00 pm
                               <Link to={''} className="delete_schedule">
-                                <FaTimes/>
+                                <FaTimes />
                               </Link>
                             </div>
                           </div>
@@ -180,9 +163,9 @@ function ScheduleTiming() {
                             <Link
                               to={'#add_time_slot'}
                               className="edit-link"
-                              data-toggle="modal"
+                              data-bs-toggle="modal"
                             >
-                              <FaPlusCircle/> Add Slot
+                              <FaPlusCircle /> Add Slot
                             </Link>
                           </h4>
                           <p className="text-muted mb-0">Not Available</p>
@@ -196,9 +179,9 @@ function ScheduleTiming() {
                             <Link
                               to={'#add_time_slot'}
                               className="edit-link"
-                              data-toggle="modal"
+                              data-bs-toggle="modal"
                             >
-                              <FaPlusCircle/> Add Slot
+                              <FaPlusCircle /> Add Slot
                             </Link>
                           </h4>
                           <p className="text-muted mb-0">Not Available</p>
@@ -212,9 +195,9 @@ function ScheduleTiming() {
                             <Link
                               to={'#add_time_slot'}
                               className="edit-link"
-                              data-toggle="modal"
+                              data-bs-toggle="modal"
                             >
-                             <FaPlusCircle/> Add Slot
+                              <FaPlusCircle /> Add Slot
                             </Link>
                           </h4>
                           <p className="text-muted mb-0">Not Available</p>
@@ -228,9 +211,9 @@ function ScheduleTiming() {
                             <Link
                               to={'#add_time_slot'}
                               className="edit-link"
-                              data-toggle="modal"
+                              data-bs-toggle="modal"
                             >
-                             <FaPlusCircle/> Add Slot
+                              <FaPlusCircle /> Add Slot
                             </Link>
                           </h4>
                           <p className="text-muted mb-0">Not Available</p>
@@ -244,9 +227,9 @@ function ScheduleTiming() {
                             <Link
                               to={'#add_time_slot'}
                               className="edit-link"
-                              data-toggle="modal"
+                              data-bs-toggle="modal"
                             >
-                           <FaPlusCircle/> Add Slot
+                              <FaPlusCircle /> Add Slot
                             </Link>
                           </h4>
                           <p className="text-muted mb-0">Not Available</p>
@@ -257,6 +240,60 @@ function ScheduleTiming() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="modal fade custom-modal" id="add_time_slot">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Add Time Slots</h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <form>
+                <div className="hours-info flex ">
+                  <div className="row form-row hours-cont">
+                    <div className="col-12 col-md-10 m-auto">
+                      <div className="row form-row">
+                        <div className="col-12 col-md-6">
+                          <div className="form-group">
+                            <label>Start Time</label>
+                            <input
+                              type="time"
+                              className="form-control datetimepicker"
+                              placeholder="Select Date"
+                              name="date"
+                            />
+                          </div>
+                        </div>
+                        <div className="col-12 col-md-6">
+                          <div className="form-group">
+                            <label>End Time</label>
+                            <input
+                              type="time"
+                              className="form-control datetimepicker"
+                              placeholder="Select Date"
+                              name="date"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="submit-section text-center">
+                  <button type="submit" className="btn btn-primary submit-btn">
+                    Add Slot
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

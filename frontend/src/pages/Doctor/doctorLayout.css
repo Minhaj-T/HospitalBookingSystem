@@ -112,7 +112,7 @@
   padding: 16px 20px;
 }
 .dashboard-menu > ul > li:hover > a,
-.dashboard-menu > ul > li.active > a {
+.dashboard-menu > ul > li> a.active  {
   color: #0de0fe;
 }
 .dashboard-menu ul li a i {
@@ -136,13 +136,6 @@
 .main{
     display: flex;
     padding-left: 15px;
-}
-.nav-tabs.nav-tabs-solid > li > a.active,
-.nav-tabs.nav-tabs-solid > li > a.active:hover,
-.nav-tabs.nav-tabs-solid > li > a.active:focus {
-	background-color: #20c0f3;
-	border-color: #20c0f3;
-	color: #fff;
 }
 .nav-tabs.nav-tabs-solid.nav-tabs-rounded {
 	border-radius: 50px;
@@ -202,4 +195,3 @@ avatar-sm {
 .avatar-sm.avatar-online::before {
 	border-width: 2px;
 }
-
