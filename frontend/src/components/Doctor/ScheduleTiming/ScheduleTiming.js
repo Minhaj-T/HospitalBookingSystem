@@ -1,7 +1,42 @@
 import './scheduletiming.css';
 import { Link } from 'react-router-dom';
-import { FaEdit, FaPlusCircle, FaTimes } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
+import CustomizedDialogs from './AddSlote';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+import Spinner from '../../User/Spinner/Spinner';
+import { useDispatch, useSelector } from 'react-redux';
+import { reset } from '../../../features/Doctor/auth/doctorauthSlice';
+
 function ScheduleTiming() {
+  const dispatch = useDispatch();
+  const { doctor, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.doctorAuth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess && doctor) {
+      toast.success('Slot added successfully !', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    dispatch(reset());
+  }, [doctor, isError, isSuccess, message, dispatch]);
+
+  // Loading page
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <div className="row">
@@ -96,15 +131,22 @@ function ScheduleTiming() {
                         <div id="slot_sunday" className="tab-pane fade">
                           <h4 className="card-title d-flex justify-content-between">
                             <span>Time Slots</span>
-                            <Link
-                              to={'#add_time_slot'}
-                              className="edit-link"
-                              data-bs-toggle="modal"
-                            >
-                              <FaPlusCircle /> Add Slot
-                            </Link>
+                            <CustomizedDialogs day={'sunday'} />
                           </h4>
-                          <p className="text-muted mb-0">Not Available</p>
+                          {doctor?.sunday.length !== 0 ? (
+                            <div className="doc-times">
+                              {doctor.sunday.map((row) => (
+                                <div key={row._id} className="doc-slot-list">
+                                  {row.start} - {row.end}
+                                  <Link to={''} className="delete_schedule">
+                                    <FaTimes />
+                                  </Link>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="text-muted mb-0">Not Available</p>
+                          )}
                         </div>
                         {/* /Sunday Slot  */}
 
@@ -115,44 +157,22 @@ function ScheduleTiming() {
                         >
                           <h4 className="card-title d-flex justify-content-between">
                             <span>Time Slots</span>
-                            <Link
-                              to={'#edit_time_slot'}
-                              className="edit-link"
-                              data-bs-toggle="modal"
-                            >
-                              <FaEdit />
-                              Edit
-                            </Link>
+                            <CustomizedDialogs day={'monday'} />
                           </h4>
-
-                          {/* Slot List */}
-                          <div className="doc-times">
-                            <div className="doc-slot-list">
-                              8:00 pm - 11:30 pm
-                              <Link to={''} className="delete_schedule">
-                                <FaTimes />
-                              </Link>
+                          {doctor?.monday.length !== 0 ? (
+                            <div className="doc-times">
+                              {doctor.monday.map((row) => (
+                                <div key={row._id} className="doc-slot-list">
+                                  {row.start} - {row.end}
+                                  <Link to={''} className="delete_schedule">
+                                    <FaTimes />
+                                  </Link>
+                                </div>
+                              ))}
                             </div>
-                            <div className="doc-slot-list">
-                              11:30 pm - 1:30 pm
-                              <Link to={''} className="delete_schedule">
-                                <FaTimes />
-                              </Link>
-                            </div>
-                            <div className="doc-slot-list">
-                              3:00 pm - 5:00 pm
-                              <Link to={''} className="delete_schedule">
-                                <FaTimes />
-                              </Link>
-                            </div>
-                            <div className="doc-slot-list">
-                              6:00 pm - 11:00 pm
-                              <Link to={''} className="delete_schedule">
-                                <FaTimes />
-                              </Link>
-                            </div>
-                          </div>
-                          {/* /Slot List  */}
+                          ) : (
+                            <p className="text-muted mb-0">Not Available</p>
+                          )}
                         </div>
                         {/* /Monday Slot  */}
 
@@ -160,15 +180,22 @@ function ScheduleTiming() {
                         <div id="slot_tuesday" className="tab-pane fade">
                           <h4 className="card-title d-flex justify-content-between">
                             <span>Time Slots</span>
-                            <Link
-                              to={'#add_time_slot'}
-                              className="edit-link"
-                              data-bs-toggle="modal"
-                            >
-                              <FaPlusCircle /> Add Slot
-                            </Link>
+                            <CustomizedDialogs day={'tuesday'} />
                           </h4>
-                          <p className="text-muted mb-0">Not Available</p>
+                          {doctor?.tuesday.length !== 0 ? (
+                            <div className="doc-times">
+                              {doctor.tuesday.map((row) => (
+                                <div key={row._id} className="doc-slot-list">
+                                  {row.start} - {row.end}
+                                  <Link to={''} className="delete_schedule">
+                                    <FaTimes />
+                                  </Link>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="text-muted mb-0">Not Available</p>
+                          )}
                         </div>
                         {/* Tuesday Slot  */}
 
@@ -176,15 +203,22 @@ function ScheduleTiming() {
                         <div id="slot_wednesday" className="tab-pane fade">
                           <h4 className="card-title d-flex justify-content-between">
                             <span>Time Slots</span>
-                            <Link
-                              to={'#add_time_slot'}
-                              className="edit-link"
-                              data-bs-toggle="modal"
-                            >
-                              <FaPlusCircle /> Add Slot
-                            </Link>
+                            <CustomizedDialogs day={'wednesday'} />
                           </h4>
-                          <p className="text-muted mb-0">Not Available</p>
+                          {doctor?.wednesday.length !== 0 ? (
+                            <div className="doc-times">
+                              {doctor.wednesday.map((row) => (
+                                <div key={row._id} className="doc-slot-list">
+                                  {row.start} - {row.end}
+                                  <Link to={''} className="delete_schedule">
+                                    <FaTimes />
+                                  </Link>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="text-muted mb-0">Not Available</p>
+                          )}
                         </div>
                         {/* Wednesday Slot */}
 
@@ -192,15 +226,22 @@ function ScheduleTiming() {
                         <div id="slot_thursday" className="tab-pane fade">
                           <h4 className="card-title d-flex justify-content-between">
                             <span>Time Slots</span>
-                            <Link
-                              to={'#add_time_slot'}
-                              className="edit-link"
-                              data-bs-toggle="modal"
-                            >
-                              <FaPlusCircle /> Add Slot
-                            </Link>
+                            <CustomizedDialogs day={'thursday'} />
                           </h4>
-                          <p className="text-muted mb-0">Not Available</p>
+                          {doctor?.thursday.length !== 0 ? (
+                            <div className="doc-times">
+                              {doctor.thursday.map((row) => (
+                                <div key={row._id} className="doc-slot-list">
+                                  {row.start} - {row.end}
+                                  <Link to={''} className="delete_schedule">
+                                    <FaTimes />
+                                  </Link>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="text-muted mb-0">Not Available</p>
+                          )}
                         </div>
                         {/* Thursday Slot  */}
 
@@ -208,15 +249,22 @@ function ScheduleTiming() {
                         <div id="slot_friday" className="tab-pane fade">
                           <h4 className="card-title d-flex justify-content-between">
                             <span>Time Slots</span>
-                            <Link
-                              to={'#add_time_slot'}
-                              className="edit-link"
-                              data-bs-toggle="modal"
-                            >
-                              <FaPlusCircle /> Add Slot
-                            </Link>
+                            <CustomizedDialogs day={'friday'} />
                           </h4>
-                          <p className="text-muted mb-0">Not Available</p>
+                          {doctor?.friday.length !== 0 ? (
+                            <div className="doc-times">
+                              {doctor.friday.map((row) => (
+                                <div key={row._id} className="doc-slot-list">
+                                  {row.start} - {row.end}
+                                  <Link to={''} className="delete_schedule">
+                                    <FaTimes />
+                                  </Link>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="text-muted mb-0">Not Available</p>
+                          )}
                         </div>
                         {/* Friday Slot  */}
 
@@ -224,15 +272,22 @@ function ScheduleTiming() {
                         <div id="slot_saturday" className="tab-pane fade">
                           <h4 className="card-title d-flex justify-content-between">
                             <span>Time Slots</span>
-                            <Link
-                              to={'#add_time_slot'}
-                              className="edit-link"
-                              data-bs-toggle="modal"
-                            >
-                              <FaPlusCircle /> Add Slot
-                            </Link>
+                            <CustomizedDialogs day={'saturday'} />
                           </h4>
-                          <p className="text-muted mb-0">Not Available</p>
+                          {doctor?.saturday.length !== 0 ? (
+                            <div className="doc-times">
+                              {doctor.saturday.map((row) => (
+                                <div key={row._id} className="doc-slot-list">
+                                  {row.start} - {row.end}
+                                  <Link to={''} className="delete_schedule">
+                                    <FaTimes />
+                                  </Link>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="text-muted mb-0">Not Available</p>
+                          )}
                         </div>
                         {/* /Saturday Slot  */}
                       </div>
@@ -240,60 +295,6 @@ function ScheduleTiming() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="modal fade custom-modal" id="add_time_slot">
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Add Time Slots</h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <form>
-                <div className="hours-info flex ">
-                  <div className="row form-row hours-cont">
-                    <div className="col-12 col-md-10 m-auto">
-                      <div className="row form-row">
-                        <div className="col-12 col-md-6">
-                          <div className="form-group">
-                            <label>Start Time</label>
-                            <input
-                              type="time"
-                              className="form-control datetimepicker"
-                              placeholder="Select Date"
-                              name="date"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-12 col-md-6">
-                          <div className="form-group">
-                            <label>End Time</label>
-                            <input
-                              type="time"
-                              className="form-control datetimepicker"
-                              placeholder="Select Date"
-                              name="date"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="submit-section text-center">
-                  <button type="submit" className="btn btn-primary submit-btn">
-                    Add Slot
-                  </button>
-                </div>
-              </form>
             </div>
           </div>
         </div>

@@ -139,31 +139,6 @@ console.log(formData);
           focused 
         />
       </Grid>
-      {/* <Grid item xs={12} sm={6}>
-        <TextField
-          required
-          id="lastName"
-          name="lastName"
-          label="Last name"
-          fullWidth
-          color="secondary"
-          autoComplete="family-name"
-          variant="standard"
-          onChange={onChange}
-        />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField
-          required
-          id="lastName"
-          name="lastName"
-          label="Last name"
-          fullWidth
-          color="secondary"
-          autoComplete="family-name"
-          variant="standard"
-        />
-      </Grid> */}
         </Grid>
         </DialogContent>
         <DialogActions>

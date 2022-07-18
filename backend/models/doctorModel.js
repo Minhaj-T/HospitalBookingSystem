@@ -86,6 +86,51 @@ const doctorSchema = mongoose.Schema({
     designation:{
         type:String,
     },
+    sunday:[
+        {
+            end:{ type: String, unique: true },
+            start: { type: String, unique: true }
+            
+        }
+    ],
+    monday:[
+        {
+           
+            end:{ type: String, unique: true },
+            start: { type: String, unique: true }
+        }
+    ],
+    tuesday:[
+        {
+            start:String,
+            end:String,
+        }
+    ],
+    wednesday:[
+        {
+            start:String,
+            end:String,
+        }
+    ],
+    thursday:[
+        {
+            start:String,
+            end:String,
+        }
+    ],
+    friday:[
+        {
+            start:String,
+            end:String,
+        }
+    ],
+    saturday:[
+        {
+            start:String,
+            end:String,
+        }
+    ],
+    
 },
     {
         timestamps:true

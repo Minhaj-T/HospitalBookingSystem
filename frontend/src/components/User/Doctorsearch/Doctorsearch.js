@@ -5,6 +5,7 @@ import { FcInfo } from 'react-icons/fc';
 import { FaMapMarkerAlt, FaMoneyBillAlt, FaThumbsUp } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import Spinner from '../Spinner/Spinner';
+import Header from '../Header/Header'
 
 function Doctorsearch() {
   const [fullData, setFullData] = useState({ loading: false, done: false });
@@ -67,10 +68,10 @@ function Doctorsearch() {
   if (fullData.loading) {
     return <Spinner />;
   }
-  console.log(fullData, '..///');
   return (
     <>
-      <div className="content">
+    <Header/>
+      <div className="content mt-5">
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-12 col-lg-4 col-xl-3 theiaStickySidebar">

@@ -51,6 +51,20 @@ export const editDoctor_Password = createAsyncThunk(
   }
 );
 
+// add the slotes
+export const add_Slotes = createAsyncThunk(
+  'auth/add_Slotes',
+  async (Data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().doctorAuth.doctor.token;
+      return await doctorService.addSlotes(token, Data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(errorHandler(error));
+    }
+  }
+);
+
+
 
 // Logout the Doctor
 export const logout = createAsyncThunk('auth/logout_Doctor', async () => {
@@ -106,6 +120,20 @@ const doctorAuth = createSlice({
         state.isSuccess = true;
       },
       [editDoctor_Password.rejected]: (state, action) => {
+        state.message = action.payload;
+        state.isLoading = false;
+        state.isError = true;
+      },
+      [add_Slotes.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [add_Slotes.fulfilled]: (state,action) => {
+        state.doctor = action.payload;
+        state.isLoading = false;
+        state.isSuccess = true;
+      },
+      [add_Slotes.rejected]: (state, action) => {
+        
         state.message = action.payload;
         state.isLoading = false;
         state.isError = true;

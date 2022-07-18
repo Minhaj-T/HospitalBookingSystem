@@ -34,6 +34,20 @@ const editPassword = async(token,Data) => {
   return data;
 }
 
+// Add Slotes
+const addSlotes = async (token,Data) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const { data } = await api.addTimeSlots(Data, config);
+  if (data) {
+    localStorage.setItem('doctorinfo', JSON.stringify(data));
+  }
+  return data;
+
+}
 // Logout doctor
 const logout = () => [localStorage.removeItem('doctorinfo')];
 
@@ -41,7 +55,8 @@ const doctorService = {
   login,
   logout,
   EditDoctor,
-  editPassword
+  editPassword,
+  addSlotes,
 };
 
 export default doctorService;
