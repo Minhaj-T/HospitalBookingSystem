@@ -16,6 +16,7 @@ export const allDoctors = createAsyncThunk(
   async (_,thunkAPI) => {
     try {
       const token = thunkAPI.getState().adminAuth.admin.token
+      console.log("this is the token",token)
       return Doctorservice.getallDoctors(token);
     } catch (error) {
       return thunkAPI.rejectWithValue(errorHandler(error));

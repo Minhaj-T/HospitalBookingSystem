@@ -6,11 +6,11 @@ import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import Spinner from '../../User/Spinner/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
-import { reset } from '../../../features/Doctor/auth/doctorauthSlice';
+import { reset,delete_TimeSlotes } from '../../../features/Doctor/auth/doctorauthSlice';
 
 function ScheduleTiming() {
   const dispatch = useDispatch();
-  const { doctor, isLoading, isError, isSuccess, message } = useSelector(
+  const { doctor, isLoading, isError,deleteSlotes, addSloat, message } = useSelector(
     (state) => state.doctorAuth
   );
 
@@ -18,7 +18,7 @@ function ScheduleTiming() {
     if (isError) {
       toast.error(message);
     }
-    if (isSuccess && doctor) {
+    if (addSloat && doctor) {
       toast.success('Slot added successfully !', {
         position: 'top-center',
         autoClose: 5000,
@@ -29,8 +29,20 @@ function ScheduleTiming() {
         progress: undefined,
       });
     }
+    if (deleteSlotes && doctor) {
+      toast.info('Slot deleted successfully !', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
     dispatch(reset());
-  }, [doctor, isError, isSuccess, message, dispatch]);
+  }, [doctor, isError, addSloat,deleteSlotes, message, dispatch]);
+
 
   // Loading page
   if (isLoading) {
@@ -138,7 +150,14 @@ function ScheduleTiming() {
                               {doctor.sunday.map((row) => (
                                 <div key={row._id} className="doc-slot-list">
                                   {row.start} - {row.end}
-                                  <Link to={''} className="delete_schedule">
+                                  <Link to={""} onClick={(e)=>{
+                                    e.preventDefault();
+                                    const data={
+                                      day:"sunday",
+                                      id: row._id
+                                    }
+                                    dispatch(delete_TimeSlotes(data))
+                                  }}  className="delete_schedule">
                                     <FaTimes />
                                   </Link>
                                 </div>
@@ -164,7 +183,14 @@ function ScheduleTiming() {
                               {doctor.monday.map((row) => (
                                 <div key={row._id} className="doc-slot-list">
                                   {row.start} - {row.end}
-                                  <Link to={''} className="delete_schedule">
+                                  <Link to={""} onClick={(e)=>{
+                                    e.preventDefault();
+                                    const data={
+                                      day:"monday",
+                                      id: row._id
+                                    }
+                                    dispatch(delete_TimeSlotes(data))
+                                  }}  className="delete_schedule">
                                     <FaTimes />
                                   </Link>
                                 </div>
@@ -187,7 +213,14 @@ function ScheduleTiming() {
                               {doctor.tuesday.map((row) => (
                                 <div key={row._id} className="doc-slot-list">
                                   {row.start} - {row.end}
-                                  <Link to={''} className="delete_schedule">
+                                  <Link to={""} onClick={(e)=>{
+                                    e.preventDefault();
+                                    const data={
+                                      day:"tuesday",
+                                      id: row._id
+                                    }
+                                    dispatch(delete_TimeSlotes(data))
+                                  }}  className="delete_schedule">
                                     <FaTimes />
                                   </Link>
                                 </div>
@@ -210,7 +243,14 @@ function ScheduleTiming() {
                               {doctor.wednesday.map((row) => (
                                 <div key={row._id} className="doc-slot-list">
                                   {row.start} - {row.end}
-                                  <Link to={''} className="delete_schedule">
+                                  <Link to={""} onClick={(e)=>{
+                                    e.preventDefault();
+                                    const data={
+                                      day:"wednesday",
+                                      id: row._id
+                                    }
+                                    dispatch(delete_TimeSlotes(data))
+                                  }}  className="delete_schedule">
                                     <FaTimes />
                                   </Link>
                                 </div>
@@ -233,7 +273,14 @@ function ScheduleTiming() {
                               {doctor.thursday.map((row) => (
                                 <div key={row._id} className="doc-slot-list">
                                   {row.start} - {row.end}
-                                  <Link to={''} className="delete_schedule">
+                                  <Link to={""} onClick={(e)=>{
+                                    e.preventDefault();
+                                    const data={
+                                      day:"thursday",
+                                      id: row._id
+                                    }
+                                    dispatch(delete_TimeSlotes(data))
+                                  }}  className="delete_schedule">
                                     <FaTimes />
                                   </Link>
                                 </div>
@@ -256,7 +303,14 @@ function ScheduleTiming() {
                               {doctor.friday.map((row) => (
                                 <div key={row._id} className="doc-slot-list">
                                   {row.start} - {row.end}
-                                  <Link to={''} className="delete_schedule">
+                                  <Link to={""} onClick={(e)=>{
+                                    e.preventDefault();
+                                    const data={
+                                      day:"friday",
+                                      id: row._id
+                                    }
+                                    dispatch(delete_TimeSlotes(data))
+                                  }}  className="delete_schedule">
                                     <FaTimes />
                                   </Link>
                                 </div>
@@ -279,7 +333,14 @@ function ScheduleTiming() {
                               {doctor.saturday.map((row) => (
                                 <div key={row._id} className="doc-slot-list">
                                   {row.start} - {row.end}
-                                  <Link to={''} className="delete_schedule">
+                                  <Link to={""} onClick={(e)=>{
+                                    e.preventDefault();
+                                    const data={
+                                      day:"saturday",
+                                      id: row._id
+                                    }
+                                    dispatch(delete_TimeSlotes(data))
+                                  }}  className="delete_schedule">
                                     <FaTimes />
                                   </Link>
                                 </div>

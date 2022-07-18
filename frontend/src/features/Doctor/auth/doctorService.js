@@ -46,8 +46,22 @@ const addSlotes = async (token,Data) => {
     localStorage.setItem('doctorinfo', JSON.stringify(data));
   }
   return data;
-
 }
+
+// delete Slotes
+const deleteSlotes = async (token,Data) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const { data } = await api.deleteTimeSlots(Data, config);
+  if (data) {
+    localStorage.setItem('doctorinfo', JSON.stringify(data));
+  }
+  return data;
+}
+
 // Logout doctor
 const logout = () => [localStorage.removeItem('doctorinfo')];
 
@@ -57,6 +71,7 @@ const doctorService = {
   EditDoctor,
   editPassword,
   addSlotes,
+  deleteSlotes
 };
 
 export default doctorService;

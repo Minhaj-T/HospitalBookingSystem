@@ -68,6 +68,7 @@ const editUser = asyncHandler(async (req, res) => {
 // @desc  get Doctors
 // @rout  GET /api/admin/fetch-doctors
 const fetchDoctors = asyncHandler(async (req, res) => {
+  console.log("callllll....");
   const doctor = await Doctor.find({});
   if (doctor) {
     res.status(200).json({

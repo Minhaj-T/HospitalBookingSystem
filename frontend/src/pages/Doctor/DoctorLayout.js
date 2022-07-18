@@ -46,7 +46,7 @@ function DoctorLayout({ children }) {
                       <img src={doctor.profile_image} alt="User" />
                     </NavLink>
                     <div className="profile-det-info">
-                      <h3>{doctor.name}</h3>
+                      <h3>{doctor.name}{" "} {doctor.lastname}</h3>
 
                       <div className="patient-details">
                         <h5 className="mb-0">{doctor.specialization}</h5>

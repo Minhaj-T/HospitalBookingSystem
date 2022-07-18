@@ -10,6 +10,8 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
+  addSloat:false,
+  deleteSlotes:false,
   message: '',
 };
 
@@ -64,6 +66,19 @@ export const add_Slotes = createAsyncThunk(
   }
 );
 
+//delete the slotes
+export const delete_TimeSlotes = createAsyncThunk(
+  'auth/delete_Slotes',
+  async (Data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().doctorAuth.doctor.token;
+      return await doctorService.deleteSlotes(token, Data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(errorHandler(error));
+    }
+  }
+);
+
 
 
 // Logout the Doctor
@@ -80,6 +95,8 @@ const doctorAuth = createSlice({
       state.isError = false;
       state.isLoading = false;
       state.isSuccess = false;
+      state.addSloat=false;
+      state.deleteSlotes=false;
       state.message = '';
     },
   },
@@ -130,10 +147,22 @@ const doctorAuth = createSlice({
       [add_Slotes.fulfilled]: (state,action) => {
         state.doctor = action.payload;
         state.isLoading = false;
-        state.isSuccess = true;
+        state.addSloat = true;
       },
       [add_Slotes.rejected]: (state, action) => {
-        
+        state.message = action.payload;
+        state.isLoading = false;
+        state.isError = true;
+      },
+      [delete_TimeSlotes.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [delete_TimeSlotes.fulfilled]: (state,action) => {
+        state.doctor = action.payload;
+        state.isLoading = false;
+        state.deleteSlotes = true;
+      }, 
+      [delete_TimeSlotes.rejected]: (state, action) => {
         state.message = action.payload;
         state.isLoading = false;
         state.isError = true;
@@ -141,6 +170,8 @@ const doctorAuth = createSlice({
       [logout.fulfilled]: (state) => {
         state.doctor = null;
         state.isSuccess = false;
+        state.addSloat = false;
+        state.deleteSlotes=false;
       },
   },
 });
