@@ -29,6 +29,8 @@ const UserProfileSettings = React.lazy(()=>import('./components/User/ProfileSett
 const Favourites = React.lazy(() =>import('./components/User/FavouriteDoctor/Favourites'));
 const DoctorProfile = React.lazy(() => import('./components/User/DoctorProfile/DoctorProfile'));
 const BookAppoinment = React.lazy(() => import('./components/User/BookAppoinment/BookAppoinment'));
+const CheckoutPage = React.lazy(()=> import('./components/User/Chekout/Checkout'));
+
 
 // Admin
 const AdminLogin = React.lazy(() =>import('./components/Admin/AdminLogni/AdminLogin'));
@@ -87,6 +89,9 @@ function App() {
               : <Login/> }/>
               <Route path="book-appoinment/:id" element={ user 
               ? <BookAppoinment/> 
+              : <Login/> }/>
+              <Route path="checkout/:id" element={ user 
+              ? <CheckoutPage/> 
               : <Login/> }/>
             </Route>
 
