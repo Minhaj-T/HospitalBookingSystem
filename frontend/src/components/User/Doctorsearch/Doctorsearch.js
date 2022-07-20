@@ -147,7 +147,7 @@ function Doctorsearch() {
                           <div className="doc-info-cont">
                             <h4 className="doc-name">
                               <Link to={''}>
-                                Dr.{row.name}.{row.lastname}
+                                Dr.{row.name}{" "}{row.lastname}
                               </Link>
                             </h4>
                             <p className="doc-speciality">{row.degree}</p>
@@ -205,7 +205,7 @@ function Doctorsearch() {
                             </Link>
                             <Link
                               className="apt-btn"
-                              to={'/user/book-appoinment'}
+                              to={`/user/book-appoinment/${row._id}`}
                             >
                               Book Appointment
                             </Link>

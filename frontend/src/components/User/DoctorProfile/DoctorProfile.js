@@ -1,7 +1,6 @@
 import './doctorprofile.css';
 import '../Doctorsearch/doctorsearch.css';
 import * as api from '../../../api/index'
-import mm from '../../../images/myImage.jpg';
 import { Link, useParams } from 'react-router-dom';
 import {
   FaMapMarkerAlt,
@@ -13,6 +12,7 @@ import {
 } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import Spinner from '../Spinner/Spinner';
+import moment from 'moment';
 
 function DoctorProfile() {
   const { id } = useParams();
@@ -54,7 +54,7 @@ function DoctorProfile() {
                     <img src={Doctor?.profile_image}className="img-fluid" alt="User" />
                   </div>
                   <div className="doc-info-cont">
-                    <h4 className="doc-name">Dr.{Doctor?.name}</h4>
+                    <h4 className="doc-name">Dr.{Doctor?.name}{" "}{Doctor?.lastname}</h4>
                     <p className="doc-speciality">
                     {Doctor?.degree}
                     </p>
@@ -319,7 +319,7 @@ function DoctorProfile() {
                           <div className="listing-hours">
                             <div className="listing-day current">
                               <div className="day">
-                                Today <span>5 Nov 2019</span>
+                                Today <span>{moment().format('LL')}</span>
                               </div>
                               <div className="time-items">
                                 <span className="open-status">

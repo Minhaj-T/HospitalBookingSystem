@@ -110,20 +110,10 @@
 .time-slot li .timing:last-child {
 	margin-bottom: 0;
 }
-.time-slot li .timing.selected {
+.time-slot li .timing.active {
 	background-color: #42c0fb;
 	border: 1px solid #42c0fb;
 	color: #fff;
-}
-.time-slot li .timing.selected::before {
-    color: #fff;
-    content: "\f00c";
-    font-family: "Font Awesome 5 Free";
-	font-size: 12px;
-    font-weight: 900;
-    position: absolute;
-    right: 6px;
-    top: 6px;
 }
 .schedule-list {
     border-bottom: 1px solid #cfcfcf;

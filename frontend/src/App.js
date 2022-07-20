@@ -85,9 +85,9 @@ function App() {
             <Route path="favourites" element={ user 
               ? <UserLayout children={<Favourites/>}/> 
               : <Login/> }/>
-              <Route path="book-appoinment" element={ user 
+              <Route path="book-appoinment/:id" element={ user 
               ? <BookAppoinment/> 
-              : <Login/> }/> 
+              : <Login/> }/>
             </Route>
 
 
