@@ -12,9 +12,15 @@ function BookAppoinment() {
   const [Date, setDate] = useState([]);
   const { id } = useParams();
   const [active, setActive] = useState('');
+  const [Day, setDay] = useState('');
+  const [DayDate, setDayDate] = useState('');
+  const [Sloat, setSloat] = useState('');
 
-  const handleClick = (event) => {
-    setActive(event.target.value);
+  const handleClick = (e) => {
+    setActive(e.target.value);
+    setDay(e.currentTarget.getAttribute('data-value'));
+    setDayDate(e.currentTarget.getAttribute('data-value1'));
+    setSloat(e.currentTarget.getAttribute('data-value2'));
   };
 
   let day0 = moment().format('dddd').toLowerCase();
@@ -24,6 +30,12 @@ function BookAppoinment() {
   let day4 = moment().add(4, 'days').format('dddd').toLowerCase();
   let day5 = moment().add(5, 'days').format('dddd').toLowerCase();
   let day6 = moment().add(6, 'days').format('dddd').toLowerCase();
+  const SlotDetails = {
+    Id: active,
+    Day: Day,
+    Date: DayDate,
+    Sloat:Sloat
+  };
 
   const [Doctor, setDoctor] = useState({ loading: false, done: false });
 
@@ -131,8 +143,11 @@ function BookAppoinment() {
                               Doctor[day0].map((row) => (
                                 <button
                                   onClick={handleClick}
-                                  value={row._id}
                                   key={row._id}
+                                  value={row._id}
+                                  data-value={day0}
+                                  data-value1={moment().format('YYYY-M-D')}
+                                  data-value2={`${row.start}-${row.end}`}
                                   className={
                                     active === row._id
                                       ? 'active timing'
@@ -150,7 +165,13 @@ function BookAppoinment() {
                                 <button
                                   onClick={handleClick}
                                   value={row._id}
+                                  data-value={day1}
+                                  data-value1={moment()
+                                    .add(1, 'days')
+                                    .format('YYYY-M-D')
+                                    .toLowerCase()}
                                   key={row._id}
+                                  data-value2={`${row.start}-${row.end}`}
                                   className={
                                     active === row._id
                                       ? 'active timing'
@@ -169,6 +190,12 @@ function BookAppoinment() {
                                   onClick={handleClick}
                                   value={row._id}
                                   key={row._id}
+                                  data-value={day2}
+                                  data-value1={moment()
+                                    .add(2, 'days')
+                                    .format('YYYY-M-D')
+                                    .toLowerCase()}
+                                  data-value2={`${row.start}-${row.end}`}
                                   className={
                                     active === row._id
                                       ? 'active timing'
@@ -187,6 +214,12 @@ function BookAppoinment() {
                                   onClick={handleClick}
                                   value={row._id}
                                   key={row._id}
+                                  data-value={day3}
+                                  data-value1={moment()
+                                    .add(3, 'days')
+                                    .format('YYYY-M-D')
+                                    .toLowerCase()}
+                                  data-value2={`${row.start}-${row.end}`}
                                   className={
                                     active === row._id
                                       ? 'active timing'
@@ -205,6 +238,12 @@ function BookAppoinment() {
                                   onClick={handleClick}
                                   value={row._id}
                                   key={row._id}
+                                  data-value={day4}
+                                  data-value1={moment()
+                                    .add(4, 'days')
+                                    .format('YYYY-M-D')
+                                    .toLowerCase()}
+                                  data-value2={`${row.start}-${row.end}`}
                                   className={
                                     active === row._id
                                       ? 'active timing'
@@ -223,6 +262,12 @@ function BookAppoinment() {
                                   onClick={handleClick}
                                   value={row._id}
                                   key={row._id}
+                                  data-value={day5}
+                                  data-value1={moment()
+                                    .add(5, 'days')
+                                    .format('YYYY-M-D')
+                                    .toLowerCase()}
+                                  data-value2={`${row.start}-${row.end}`}
                                   className={
                                     active === row._id
                                       ? 'active timing'
@@ -241,6 +286,12 @@ function BookAppoinment() {
                                   onClick={handleClick}
                                   value={row._id}
                                   key={row._id}
+                                  data-value={day6}
+                                  data-value1={moment()
+                                    .add(6, 'days')
+                                    .format('YYYY-M-D')
+                                    .toLowerCase()}
+                                  data-value2={`${row.start}-${row.end}`}
                                   className={
                                     active === row._id
                                       ? 'active timing'
@@ -264,7 +315,11 @@ function BookAppoinment() {
 
               {/* Submit Section */}
               <div className="submit-section proceed-btn text-right">
-                <Link to={''} className="btn btn-primary submit-btn">
+                <Link
+                  to={`/user/checkout/${Doctor['_id']}`}
+                  state={SlotDetails}
+                  className="btn btn-primary submit-btn"
+                >
                   Proceed to Pay
                 </Link>
               </div>

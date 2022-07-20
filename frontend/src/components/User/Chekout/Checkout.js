@@ -1,13 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './checkout.css';
-import { Link } from 'react-router-dom';
-import mm from '../../../images/myImage.jpg';
-import Header from '../Header/Header'
+import { Link, useParams, useLocation } from 'react-router-dom';
+import Header from '../Header/Header';
+import * as api from '../../../api/index';
+import Spinner from '../Spinner/Spinner';
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 function Checkout() {
+  const { id } = useParams();
+  const { state } = useLocation();
+  const { user } = useSelector((state) => state.auth);
+  const [Doctor, setDoctor] = useState({ loading: false, done: false });
+  const { Id, Day, Date, Sloat } = state;
+
+  useEffect(() => {
+    !Doctor.done && getDoctor(id);
+  }, []);
+
+  const getDoctor = async (id) => {
+    setDoctor((prev) => ({ ...prev, loading: true }));
+    let { data } = await api.getDoctor(id);
+    if (data?.data) {
+      setDoctor((prev) => ({
+        ...prev,
+        ...data?.data,
+        loading: false,
+        done: true,
+      }));
+    }
+  };
+
+  // Loading page
+  if (Doctor.loading) {
+    return <Spinner />;
+  }
+  console.log('ckeckout');
   return (
     <>
-	<Header/>
+      <Header />
       {/* <!-- Page Content --> */}
       <div className="content">
         <div className="container mt-5">
@@ -23,26 +54,46 @@ function Checkout() {
                       <div className="row">
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
-                            <label>First Name</label>
-                            <input className="form-control" type="text" />
-                          </div>
-                        </div>
-                        <div className="col-md-6 col-sm-12">
-                          <div className="form-group card-label">
-                            <label>Last Name</label>
-                            <input className="form-control" type="text" />
+                            <label>Full Name</label>
+                            <input
+                              className="form-control"
+                              value={user?.name}
+                              type="text"
+                              readOnly
+                            />
                           </div>
                         </div>
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
                             <label>Email</label>
-                            <input className="form-control" type="email" />
+                            <input
+                              className="form-control"
+                              value={user?.email}
+                              type="text"
+                              readOnly
+                            />
                           </div>
                         </div>
                         <div className="col-md-6 col-sm-12">
                           <div className="form-group card-label">
                             <label>Phone</label>
-                            <input className="form-control" type="text" />
+                            <input
+                              className="form-control"
+                              value={user?.mobile}
+                              type="text"
+                              readOnly
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-6 col-sm-12">
+                          <div className="form-group card-label">
+                            <label>Place</label>
+                            <input
+                              className="form-control"
+                              value={user?.city}
+                              type="text"
+                              readOnly
+                            />
                           </div>
                         </div>
                       </div>
@@ -101,15 +152,18 @@ function Checkout() {
                   {/* <!-- Booking Doctor Info --> */}
                   <div className="booking-doc-info mb-3">
                     <Link to={''} className="booking-doc-img">
-                      <img src={mm} alt="User" />
+                      <img src={Doctor?.profile_image} alt="User" />
                     </Link>
                     <div className="booking-info">
                       <h4>
-                        <Link to={''}>Dr. Darren Elder</Link>
+                        <Link to={''}>
+                          Dr.{Doctor?.name} {Doctor?.lastname}
+                        </Link>
                       </h4>
                       <div className="clinic-details">
                         <p className="doc-location">
-                          <i className="fas fa-map-marker-alt"></i> Newyork, USA
+                          <FaMapMarkerAlt />
+                          {Doctor?.state},{Doctor?.country}
                         </p>
                       </div>
                     </div>
@@ -120,10 +174,11 @@ function Checkout() {
                     <div className="booking-item-wrap">
                       <ul className="booking-date">
                         <li>
-                          Date <span>16 Nov 2019</span>
+                          Date <span>{Date ? Date : 'yyy-mm-dd'}</span>
                         </li>
                         <li>
-                          Time <span>10:00 AM</span>
+                          Time{' '}
+                          <span>{Sloat ? Sloat : '00:00 AM-00:00 PM'}</span>
                         </li>
                       </ul>
                       <ul className="booking-fee">
@@ -138,7 +193,7 @@ function Checkout() {
                         <ul className="booking-total-list">
                           <li>
                             <span>Total</span>
-                            <span className="total-cost">₹ 160</span>
+                            <span className="total-cost">₹ 110</span>
                           </li>
                         </ul>
                       </div>
