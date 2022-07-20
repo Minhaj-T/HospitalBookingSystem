@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect} from "react";
+// import { useDispatch, useSelector } from "react-redux";
 import errorGif from "../../../images/404.gif"
 
 function ErrorPage() {
   
-  const { posts } = useSelector((state) => state);
+  // const { posts } = useSelector((state) => state);
   
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     document.title = "404 - Newsonic"

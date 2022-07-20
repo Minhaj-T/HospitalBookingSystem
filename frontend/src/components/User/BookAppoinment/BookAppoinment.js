@@ -1,13 +1,7 @@
 import './bookappoinment.css';
-import { Link, NavLink, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Header from '../Header/Header';
-import {
-  FaCalendarAlt,
-  FaChevronDown,
-  FaChevronLeft,
-  FaChevronRight,
-  FaMapMarked,
-} from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaMapMarked } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import * as api from '../../../api/index';
 import Spinner from '../Spinner/Spinner';
@@ -67,7 +61,7 @@ function BookAppoinment() {
                 <div className="card-body">
                   <div className="booking-doc-info">
                     <Link to={''} className="booking-doc-img">
-                      <img src={Doctor?.profile_image} alt="User Image" />
+                      <img src={Doctor?.profile_image} alt="User" />
                     </Link>
                     <div className="booking-info">
                       <h4>

@@ -3,7 +3,7 @@ import "../FavouriteDoctor/favourites.css"
 function BookDoctor() {
   return (
     <>
-   <section className="section section-doctor">
+   {/* <section className="section section-doctor">
 				<div className="container-fluid">
 				   <div className="row">
 						<div className="col-lg-4">
@@ -66,7 +66,7 @@ function BookDoctor() {
 						</div>
 				   </div>
 				</div>
-			</section>
+			</section> */}
     </>
 
   )
