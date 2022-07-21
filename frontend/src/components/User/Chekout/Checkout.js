@@ -4,8 +4,13 @@ import { Link, useParams, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import * as api from '../../../api/index';
 import Spinner from '../Spinner/Spinner';
-import { FaMapMarkerAlt } from 'react-icons/fa';
+import { FaCreditCard, FaMapMarkerAlt } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
+import {
+  createRazorOrder,
+  verifyAndPay,
+} from "../../../api/payment";
+import {notification} from '../../../utilities/notification'
 
 function Checkout() {
   const { id } = useParams();
@@ -13,6 +18,7 @@ function Checkout() {
   const { user } = useSelector((state) => state.auth);
   const [Doctor, setDoctor] = useState({ loading: false, done: false });
   const { Id, Day, Date, Sloat } = state;
+  const totalAmount=56;
 
   useEffect(() => {
     !Doctor.done && getDoctor(id);
@@ -31,11 +37,81 @@ function Checkout() {
     }
   };
 
+
+  function loadRazorpay(e) {
+    e.preventDefault();
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onerror = () => {
+      alert("Razorpay SDK failed to load. Are you online?");
+    };
+
+    script.onload = async () => {
+      try {
+        setDoctor((prev) => ({ ...prev, loading: true }));
+        const result = await createRazorOrder({
+          amount: totalAmount *100,
+        });
+
+
+        const { amount,  id:order_id, currency, key } = result.data;
+
+        const options = {
+          key: key,
+          amount: amount.toString(),
+          currency: currency,
+          name: "Carewell",
+          description: "Payment for Campaign",
+          order_id: order_id,
+          handler: async function (response) {
+            const { data } = await verifyAndPay({
+              ...response,
+              amount: amount,
+            });
+
+            if (data.status) {
+              // showToast(data.message, "success");
+              // setPayStatus("SUCCESS");
+              // dispatch(getSponsorAds());
+              // setTransId(data.transId);
+              notification.success(data.message);
+            }
+          },
+          modal: {
+            escape: false,
+            ondismiss: function () {
+              notification.warn('Payment Cancelled !');
+            },
+          },
+          prefill: {
+            name: user?.name,
+            email: user?.email,
+            contact: user?.mobile,
+          },
+          notes: {
+            address: user?.email,
+          },
+          theme: {
+            color: "#2a1961",
+          },
+        };
+        setDoctor((prev) => ({ ...prev, loading: false }));
+        const paymentObject = new window.Razorpay(options);
+        paymentObject.open();
+      } catch (err) {
+        notification.error('Payment Cancelled !');
+      }
+    };
+    document.body.appendChild(script);
+  }
+
+
+
   // Loading page
   if (Doctor.loading) {
     return <Spinner />;
   }
-  console.log('ckeckout');
+  // console.log('ckeckout',Id, Day, Date, Sloat);
   return (
     <>
       <Header />
@@ -106,22 +182,22 @@ function Checkout() {
                       {/* <!-- Paypal Payment --> */}
                       <div className="payment-list">
                         <label className="payment-radio paypal-option">
-                          <input type="radio" name="radio" />
-                          <span className="checkmark"></span>
-                          Google Pay
+                          {/* <input type="radio" name="radio" /> */}
                         </label>
+                        <FaCreditCard style={{marginRight:8}}/>
+                        <span style={{color: '#20c0f3',fontWeight: 'bold'}}>Razorpay only</span>
                       </div>
                       {/* <!-- /Paypal Payment --> */}
 
                       {/* <!-- Terms Accept --> */}
                       <div className="terms-accept">
-                        <div className="custom-checkbox">
+                        {/* <div className="custom-checkbox">
                           <input type="checkbox" id="terms_accept" />
                           <label for="terms_accept">
                             I have read and accept{' '}
                             <Link to={''}>Terms &amp; Conditions</Link>
                           </label>
-                        </div>
+                        </div> */}
                       </div>
                       {/* <!-- /Terms Accept --> */}
 
@@ -130,6 +206,7 @@ function Checkout() {
                         <button
                           type="submit"
                           className="btn btn-primary submit-btn"
+                          onClick={loadRazorpay}
                         >
                           Confirm and Pay
                         </button>
@@ -162,7 +239,7 @@ function Checkout() {
                       </h4>
                       <div className="clinic-details">
                         <p className="doc-location">
-                          <FaMapMarkerAlt />
+                          <FaMapMarkerAlt style={{marginRight:4}}/>
                           {Doctor?.state},{Doctor?.country}
                         </p>
                       </div>
