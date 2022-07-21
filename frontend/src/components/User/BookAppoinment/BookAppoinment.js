@@ -14,13 +14,13 @@ function BookAppoinment() {
   const [active, setActive] = useState('');
   const [Day, setDay] = useState('');
   const [DayDate, setDayDate] = useState('');
-  const [Sloat, setSloat] = useState('');
+  const [Slot, setSlot] = useState('');
 
   const handleClick = (e) => {
     setActive(e.target.value);
     setDay(e.currentTarget.getAttribute('data-value'));
     setDayDate(e.currentTarget.getAttribute('data-value1'));
-    setSloat(e.currentTarget.getAttribute('data-value2'));
+    setSlot(e.currentTarget.getAttribute('data-value2'));
   };
 
   let day0 = moment().format('dddd').toLowerCase();
@@ -34,7 +34,7 @@ function BookAppoinment() {
     Id: active,
     Day: Day,
     Date: DayDate,
-    Sloat:Sloat
+    Slot:Slot
   };
 
   const [Doctor, setDoctor] = useState({ loading: false, done: false });
@@ -158,6 +158,7 @@ function BookAppoinment() {
                                   <span>{row.end}</span>
                                 </button>
                               ))}
+                              <div className="p-1"></div>
                           </li>
                           <li>
                             {Doctor.monday &&
@@ -182,6 +183,7 @@ function BookAppoinment() {
                                   <span>{row.end}</span>
                                 </button>
                               ))}
+                              <div className="p-1"></div>
                           </li>
                           <li>
                             {Doctor.monday &&
@@ -206,6 +208,7 @@ function BookAppoinment() {
                                   <span>{row.end}</span>
                                 </button>
                               ))}
+                              <div className="p-1"></div>
                           </li>
                           <li>
                             {Doctor.monday &&
@@ -230,6 +233,7 @@ function BookAppoinment() {
                                   <span>{row.end}</span>
                                 </button>
                               ))}
+                              <div className="p-1"></div>
                           </li>
                           <li>
                             {Doctor.monday &&
@@ -254,6 +258,7 @@ function BookAppoinment() {
                                   <span>{row.end}</span>
                                 </button>
                               ))}
+                              <div className="p-1"></div>
                           </li>
                           <li>
                             {Doctor.monday &&
@@ -278,6 +283,7 @@ function BookAppoinment() {
                                   <span>{row.end}</span>
                                 </button>
                               ))}
+                              <div className="p-1"></div>
                           </li>
                           <li>
                             {Doctor.monday &&
@@ -302,6 +308,7 @@ function BookAppoinment() {
                                   <span>{row.end}</span>
                                 </button>
                               ))}
+                             <div className="p-1"></div>
                           </li>
                         </ul>
                       </div>

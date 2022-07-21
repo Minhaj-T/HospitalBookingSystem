@@ -5,6 +5,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Signup from './components/User/Signup/Signup';
 
+
+
 //Utilities and Components
 // const Loader = React.lazy(() => import("./components/Loader/Loader"));
 import Spinner from './components/User/Spinner/Spinner';
@@ -30,6 +32,8 @@ const Favourites = React.lazy(() =>import('./components/User/FavouriteDoctor/Fav
 const DoctorProfile = React.lazy(() => import('./components/User/DoctorProfile/DoctorProfile'));
 const BookAppoinment = React.lazy(() => import('./components/User/BookAppoinment/BookAppoinment'));
 const CheckoutPage = React.lazy(()=> import('./components/User/Chekout/Checkout'));
+const Bookingsuccess = React.lazy(()=> import('./components/User/bookingSuccess/BookingSuccess'));
+
 
 
 // Admin
@@ -92,6 +96,9 @@ function App() {
               : <Login/> }/>
               <Route path="checkout/:id" element={ user 
               ? <CheckoutPage/> 
+              : <Login/> }/>
+              <Route path="booking-success" element={ user 
+              ? <Bookingsuccess/> 
               : <Login/> }/>
             </Route>
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './checkout.css';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams, useLocation,useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import * as api from '../../../api/index';
 import Spinner from '../Spinner/Spinner';
@@ -11,17 +11,29 @@ import {
   verifyAndPay,
 } from "../../../api/payment";
 import {notification} from '../../../utilities/notification'
+import {calculateTime} from '../../../utilities/DateItration' 
 
 function Checkout() {
+  const navigate= useNavigate();
   const { id } = useParams();
   const { state } = useLocation();
   const { user } = useSelector((state) => state.auth);
   const [Doctor, setDoctor] = useState({ loading: false, done: false });
-  const { Id, Day, Date, Sloat } = state;
-  const totalAmount=56;
+  const { Id, Day, Date, Slot } = state;
+  const [fullAmount, setfullAmount] = useState("")
+  const [start,end] = Slot.split('-');
+ 
+  //create a tocken
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user['token']}`,
+    },
+  };
+
 
   useEffect(() => {
     !Doctor.done && getDoctor(id);
+    setfullAmount(calculateTime(start, end))
   }, []);
 
   const getDoctor = async (id) => {
@@ -50,7 +62,7 @@ function Checkout() {
       try {
         setDoctor((prev) => ({ ...prev, loading: true }));
         const result = await createRazorOrder({
-          amount: totalAmount *100,
+          amount: fullAmount *100,
         });
 
 
@@ -67,14 +79,24 @@ function Checkout() {
             const { data } = await verifyAndPay({
               ...response,
               amount: amount,
-            });
+              doctorId:id,
+              slotId:Id,
+              Day:Day
+            },config);
 
             if (data.status) {
               // showToast(data.message, "success");
               // setPayStatus("SUCCESS");
               // dispatch(getSponsorAds());
               // setTransId(data.transId);
-              notification.success(data.message);
+              notification.success(data.message); 
+              navigate('/user/booking-success',
+              {state:{
+                name:Doctor?.name,
+                day:Day,
+                slot:Slot
+              }}
+              )
             }
           },
           modal: {
@@ -111,7 +133,7 @@ function Checkout() {
   if (Doctor.loading) {
     return <Spinner />;
   }
-  // console.log('ckeckout',Id, Day, Date, Sloat);
+  console.log('ckeckout',Day);
   return (
     <>
       <Header />
@@ -255,22 +277,22 @@ function Checkout() {
                         </li>
                         <li>
                           Time{' '}
-                          <span>{Sloat ? Sloat : '00:00 AM-00:00 PM'}</span>
+                          <span>{Slot ? Slot : '00:00 AM-00:00 PM'}</span>
                         </li>
                       </ul>
                       <ul className="booking-fee">
                         <li>
-                          Consulting Fee <span>₹ 100</span>
+                          Consulting Fee <span>₹ {fullAmount}</span>
                         </li>
                         <li>
-                          Booking Fee <span>₹ 10</span>
+                          Booking Fee <span>₹ free</span>
                         </li>
                       </ul>
                       <div className="booking-total">
                         <ul className="booking-total-list">
                           <li>
                             <span>Total</span>
-                            <span className="total-cost">₹ 110</span>
+                            <span className="total-cost">₹ {fullAmount}</span>
                           </li>
                         </ul>
                       </div>

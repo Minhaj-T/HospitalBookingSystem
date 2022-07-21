@@ -15,3 +15,14 @@ export const iterateDate = () => {
     console.log(error);
   }
 };
+
+export const calculateTime = (start, end) => {
+  var startTime = moment(start, 'HH:mm:ss a');
+  var endTime = moment(end, 'HH:mm:ss a');
+  var duration = moment.duration(endTime.diff(startTime));
+  var minutes = parseInt(duration.asMinutes());
+  let chargesPerMinute = 16.667;
+
+  const result = Math.round(chargesPerMinute * minutes);
+  return result;
+};

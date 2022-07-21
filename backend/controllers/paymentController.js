@@ -30,14 +30,19 @@ const createOrder = asyncHandler(async (req, res) => {
 // @desc    Verify Rayzor payment
 // @rout    POST /api/payment/verify-payment
 const verifyPayment = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  
+  
     const {
       razorpay_payment_id,
       razorpay_order_id,
       razorpay_signature,
       amount,
+      doctorId,
+      slotId,
+      Day
       // decodeId: sponsorId,
     } = req.body;
-  
     let hmac = crypto.createHmac("sha256", process.env.RAZORPAY_SECRET);
     hmac.update(razorpay_order_id + "|" + razorpay_payment_id);
     hmac = hmac.digest("hex");
@@ -48,7 +53,11 @@ const verifyPayment = asyncHandler(async (req, res) => {
         date: new Date(),
         amount: amount / 100,
         method: "RAZOR",
-        // sponsorId,
+        userId:userId,
+        doctorId:doctorId,
+        slotId:slotId,
+        day: Day
+
       });
       await newTransaction.save();
   

@@ -8,4 +8,4 @@ const API = axios.create({
 
 //Payment Endpoints
 export const createRazorOrder = (data) => API.post(`/create-order`,data);
-export const verifyAndPay = (data) => API.post(`/verify-payment`,data);
+export const verifyAndPay = (data,config) => API.post(`/verify-payment`,data,config);
