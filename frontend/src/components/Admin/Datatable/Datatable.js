@@ -1,6 +1,6 @@
 import './datatable.scss';
 import { DataGrid } from '@mui/x-data-grid';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
