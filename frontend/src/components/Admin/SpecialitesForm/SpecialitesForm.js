@@ -15,6 +15,7 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { addSpecialities } from '../../../features/admin/auth/adminauthSlice';
 import { UploadImage } from '../../../utilities/cloudinaryImageUpload';
 import Spinner from '../../User/Spinner/Spinner';
+
 let Input = styled('input')({
   display: 'none',
 });
@@ -60,7 +61,7 @@ BootstrapDialogTitle.propTypes = {
 function SpecialitesForm() {
   const [open, setOpen] = React.useState(false);
   const [pic, setPic] = React.useState('');
-  const [Loading, setLoading] = React.useState(false)
+  const [Loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
 
   const [formData, setFormData] = React.useState({
@@ -79,15 +80,14 @@ function SpecialitesForm() {
   //dump the image into cloudinary ImageUpload
   const postDetails = async (pics) => {
     try {
-      setLoading(true)
+      setLoading(true);
       const data = await UploadImage(pics);
       setPic(data.secure_url.toString());
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
-
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -104,7 +104,7 @@ function SpecialitesForm() {
   const handleClose = () => {
     setOpen(false);
   };
-  
+
   if (Loading) {
     return <Spinner />;
   }

@@ -81,19 +81,19 @@ function SpecialtiesDatatable() {
 
   return (
     <>
-    <div className="datatable1">
-      <div style={{ height: 400, width: '45%' }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          getRowId={(row) => row._id}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-        />
+      <div className="datatable1">
+        <div style={{ height: 400, width: '45%' }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+          />
+        </div>
       </div>
-    </div>
 
-    <div>
+      <div>
         <Modal
           open={open}
           onClose={handleClose}
@@ -119,8 +119,7 @@ function SpecialtiesDatatable() {
                 }}
               >
                 Cancel
-              </Button>
-              {' '}
+              </Button>{' '}
               <Button
                 className="delete-confirm-btn"
                 size="small"
