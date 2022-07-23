@@ -1,23 +1,23 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import adminauthService from "./adminauthService";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import adminauthService from './adminauthService';
 import { errorHandler } from '../../../utilities/errorMessege';
 // Get admin from localStorage
-const admin = JSON.parse(localStorage.getItem("admininfo"));
+const admin = JSON.parse(localStorage.getItem('admininfo'));
 
 const initialState = {
   admin: admin ? admin : null,
   isError: false,
   isSuccess: false,
   isLoading: false,
-  users:[],
-  doctors:[],
-  specialties:[],
-  message: "",
+  users: [],
+  doctors: [],
+  specialties: [],
+  message: '',
 };
 
 //admin login
 export const login = createAsyncThunk(
-  "auth/adminlogin",
+  'auth/adminlogin',
   async (admin, thunkAPI) => {
     try {
       return adminauthService.login(admin);
@@ -37,30 +37,36 @@ export const fetchUsers = createAsyncThunk('fetch-Users', async (thunkAPI) => {
 });
 
 //block-User
-export const Blockusers = createAsyncThunk('block-Users', async (data,thunkAPI) => {
-  const{id,status}=data;
-  try {
-    return adminauthService.BlockUsers(id,status); 
-  } catch (error) {
-    return thunkAPI.rejectWithValue(errorHandler(error));
+export const Blockusers = createAsyncThunk(
+  'block-Users',
+  async (data, thunkAPI) => {
+    const { id, status } = data;
+    try {
+      return adminauthService.BlockUsers(id, status);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(errorHandler(error));
+    }
   }
-});
+);
 
 //remove-User
-export const Deleteuser = createAsyncThunk('delete-Users', async (id,thunkAPI) => {
-  try {
-    return adminauthService.RemoveUser(id);
-  } catch (error) {
-    return thunkAPI.rejectWithValue(errorHandler(error));
+export const Deleteuser = createAsyncThunk(
+  'delete-Users',
+  async (id, thunkAPI) => {
+    try {
+      return adminauthService.RemoveUser(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(errorHandler(error));
+    }
   }
-});
+);
 
 // get all doctors
 export const allDoctors = createAsyncThunk(
   'fetch-doctors',
-  async (_,thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().adminAuth.admin.token
+      const token = thunkAPI.getState().adminAuth.admin.token;
       return adminauthService.getallDoctors(token);
     } catch (error) {
       return thunkAPI.rejectWithValue(errorHandler(error));
@@ -73,7 +79,7 @@ export const addDoctor = createAsyncThunk(
   'add-Doctor',
   async (doctor, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().adminAuth.admin.token
+      const token = thunkAPI.getState().adminAuth.admin.token;
       return adminauthService.addDoctor(doctor);
     } catch (error) {
       return thunkAPI.rejectWithValue(errorHandler(error));
@@ -93,11 +99,23 @@ export const deleteDoctor = createAsyncThunk(
   }
 );
 
+//block-Doctor
+export const BlockDoctors = createAsyncThunk(
+  'block-Doctors',
+  async (data, thunkAPI) => {
+    const { id, status } = data;
+    try {
+      return adminauthService.BlockDoctors(id, status);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(errorHandler(error));
+    }
+  }
+);
 
 // get all specialties
 export const allSpecialties = createAsyncThunk(
   'fetch-Specialties',
-  async (_,thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
       return await adminauthService.getallSpecialties();
     } catch (error) {
@@ -106,24 +124,24 @@ export const allSpecialties = createAsyncThunk(
   }
 );
 
- // add specialties
- export const addSpecialities= createAsyncThunk(
-  "add-specialities",
-  async (specialty,thunkAPI) => {
+// add specialties
+export const addSpecialities = createAsyncThunk(
+  'add-specialities',
+  async (specialty, thunkAPI) => {
     try {
       return await adminauthService.addSpecialty(specialty);
     } catch (error) {
       return thunkAPI.rejectWithValue(errorHandler(error));
     }
   }
- )
+);
 
-  //Delete specialties
+//Delete specialties
 export const deleteSpecialties = createAsyncThunk(
   'delete-specialties',
   async (SpecialtiesId, thunkAPI) => {
     try {
-      return await adminauthService.deleteSpecialty(SpecialtiesId)
+      return await adminauthService.deleteSpecialty(SpecialtiesId);
     } catch (error) {
       return thunkAPI.rejectWithValue(errorHandler(error));
     }
@@ -131,14 +149,14 @@ export const deleteSpecialties = createAsyncThunk(
 );
 
 const adminauthSlice = createSlice({
-  name: "adminAuth",
+  name: 'adminAuth',
   initialState,
   reducers: {
     reset: (state) => {
       state.isError = false;
       state.isLoading = false;
       state.isSuccess = false;
-      state.message = "";
+      state.message = '';
     },
   },
   extraReducers: {
@@ -161,7 +179,7 @@ const adminauthSlice = createSlice({
       state.isLoading = true;
     },
     [fetchUsers.fulfilled]: (state, action) => {
-      state.users = JSON.parse(JSON.stringify([...action.payload.user]))
+      state.users = JSON.parse(JSON.stringify([...action.payload.user]));
       state.isLoading = false;
       state.isSuccess = true;
     },
@@ -176,7 +194,7 @@ const adminauthSlice = createSlice({
       state.isLoading = true;
     },
     [allDoctors.fulfilled]: (state, action) => {
-      state.doctors = JSON.parse(JSON.stringify([...action.payload.doctor]))
+      state.doctors = JSON.parse(JSON.stringify([...action.payload.doctor]));
       state.isLoading = false;
       state.isSuccess = true;
     },
@@ -206,34 +224,30 @@ const adminauthSlice = createSlice({
       state.isLoading = true;
     },
     [Blockusers.fulfilled]: (state, action) => {
-      const updatedTodos = state.users.map((user) =>
-      user._id === action.payload.user._id ? action.payload.user : user
+      const updatedData = state.users.map((user) =>
+        user._id === action.payload.user._id ? action.payload.user : user
       );
-      state.users=updatedTodos;
+      state.users = updatedData;
       state.isLoading = false;
       state.isSuccess = true;
     },
-    [Deleteuser.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [Deleteuser.fulfilled]: (state, action) => {
-      const itemId = action.payload.userId;
-      // console.log("out",itemId);
-
-      state.users = state.users.filter(
-        (item) => item._id !== itemId
-      );
-      state.isLoading = false;
-      state.isSuccess = true;
-    },
-    [Deleteuser.rejected]: (state, action) => {
+    [Blockusers.rejected]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = false;
       state.isError = true;
       state.message = action.payload;
       state.users = null;
     },
-    [Blockusers.rejected]: (state, action) => {
+    [Deleteuser.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [Deleteuser.fulfilled]: (state, action) => {
+      const itemId = action.payload.userId;
+      state.users = state.users.filter((item) => item._id !== itemId);
+      state.isLoading = false;
+      state.isSuccess = true;
+    },
+    [Deleteuser.rejected]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = false;
       state.isError = true;
@@ -245,9 +259,7 @@ const adminauthSlice = createSlice({
     },
     [deleteDoctor.fulfilled]: (state, action) => {
       const itemId = action.payload.doctorId;
-      state.doctors = state.doctors.filter(
-        (item) => item._id !== itemId
-      );
+      state.doctors = state.doctors.filter((item) => item._id !== itemId);
       state.isLoading = false;
       state.isSuccess = true;
     },
@@ -258,11 +270,31 @@ const adminauthSlice = createSlice({
       state.message = action.payload;
       state.doctors = null;
     },
+    [BlockDoctors.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [BlockDoctors.fulfilled]: (state, action) => {
+      const updatedData = state.doctors.map((doc) =>
+      doc._id === action.payload.doctor._id ? action.payload.doctor : doc
+      );
+      state.doctors = updatedData;
+      state.isLoading = false;
+      state.isSuccess = true;
+    },
+    [BlockDoctors.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.isError = true;
+      state.message = action.payload;
+      state.users = null;
+    },
     [allSpecialties.pending]: (state) => {
       state.isLoading = true;
     },
     [allSpecialties.fulfilled]: (state, action) => {
-      state.specialties = JSON.parse(JSON.stringify([...action.payload.specialties]))
+      state.specialties = JSON.parse(
+        JSON.stringify([...action.payload.specialties])
+      );
       state.isLoading = false;
       state.isSuccess = true;
     },
@@ -284,7 +316,7 @@ const adminauthSlice = createSlice({
     [addSpecialities.rejected]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = false;
-      state.isError = true; 
+      state.isError = true;
       state.message = action.payload;
       state.doctors = null;
     },
@@ -293,7 +325,7 @@ const adminauthSlice = createSlice({
     },
     [deleteSpecialties.fulfilled]: (state, action) => {
       const itemId = action.payload.specialtyId;
-      state.specialties= state['specialties'].filter(
+      state.specialties = state['specialties'].filter(
         (item) => item._id !== itemId
       );
       state.isLoading = false;

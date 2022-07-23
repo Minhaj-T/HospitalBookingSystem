@@ -1,5 +1,4 @@
 import { DataGrid } from '@mui/x-data-grid';
-// import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
@@ -8,11 +7,11 @@ import { deleteDoctor } from '../../../features/admin/auth/adminauthSlice';
 import { Modal, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useState } from 'react';
+import { BlockDoctors } from '../../../features/admin/auth/adminauthSlice';
 // import CustomizedDialogs from '../Edituser/EditUserModal';
 
 function Datatables() {
   const dispatch = useDispatch();
-  const label = { inputProps: { 'aria-label': '' } };
   const { doctors } = useSelector((state) => state.adminAuth);
 
   const [open, setOpen] = useState(false);
@@ -25,6 +24,14 @@ function Datatables() {
 
   const handleDelete = async () => {
     dispatch(deleteDoctor(deleteId));
+  };
+
+  const handleBlock = async (id, status) => {
+    const data = {
+      id,
+      status,
+    };
+    dispatch(BlockDoctors(data));
   };
 
   const style = {
@@ -75,13 +82,11 @@ function Datatables() {
       renderCell: (params) => {
         return (
           <div>
-          <Switch
-            checked={params.row.isBlocked}
-            onChange={(e) => {
-              console.log(e.target.checked);
-            }}
-          />
-        </div>
+            <Switch
+              checked={params.row.isBlocked}
+              onChange={(e) => handleBlock(params.id, e.target.checked)}
+            />
+          </div>
         );
       },
     },
@@ -99,7 +104,7 @@ function Datatables() {
                 <Link to="" style={{ textDecoration: 'none' }}>
                   <Button
                     onClick={() => {
-                      setDeleteId(params.id)
+                      setDeleteId(params.id);
                       handleOpen();
                     }}
                     variant="outlined"

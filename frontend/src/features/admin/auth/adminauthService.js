@@ -51,6 +51,12 @@ export const deleteDoctor = async (doctorId) => {
   return data;
 };
 
+//block-doctors
+export const BlockDoctors = async (id,status) => {
+  const { data } = await api.blockDoctor(id,status);
+  return data;
+};
+
 //getall specialties
 export const getallSpecialties = async () => {
   const { data } = await api.fetchSpecialties();
@@ -79,6 +85,7 @@ const adminauthService = {
   addSpecialty,
   deleteSpecialty,
   BlockUsers,
-  RemoveUser
+  RemoveUser,
+  BlockDoctors
 };
 export default adminauthService;

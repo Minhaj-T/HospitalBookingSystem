@@ -26,7 +26,6 @@ function AddDoctor() {
   if (isLoading) {
     return <Spinner />;
   }
-
   return (
     <>
       <div>

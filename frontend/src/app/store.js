@@ -4,7 +4,6 @@ import adminauthSlice from "../features/admin/auth/adminauthSlice";
 import doctorAuth from "../features/Doctor/auth/doctorauthSlice";
 // import Modalslice from "../features/admin/EdituserModal/Modalslice";
 import getallUsersSlice from "../features/admin/Get-all-users/getallUsersSlice";
-import getAllDoctors from '../features/admin/Doctors/DoctorSlice'
 import getallSpecialties  from "../features/admin/Specialties/SpecialtiesSlice";
            
 export const store = configureStore({
@@ -12,7 +11,6 @@ export const store = configureStore({
     auth: authSlice,
     adminAuth: adminauthSlice,
     doctorAuth:doctorAuth,
-    allDoctors:getAllDoctors,   
     fetchAlluser:getallUsersSlice,
     allspecialties:getallSpecialties,
   },

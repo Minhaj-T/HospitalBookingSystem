@@ -17,6 +17,7 @@ export const removeUser = (id) => API.delete(`/remove-user?id=${id}`)
 export const addDoctor=(doctorData)=>API.post('/add-doctors',doctorData)
 export const fetchDoctors=(config)=>API.get('/fetch-doctors',config)
 export const deleteDoctor=(doctorId)=>API.delete(`/delete-doctor/${doctorId}`)
+export const blockDoctor = (id,status) => API.patch(`/block-doctor?id=${id}&status=${status}`)
 
 export const fetchSpecialties=()=>API.get('/fetch-specialties')
 export const addSpecialities=(specialties)=>API.post('/add-specialties',specialties)

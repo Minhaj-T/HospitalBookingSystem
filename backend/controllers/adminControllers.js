@@ -113,7 +113,6 @@ const addDoctors = asyncHandler(async (req, res) => {
 
   // Check if doctor exists
   const doctorExists = await Doctor.findOne({ email });
-
   if (doctorExists) {
     res.status(400);
     throw new Error('Doctor already exists');
@@ -182,6 +181,16 @@ const deleteDoctor = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc  block Doctor
+// @rout  PATCH /api/admin/block-Doctor
+const blockDoctor = asyncHandler(async (req, res) => {
+  const { id, status } = req.query;
+  let doctor = await Doctor.findById(id);
+  doctor.isBlocked = status;
+  doctor.save();
+  res.status(200).json({ doctor });
+});
+
 // @desc  GET add the Specialties
 // @rout  ERT /api/admin/fetch-specialties
 const fetchSpecialties = asyncHandler(async (req, res) => {
@@ -200,13 +209,11 @@ const fetchSpecialties = asyncHandler(async (req, res) => {
 // @rout  POST /api/admin/add-specialties/
 const addSpecialities = asyncHandler(async (req, res) => {
   const data = req.body;
-  console.log('client sade data', data);
   //Create a specialties
   const specialities = await Specialties.create({
     name: data.name,
     img: data.img,
   });
-  console.log('this is the find', specialities);
   if (specialities) {
     res.status(201).json({
       _id: specialities.id,
@@ -251,4 +258,5 @@ module.exports = {
   fetchSpecialties,
   deleteSpecialties,
   removeUser,
+  blockDoctor,
 };

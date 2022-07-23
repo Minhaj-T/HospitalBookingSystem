@@ -78,7 +78,6 @@ export default function CustomizedDialogs() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log('click');
     const doctorData = {
       name,
       email,
