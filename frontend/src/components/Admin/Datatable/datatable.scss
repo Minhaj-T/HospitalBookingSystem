@@ -42,11 +42,11 @@
       border-radius: 5px;
       text-align: center;
   
-      &.active {
+      &.true {
         background-color: rgba(8, 141, 8, 0.281);
         color: green;
       }
-      &.blocked {
+      &.false {
         background-color: rgba(255, 0, 0, 0.185);
         color: crimson;
       }

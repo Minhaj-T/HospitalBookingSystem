@@ -11,6 +11,7 @@ export const loginAdmin = (data) => API.post(`/login`, data);
 
 export const fetchUsers=()=>API.get('/fetch-users')
 export const editUser=(userData,userId)=>API.put(`/edit-user/${userId}`,userData)
+export const blockUser = (id,status) => API.patch(`/block-user?id=${id}&status=${status}`)
 
 export const addDoctor=(doctorData)=>API.post('/add-doctors',doctorData)
 export const fetchDoctors=(config)=>API.get('/fetch-doctors',config)

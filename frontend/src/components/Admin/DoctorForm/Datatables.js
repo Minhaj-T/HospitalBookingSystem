@@ -5,7 +5,7 @@ import { Link, } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteDoctor} from '../../../features/admin/Doctors/DoctorSlice'
+import { deleteDoctor} from '../../../features/admin/auth/adminauthSlice'
 // import CustomizedDialogs from '../Edituser/EditUserModal';
 
 
@@ -14,7 +14,7 @@ function Datatables() {
   const dispatch=useDispatch()
   const label = { inputProps: { 'aria-label': '' } };
   const {  doctors } = useSelector(
-    (state) => state.allDoctors)
+    (state) => state.adminAuth)
 
 
 const columns = [
@@ -27,7 +27,7 @@ const columns = [
     renderCell:(params)=>{
         return(
           <div className='cellWithImg'>
-            <img className='cellImg' src={params.row.img} alt="" />
+            <img className='cellImg' src={params.row.profile_image} alt="" />
             {params.row.name}
           </div>
         )
@@ -72,7 +72,7 @@ renderCell:(params)=>{
 },
 ];
 
-const rows =doctors.doctor ? doctors.doctor : '';
+const rows =doctors ? doctors: '';
 
   return (
     <div className="datatable">

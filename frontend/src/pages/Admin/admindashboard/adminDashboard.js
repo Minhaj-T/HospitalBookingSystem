@@ -1,10 +1,10 @@
 import './dashboard.scss';
 import Widgets from '../../../components/Admin/Widgets/Widgets';
-import { allDoctors } from '../../../features/admin/Doctors/DoctorSlice';
+import { allDoctors } from '../../../features/admin/auth/adminauthSlice';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchUsers } from '../../../features/admin/Get-all-users/getallUsersSlice';
-import { allSpecialties } from '../../../features/admin/Specialties/SpecialtiesSlice';
+import { fetchUsers } from '../../../features/admin/auth/adminauthSlice';
+import { allSpecialties } from '../../../features/admin/auth/adminauthSlice';
 
 function AdminDashboard() {
   const dispatch = useDispatch();

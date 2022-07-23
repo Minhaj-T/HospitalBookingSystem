@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import SpecialtiesService from './SpecialtiesService';
+import { errorHandler } from '../../../utilities/errorMessege';
 
 const initialState = {
   specialties: [],
@@ -18,14 +19,7 @@ export const allSpecialties = createAsyncThunk(
       try {
         return await SpecialtiesService.getallSpecialties();
       } catch (error) {
-        const message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString() ||
-          'Something wrong. Please check your network';
-        return thunkAPI.rejectWithValue(message);
+        return thunkAPI.rejectWithValue(errorHandler(error));
       }
     }
   );
@@ -37,14 +31,7 @@ export const allSpecialties = createAsyncThunk(
     try {
       return await SpecialtiesService.addSpecialty(specialty);
     } catch (error) {
-      const message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString() ||
-          'Something wrong. Please check your network';
-        return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(errorHandler(error));
     }
 
   }
@@ -57,14 +44,7 @@ export const deleteSpecialties = createAsyncThunk(
     try {
       return await SpecialtiesService.deleteSpecialty(SpecialtiesId)
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString() ||
-        'Something wrong. Please check your network';
-      return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(errorHandler(error));
     }
   }
 );
@@ -87,9 +67,9 @@ export const deleteSpecialties = createAsyncThunk(
         state.isLoading = true;
       },
       [allSpecialties.fulfilled]: (state, action) => {
+        state.specialties = JSON.parse(JSON.stringify([...action.payload.specialties]))
         state.isLoading = false;
         state.isSuccess = true;
-        state.specialties = action.payload;
       },
       [allSpecialties.rejected]: (state, action) => {
         state.isLoading = false;
@@ -102,7 +82,7 @@ export const deleteSpecialties = createAsyncThunk(
         state.isLoading = true;
       },
       [addSpecialities.fulfilled]: (state, action) => {
-        state.specialties.specialties.push(action.payload);
+        state.specialties.push(action.payload);
         state.isLoading = false;
         state.isSuccess = true;
       },
@@ -118,8 +98,7 @@ export const deleteSpecialties = createAsyncThunk(
       },
       [deleteSpecialties.fulfilled]: (state, action) => {
         const itemId = action.payload.specialtyId;
-        console.log("itemId", itemId);
-        state.specialties.specialties = state.specialties.specialties.filter(
+        state.specialties= state['specialties'].filter(
           (item) => item._id !== itemId
         );
         state.isLoading = false;

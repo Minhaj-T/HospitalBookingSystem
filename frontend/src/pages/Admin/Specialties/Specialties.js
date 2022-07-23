@@ -6,13 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Spinner from '../../../components/User/Spinner/Spinner';
 import { useEffect } from 'react';
-import { reset } from '../../../features/admin/Specialties/SpecialtiesSlice';
+import { reset } from '../../../features/admin/auth/adminauthSlice';
 import SpecialtiesDatatable from '../../../components/Admin/SpecialitesForm/SpecialtiesDatatable';
 
 function Specialties() {
   const dispatch = useDispatch();
+
   const { specialties, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.allspecialties
+    (state) => state.adminAuth
   );
   useEffect(() => {
     if (isError) {
@@ -36,7 +37,7 @@ function Specialties() {
           icon={<PeopleAltOutlinedIcon fontSize="large" />}
         />
       </div>
-      <div className="addSpecialities">
+      <div className="px-4 mt-3">
         <SpecialitesForm />
       </div>
       <div className="dataTable1">

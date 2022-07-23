@@ -14,8 +14,7 @@ import AddIcon from '@mui/icons-material/Add';
 import MenuItem from '@mui/material/MenuItem';
 import { InputLabel, Select } from '@mui/material';
 import { useDispatch } from 'react-redux';
-
-import { addDoctor} from '../../../features/admin/Doctors/DoctorSlice'
+import { addDoctor } from '../../../features/admin/auth/adminauthSlice';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -58,7 +57,7 @@ BootstrapDialogTitle.propTypes = {
 export default function CustomizedDialogs() {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
- 
+
   const [formData, setFormData] = React.useState({
     name: '',
     email: '',
@@ -67,7 +66,7 @@ export default function CustomizedDialogs() {
     phone: '',
     specialization: '',
   });
-  
+
   const { name, email, password, phone, gender, specialization } = formData;
 
   const onChange = (e) => {
@@ -77,22 +76,19 @@ export default function CustomizedDialogs() {
     }));
   };
 
-
-
-  const onSubmit=(e)=>{
+  const onSubmit = (e) => {
     e.preventDefault();
-    console.log("click");
+    console.log('click');
     const doctorData = {
       name,
       email,
       password,
       phone,
       gender,
-      specialization
+      specialization,
     };
     dispatch(addDoctor(doctorData));
-
-  }
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -100,7 +96,6 @@ export default function CustomizedDialogs() {
   const handleClose = () => {
     setOpen(false);
   };
-
 
   return (
     <div>
@@ -118,105 +113,107 @@ export default function CustomizedDialogs() {
         >
           Add doctor
         </BootstrapDialogTitle>
-      <form onSubmit={onSubmit}>  
-        <DialogContent dividers>
-          <React.Fragment>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  name="name"
-                  label="Name"
-                  value={name}
-                  onChange={onChange}
-                  fullWidth
-                  autoComplete="given-name"
-                  variant="standard"
-                />
+        <form onSubmit={onSubmit}>
+          <DialogContent dividers>
+            <React.Fragment>
+              <Grid container spacing={3}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    name="name"
+                    label="Name"
+                    value={name}
+                    onChange={onChange}
+                    fullWidth
+                    autoComplete="given-name"
+                    variant="standard"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    name="email"
+                    value={email}
+                    onChange={onChange}
+                    label="email"
+                    fullWidth
+                    autoComplete="family-name"
+                    variant="standard"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    name="phone"
+                    type="tel"
+                    value={phone}
+                    onChange={onChange}
+                    label="Phone"
+                    fullWidth
+                    autoComplete="shipping address-level2"
+                    variant="standard"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    type="password"
+                    name="password"
+                    value={password}
+                    onChange={onChange}
+                    label="password"
+                    fullWidth
+                    autoComplete="shipping address-level2"
+                    variant="standard"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <InputLabel id="demo-simple-select-label">
+                    Specialization
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name="specialization"
+                    value={specialization}
+                    label="Specialization"
+                    onChange={onChange}
+                    fullWidth
+                  >
+                    <MenuItem value={'Urology'}>Urology</MenuItem>
+                    <MenuItem value={'Neurology'}>Neurology</MenuItem>
+                    <MenuItem value={'Orthopedic'}>Orthopedic</MenuItem>
+                    <MenuItem value={'Cardiologist'}>Cardiologist</MenuItem>
+                    <MenuItem value={'Dentist'}>Dentist</MenuItem>
+                    <MenuItem value={'Cardiologist'}>Cardiologisty</MenuItem>
+                    <MenuItem value={'Neurology'}>Neurology</MenuItem>
+                  </Select>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name="gender"
+                    value={gender}
+                    label="gender"
+                    onChange={onChange}
+                    fullWidth
+                  >
+                    <MenuItem value={'Male'}>Male</MenuItem>
+                    <MenuItem value={'Female'}>female</MenuItem>
+                    <MenuItem value={'Other'}>other</MenuItem>
+                  </Select>
+                </Grid>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  name="email"
-                  value={email}
-                  onChange={onChange}
-                  label="email"
-                  fullWidth
-                  autoComplete="family-name"
-                  variant="standard"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  name="phone"
-                  type="tel"
-                  value={phone}
-                  onChange={onChange}
-                  label="Phone"
-                  fullWidth
-                  autoComplete="shipping address-level2"
-                  variant="standard"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={onChange}
-                  label="password"
-                  fullWidth
-                  autoComplete="shipping address-level2"
-                  variant="standard"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <InputLabel id="demo-simple-select-label">
-                  Specialization
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  name="specialization"
-                  value={specialization}
-                  label="Specialization"
-                  onChange={onChange}
-                  fullWidth
-                >
-                  <MenuItem value={'Urology'}>Urology</MenuItem>
-                  <MenuItem value={'Neurology'}>Neurology</MenuItem>
-                  <MenuItem value={'Orthopedic'}>Orthopedic</MenuItem>
-                  <MenuItem value={'Cardiologist'}>Cardiologist</MenuItem>
-                  <MenuItem value={'Dentist'}>Dentist</MenuItem>
-                  <MenuItem value={'Cardiologist'}>Cardiologisty</MenuItem>
-                  <MenuItem value={'Neurology'}>Neurology</MenuItem>
-                </Select>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  name="gender"
-                  value={gender}
-                  label="gender"
-                  onChange={onChange}
-                  fullWidth
-                >
-                  <MenuItem value={'Male'}>Male</MenuItem>
-                  <MenuItem value={'Female'}>female</MenuItem>
-                  <MenuItem value={'Other'}>other</MenuItem>
-                </Select>
-              </Grid>
-            </Grid>
-          </React.Fragment>
-          <div style={{paddingTop: '25px',textAlign: 'center'}}>
-          <Button variant="contained" size="medium"  type="submit">Save Doctor</Button>
-          </div>
-        </DialogContent>
-      </form>  
+            </React.Fragment>
+            <div style={{ paddingTop: '25px', textAlign: 'center' }}>
+              <Button variant="contained" size="medium" type="submit">
+                Save Doctor
+              </Button>
+            </div>
+          </DialogContent>
+        </form>
       </BootstrapDialog>
     </div>
   );

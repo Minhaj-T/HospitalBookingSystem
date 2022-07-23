@@ -1,6 +1,6 @@
 const express= require('express')
 const router=express.Router()
-const {loginAdmin ,addDoctors ,fetchUsers ,fetchDoctors 
+const {loginAdmin ,addDoctors ,fetchUsers,blockUser ,fetchDoctors 
     ,editUser ,editDoctor ,deleteDoctor ,addSpecialities 
     ,fetchSpecialties ,deleteSpecialties }=require('../controllers/adminControllers');
 // const { isAdmin } = require('../middlewares/authMiddleware')
@@ -8,6 +8,7 @@ const {loginAdmin ,addDoctors ,fetchUsers ,fetchDoctors
 router.post('/login', loginAdmin);
 router.get('/fetch-users', fetchUsers);
 router.put('/edit-user/:id',editUser)
+router.patch('/block-user',blockUser)
 router.post('/add-doctors',addDoctors)
 router.get('/fetch-doctors',fetchDoctors)
 router.put('/edit-doctor/:id',editDoctor)

@@ -1,13 +1,13 @@
-import './specialtiesTable.scss'
+import './specialtiesTable.scss';
 import { DataGrid } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteSpecialties } from '../../../features/admin/Specialties/SpecialtiesSlice';
+import { deleteSpecialties } from '../../../features/admin/auth/adminauthSlice';
 
 function SpecialtiesDatatable() {
   const dispatch = useDispatch();
-  const { specialties } = useSelector((state) => state.allspecialties);
+  const { specialties } = useSelector((state) => state.adminAuth);
 
   const columns = [
     { field: '', headerName: 'No', width: 50 },
@@ -35,7 +35,7 @@ function SpecialtiesDatatable() {
               <Link to="" style={{ textDecoration: 'none' }}>
                 <Button
                   onClick={() => {
-                    dispatch(deleteSpecialties(params.id))
+                    dispatch(deleteSpecialties(params.id));
                   }}
                   variant="outlined"
                   size="small"
@@ -51,11 +51,11 @@ function SpecialtiesDatatable() {
     },
   ];
 
-  const rows = specialties.specialties ? specialties.specialties : '';
+  const rows = specialties ? specialties : '';
 
   return (
     <div className="datatable1">
-      <div style={{ height: 400, width: '50%' }}>
+      <div style={{ height: 400, width: '45%' }}>
         <DataGrid
           rows={rows}
           columns={columns}

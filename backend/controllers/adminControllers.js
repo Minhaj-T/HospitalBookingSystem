@@ -5,7 +5,7 @@ const { customAlphabet } = require('nanoid');
 const Doctor = require('../models/doctorModel');
 const User = require('../models/userModel');
 const Specialties = require('../models/specialties');
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 // const { find, findByIdAndUpdate } = require("../models/adminModel");
 
 // @desc  Authenticate Admin
@@ -65,10 +65,19 @@ const editUser = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc  block user
+// @rout  PATCH /api/admin/block-user
+const blockUser = asyncHandler(async (req, res) => {
+  const { id, status } = req.query;
+  let user = await User.findById(id);
+  user.isBlocked = status;
+  user.save();
+  res.status(200).json({ user });
+});
+
 // @desc  get Doctors
 // @rout  GET /api/admin/fetch-doctors
 const fetchDoctors = asyncHandler(async (req, res) => {
-  console.log("callllll....");
   const doctor = await Doctor.find({});
   if (doctor) {
     res.status(200).json({
@@ -182,12 +191,14 @@ const addSpecialities = asyncHandler(async (req, res) => {
   //Create a specialties
   const specialities = await Specialties.create({
     name: data.name,
-    img:data.img
+    img: data.img,
   });
   console.log('this is the find', specialities);
   if (specialities) {
     res.status(201).json({
-      specialities,
+      _id: specialities.id,
+      name: specialities.name,
+      img: specialities.img,
     });
   } else {
     res.status(400);
@@ -198,7 +209,6 @@ const addSpecialities = asyncHandler(async (req, res) => {
 // @desc  DELETE add the Specialties
 // @rout  DELETE /api/admin/delete-specialties
 const deleteSpecialties = asyncHandler(async (req, res) => {
-  console.log('ghghghghg', req.params.id);
   const Id = req.params.id;
   try {
     const specialty = await Specialties.findById(Id);
@@ -211,7 +221,7 @@ const deleteSpecialties = asyncHandler(async (req, res) => {
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: "10d",
+    expiresIn: '10d',
   });
 };
 
@@ -219,6 +229,7 @@ module.exports = {
   loginAdmin,
   addDoctors,
   fetchUsers,
+  blockUser,
   fetchDoctors,
   editUser,
   editDoctor,

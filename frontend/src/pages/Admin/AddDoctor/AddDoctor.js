@@ -5,14 +5,14 @@ import DoctorForm from '../../../components/Admin/DoctorForm/DoctorForm';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../../../components/User/Spinner/Spinner';
 import Datatables from '../../../components/Admin/DoctorForm/Datatables';
-import { reset } from '../../../features/admin/Doctors/DoctorSlice';
+import { reset } from '../../../features/admin/auth/adminauthSlice';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 function AddDoctor() {
   const dispatch = useDispatch();
   const { doctors, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.allDoctors
+    (state) => state.adminAuth
   );
   useEffect(() => {
     if (isError) {

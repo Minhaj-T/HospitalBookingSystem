@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import getallUsersServise from './getallUsersServise';
+import { errorHandler } from '../../../utilities/errorMessege';
 
 const initialState = {
   users: [],
@@ -13,12 +14,15 @@ export const fetchUsers = createAsyncThunk('fetch-Users', async (thunkAPI) => {
   try {
     return getallUsersServise.fetchallUsers();
   } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString() ||
-      'Something wrong. Please check your network';
-    return thunkAPI.rejectWithValue(message);
+    return thunkAPI.rejectWithValue(errorHandler(error));
+  }
+});
+
+export const block = createAsyncThunk('fetch-Users', async (thunkAPI) => {
+  try {
+    return getallUsersServise.fetchallUsers();
+  } catch (error) {
+    return thunkAPI.rejectWithValue(errorHandler(error));
   }
 });
 
@@ -31,7 +35,7 @@ const getallUsersSlice = createSlice({
       state.isLoading = false;
       state.isSuccess = false;
       state.message = '';
-    },
+    }
   },
   extraReducers: {
     [fetchUsers.pending]: (state) => {
