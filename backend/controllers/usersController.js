@@ -107,6 +107,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
   //get for user email
   const user = await User.findOne({ email });
+  if(user.isBlocked)throw new Error(`User ${user.email} is blocked`);
   if (user && (await bcrypt.compare(password, user.password))) {
     res.status(200).json({
       _id: user.id,

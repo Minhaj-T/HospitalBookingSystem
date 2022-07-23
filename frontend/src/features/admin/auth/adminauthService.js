@@ -22,6 +22,12 @@ export const BlockUsers = async (id,status) => {
   return data;
 };
 
+//romove user
+export const RemoveUser = async (Id) => {
+  const { data } = await api.removeUser(Id);
+  return data;
+}
+
 //getall doctors
 export const getallDoctors = async (token) => {
   const config = {
@@ -72,6 +78,7 @@ const adminauthService = {
   deleteDoctor,
   addSpecialty,
   deleteSpecialty,
-  BlockUsers
+  BlockUsers,
+  RemoveUser
 };
 export default adminauthService;

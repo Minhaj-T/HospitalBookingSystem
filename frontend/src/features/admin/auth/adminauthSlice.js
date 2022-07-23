@@ -36,11 +36,20 @@ export const fetchUsers = createAsyncThunk('fetch-Users', async (thunkAPI) => {
   }
 });
 
-//block-allUsers
+//block-User
 export const Blockusers = createAsyncThunk('block-Users', async (data,thunkAPI) => {
   const{id,status}=data;
   try {
     return adminauthService.BlockUsers(id,status); 
+  } catch (error) {
+    return thunkAPI.rejectWithValue(errorHandler(error));
+  }
+});
+
+//remove-User
+export const Deleteuser = createAsyncThunk('delete-Users', async (id,thunkAPI) => {
+  try {
+    return adminauthService.RemoveUser(id);
   } catch (error) {
     return thunkAPI.rejectWithValue(errorHandler(error));
   }
@@ -203,6 +212,26 @@ const adminauthSlice = createSlice({
       state.users=updatedTodos;
       state.isLoading = false;
       state.isSuccess = true;
+    },
+    [Deleteuser.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [Deleteuser.fulfilled]: (state, action) => {
+      const itemId = action.payload.userId;
+      // console.log("out",itemId);
+
+      state.users = state.users.filter(
+        (item) => item._id !== itemId
+      );
+      state.isLoading = false;
+      state.isSuccess = true;
+    },
+    [Deleteuser.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.isError = true;
+      state.message = action.payload;
+      state.users = null;
     },
     [Blockusers.rejected]: (state, action) => {
       state.isLoading = false;

@@ -21,6 +21,7 @@ const doctorSchema = mongoose.Schema({
         type:String,
         required:[true,'Please add doctors gender']
     },
+    isBlocked:{type:Boolean, default:false},
     phone:{
         type:Number,
         required:[true,'Please add Doctors phone']

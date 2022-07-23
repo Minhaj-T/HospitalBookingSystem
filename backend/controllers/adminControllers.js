@@ -75,6 +75,20 @@ const blockUser = asyncHandler(async (req, res) => {
   res.status(200).json({ user });
 });
 
+// @desc  DELETE the User
+// @rout  DELETE /api/admin/remove-user/:id
+const removeUser = asyncHandler(async (req, res) => {
+  const { id } = req.query;
+  try {
+    const user = await User.findById(id);
+    const data = await user.remove();
+
+    res.status(200).json({ userId: data._id });
+  } catch (error) {
+    res.json(error);
+  }
+});
+
 // @desc  get Doctors
 // @rout  GET /api/admin/fetch-doctors
 const fetchDoctors = asyncHandler(async (req, res) => {
@@ -97,7 +111,7 @@ const addDoctors = asyncHandler(async (req, res) => {
   const nanoid = customAlphabet(`123DOC`, 5);
   const doctorID = nanoid();
 
-  // Check if user exists
+  // Check if doctor exists
   const doctorExists = await Doctor.findOne({ email });
 
   if (doctorExists) {
@@ -157,7 +171,6 @@ const editDoctor = asyncHandler(async (req, res) => {
 
 // @desc  DELETE the Doctor
 // @rout  DELETE /api/admin/delete-doctor/:id
-
 const deleteDoctor = asyncHandler(async (req, res) => {
   const doctorId = req.params.id;
   try {
@@ -237,4 +250,5 @@ module.exports = {
   addSpecialities,
   fetchSpecialties,
   deleteSpecialties,
+  removeUser,
 };
