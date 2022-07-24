@@ -38,6 +38,15 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   }
 });
 
+// Login user-Google
+export const loginGoogle = createAsyncThunk('auth/login-google', async (user, thunkAPI) => {
+  try {
+    return await authService.loginwithGoogle(user);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(errorHandler(error));
+  }
+});
+
 //editUser
 export const editUser_Details = createAsyncThunk(
   'auth/editUserDetails',
@@ -143,6 +152,20 @@ const authSlice = createSlice({
       state.message = action.payload;
       state.isLoading = false;
       state.isError = true;
+    },
+    [loginGoogle.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [loginGoogle.fulfilled]: (state, action) => {
+      state.user = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    },
+    [loginGoogle.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload;
+      state.user = null;
     },
     [logout.fulfilled]: (state) => {
       state.user = null;

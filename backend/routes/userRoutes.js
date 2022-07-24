@@ -2,6 +2,7 @@ const express = require('express');
 const {
   registerUser,
   loginUser,
+  login_with_Google,
   editUser,
   editUserPassword,
   fetchAllDoctors,
@@ -13,6 +14,7 @@ const { protect } = require('../middlewares/authMiddleware');
 
 router.post('/signup', registerUser);
 router.post('/login', loginUser);
+router.post('/login-google',login_with_Google);
 router.put('/edit-userDetails', protect, editUser);
 router.post('/edit-password', protect,editUserPassword);
 router.get('/fetch-allDoctors',fetchAllDoctors);

@@ -18,6 +18,16 @@ const login = async (userData) => {
   return data;
 };
 
+// Login user with google
+const loginwithGoogle = async (userData) => {
+  const { data } = await api.login_google(userData);
+  if (data) {
+    localStorage.setItem('user', JSON.stringify(data));
+  }
+  return data;
+};
+
+
 
 
 // Edituser
@@ -54,6 +64,7 @@ const authService = {
   login,
   editUser,
   editPassword,
+  loginwithGoogle
 };
 
 export default authService;

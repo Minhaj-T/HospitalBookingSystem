@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
 const Doctor = require('../models/doctorModel');
+
 // @desc  Register New User
 // @rout  POST /api/users/signup
 const registerUser = asyncHandler(async (req, res) => {
@@ -109,6 +110,45 @@ const loginUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
   if(user.isBlocked)throw new Error(`User ${user.email} is blocked`);
   if (user && (await bcrypt.compare(password, user.password))) {
+    res.status(200).json({
+      _id: user.id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id),
+      address: user.address,
+      mobile: user.mobile,
+      age: user.age,
+      allergies: user.allergies,
+      blood_group: user.blood_group,
+      bp: user.bp,
+      city: user.city,
+      gender: user.gender,
+      glucose: user.glucose,
+      heart_rate: user.heart_rate,
+      height: user.height,
+      height_unit: user.height_unit,
+      profile_image: user.profile_image,
+      state: user.state,
+      weight: user.weight,
+      weight_unit: user.weight,
+      zip_code: user.zip_code,
+    });
+  } else {
+    res.status(400);
+    throw new Error('invalid the user data');
+  }
+});
+
+// @desc  Authenticate User
+// @rout  POST /api/users/login
+const login_with_Google = asyncHandler(async (req, res) => {
+  const { email,email_verified } = req.body;
+
+  if(!email_verified)throw new Error('email not verified');
+  // //get for user email
+  const user = await User.findOne({ email });
+  if(user.isBlocked)throw new Error(`User ${user.email} is blocked`);
+  if (user) {
     res.status(200).json({
       _id: user.id,
       name: user.name,
@@ -255,4 +295,5 @@ module.exports = {
   editUserPassword,
   fetchAllDoctors,
   getDoctor,
+  login_with_Google,
 };

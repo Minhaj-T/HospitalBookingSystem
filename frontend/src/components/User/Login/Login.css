@@ -86,3 +86,8 @@
 .social-login .btn:focus {
   color: #fff;
 }
+.google-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
