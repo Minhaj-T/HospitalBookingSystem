@@ -80,10 +80,6 @@ function Login() {
     }
     dispatch(loginGoogle(data))
   };
-  // const handleLogout = () => {
-  //   localStorage.removeItem('loginData');
-  //   setLoginData(null);
-  // };
 
   // Loading page
   if (isLoading) {
@@ -175,7 +171,6 @@ function Login() {
                             onError={handleFailure}
                             useOneTap
                           />
-                          ;
                         </div>
                       </div>
 

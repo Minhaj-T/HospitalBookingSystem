@@ -8,7 +8,8 @@ const jwt = require('jsonwebtoken');
 const loginDoctor = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const doctor = await Doctor.findOne({ email });
-  if (Doctor && (await bcrypt.compare(password, doctor.password))) {
+  if(doctor.isBlocked)throw new Error(`Doctor ${doctor.name} is blocked by admin`);
+  if (doctor && (await bcrypt.compare(password, doctor.password))) {
     res.status(200).json({
       name: doctor.name,
       lastname: doctor.lastname,
