@@ -18,7 +18,7 @@ router.post('/login-google',login_with_Google);
 router.put('/edit-userDetails', protect, editUser);
 router.post('/edit-password', protect,editUserPassword);
 router.get('/fetch-allDoctors',fetchAllDoctors);
-router.get('/get-doctor',getDoctor)
-router.get('/fetch-specialties',fetchSpecialties)
+router.get('/get-doctor',getDoctor);
+router.get('/fetch-specialties',fetchSpecialties);
 
 module.exports = router;

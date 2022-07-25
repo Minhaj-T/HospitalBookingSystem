@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
 const Doctor = require('../models/doctorModel');
+const Specialities = require('../models/specialties');
 
 // @desc  Register New User
 // @rout  POST /api/users/signup

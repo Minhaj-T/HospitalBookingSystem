@@ -14,8 +14,9 @@ function Doctorsearch() {
     date: '',
     gender: '',
     specialization: '',
+    searchInput:'',
   });
-  const { date, gender, specialization } = formData;
+  const { date, gender, specialization,searchInput } = formData;
 
   useEffect(() => {
     !fullData.done && fetchAllDetails(0, 10);
@@ -44,9 +45,15 @@ function Doctorsearch() {
       updatedList = updatedList.filter((item) => item.gender === gender);
     }
     if (specialization) {
-      console.log(specialization);
       updatedList = updatedList.filter(
         (item) => item.specialization === specialization
+      );
+    }
+    // Search Filter
+    if (searchInput) {
+      updatedList = updatedList.filter(
+        (item) =>
+          item.name.toLowerCase().search(searchInput.toLowerCase().trim()) !== -1
       );
     }
     setData(updatedList);
@@ -54,7 +61,7 @@ function Doctorsearch() {
 
   useEffect(() => {
     applyFilters();
-  }, [date, gender, specialization]);
+  }, [date, gender, specialization,searchInput]);
 
   //  fetch the input form doctor serch section
   const onChange = (e) => {
@@ -82,10 +89,12 @@ function Doctorsearch() {
                 <div className="card-body">
                   <div className="filter-widget" onChange={onChange}>
                     <input
-                      type="date"
-                      className="form-control datetimepicker"
-                      placeholder="Select Date"
-                      name="date"
+                      type="search"
+                      className="form-control"
+                      value={searchInput}
+                      onChange={onChange}
+                      placeholder="Search here.." 
+                      name="searchInput"
                     />
                   </div>
                   <div className="filter-widget" onChange={onChange}>
@@ -120,9 +129,10 @@ function Doctorsearch() {
                       ))}
                   </div>
                   <div className="btn-search">
-                    <button type="button" className="btn btn-block">
+                    {/* <button type="button" className="btn btn-block" onClick={
+                      }>
                       Search
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
@@ -217,9 +227,9 @@ function Doctorsearch() {
                 ))}
 
               <div className="load-more text-center">
-                <Link className="btn btn-primary btn-sm" to={''}>
+                {/* <Link className="btn btn-primary btn-sm" to={''}>
                   Load More
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>
