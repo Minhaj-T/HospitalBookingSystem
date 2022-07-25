@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcryptjs');
 const Doctor = require('../models/doctorModel');
+const Transactions= require('../models/transactions');
 const jwt = require('jsonwebtoken');
 
 // @desc  Authenticate doctor
@@ -392,6 +393,17 @@ const deleteSlotes = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc  get the appointment using doctor id
+// @rout  POST /api/doctor/get-appointments
+
+const getAppointments=asyncHandler(async(req, res)=>{
+  const id = req.doctor._id;
+  const data= await Transactions.find({doctorId:id})
+  .populate({path: "userId",  select:  {_id: 1, name: 1,profile_image:1,mobile:1,email:1,state:1,city:1}})
+  .populate({path: "doctorId"})
+  res.status(200).json({data})
+})
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '10d',
@@ -404,4 +416,5 @@ module.exports = {
   editDoctorPassword,
   addSlotes,
   deleteSlotes,
+  getAppointments
 };

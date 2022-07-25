@@ -81,7 +81,8 @@ function Checkout() {
               amount: amount,
               doctorId:id,
               slotId:Id,
-              Day:Day
+              Day:Day,
+              slotDate:Date
             },config);
 
             if (data.status) {
@@ -94,7 +95,7 @@ function Checkout() {
               {state:{
                 name:Doctor?.name,
                 day:Day,
-                slot:Slot
+                slot:Slot,
               }}
               )
             }

@@ -40,8 +40,8 @@ const verifyPayment = asyncHandler(async (req, res) => {
       amount,
       doctorId,
       slotId,
-      Day
-      // decodeId: sponsorId,
+      Day,
+      slotDate
     } = req.body;
     let hmac = crypto.createHmac("sha256", process.env.RAZORPAY_SECRET);
     hmac.update(razorpay_order_id + "|" + razorpay_payment_id);
@@ -56,7 +56,8 @@ const verifyPayment = asyncHandler(async (req, res) => {
         userId:userId,
         doctorId:doctorId,
         slotId:slotId,
-        day: Day
+        day: Day,
+        slotDate:slotDate
 
       });
       await newTransaction.save();

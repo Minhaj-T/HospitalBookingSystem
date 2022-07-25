@@ -2,6 +2,7 @@ import './doctorLayout.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, reset } from '../../features/Doctor/auth/doctorauthSlice';
+import {getAppointment} from '../../features/Doctor/appointments/appointmentSlice'
 import {
   FaColumns,
   FaCalendarCheck,
@@ -27,6 +28,7 @@ function DoctorLayout({ children }) {
   };
 
   useEffect(() => {
+    dispatch(getAppointment());
     if (doctor?.token) {
       navigate("/doctor/");
     }

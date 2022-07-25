@@ -12,7 +12,7 @@ function SignupPage2() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [Pic, setPic] = useState('');
+  const [Pic, setPic] = useState('https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg');
 
   //dump the image into cloudinary ImageUpload
   const postDetails = async (ProfilePicture) => {

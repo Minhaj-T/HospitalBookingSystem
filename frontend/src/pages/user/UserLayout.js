@@ -32,10 +32,10 @@ function UserLayout({children}) {
                       <h3>{user.name}</h3>
                       <div className="patient-details">
                         <h5>
-                          <FaBirthdayCake /> {user.age} years old
+                          <FaBirthdayCake /> {user.age?user.age:'XX'} years old
                         </h5>
                         <h5 className="mb-0">
-                          <FaMapMarkerAlt /> {user.city}, {user.state}
+                          <FaMapMarkerAlt /> {user.city?user.city:'XXXX'}, {user.state?user.state:'XXXX'}
                         </h5>
                       </div>
                     </div>

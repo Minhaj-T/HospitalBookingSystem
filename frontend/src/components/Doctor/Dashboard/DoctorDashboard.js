@@ -2,8 +2,38 @@ import './doctorDashboard.css';
 import { Link } from 'react-router-dom';
 import mm from '../../../images/myImage.jpg';
 import { FaEye, FaCheck, FaTimes } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { notification } from '../../../utilities/notification';
+import { reset } from '../../../features/Doctor/appointments/appointmentSlice';
+import Spinner from '../../User/Spinner/Spinner';
+import moment from 'moment';
 
 function DoctorDashboard() {
+  const [TodayAppointment, setTodayAppointment] = useState("")
+  const dispatch = useDispatch();
+
+  // get the current state
+  const { appointment, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.appointments
+  );
+
+  useEffect(() => {
+    if (isError) {
+      notification.error(message);
+    }
+    dispatch(reset());
+  }, [appointment, isError, isSuccess, message, dispatch]);
+
+  //filter the today date
+const today_date = moment().format('YYYY-M-D');
+ const today_appointment=appointment?.filter(row=>moment().format(row['slotDate'])==today_date)
+ 
+  // Loading page
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <div className="row">
@@ -41,65 +71,71 @@ function DoctorDashboard() {
                             <th>Patient Name</th>
                             <th>Appt Date</th>
                             <th>Purpose</th>
-                            <th>Type</th>
                             <th className="text-center">Paid Amount</th>
                             <th></th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr>
-                            <td>
-                              <h2 className="table-avatar">
-                                <Link to={''} className="avatar avatar-sm mr-2">
-                                  <img
-                                    alt="User"
-                                    src={mm}
-                                    className="avatar-img rounded-circle"
-                                  />
-                                </Link>
-                                <Link
-                                  to={'/doctor/patient-profile'}
-                                  style={{ marginLeft: '6px' }}
-                                >
-                                  Richard Wilson
-                                  <span>#PT0016</span>
-                                </Link>
-                              </h2>
-                            </td>
-                            <td>
-                              11 Nov 2019
-                              <span className="d-block text-info">
-                                10.00 AM
-                              </span>
-                            </td>
-                            <td>General</td>
-                            <td>New Patient</td>
-                            <td className="text-center">$150</td>
-                            <td className="text-right">
-                              <div className="table-action pe-5">
-                                <Link
-                                  to={''}
-                                  className="btn btn-sm bg-info-light"
-                                >
-                                  <FaEye /> View
-                                </Link>
+                        {appointment &&
+                          appointment?.map((row) => (
+                            <tbody key={row._id}>
+                              <tr>
+                                <td>
+                                  <h2 className="table-avatar">
+                                    <Link
+                                      to={''}
+                                      className="avatar avatar-sm mr-2"
+                                    >
+                                      <img
+                                        alt="User"
+                                        src={row.userId['profile_image']}
+                                        className="avatar-img rounded-circle"
+                                      />
+                                    </Link>
+                                    <Link
+                                      to={'/doctor/patient-profile'}
+                                      style={{ marginLeft: '6px' }}
+                                    >
+                                      {row.userId['name']}
+                                      <span>#{row['payId'].substr(4, 6)}</span>
+                                    </Link>
+                                  </h2>
+                                </td>
+                                <td>
+                                  {row['slotDate']}
+                                  <span className="d-block text-info">
+                                    10.00 AM
+                                  </span>
+                                </td>
+                                <td>General</td>
+                                <td className="text-center">
+                                  ₹{row['amount']}
+                                </td>
+                                <td className="text-right">
+                                  <div className="table-action pe-5">
+                                    <Link
+                                      to={''}
+                                      className="btn btn-sm bg-info-light"
+                                    >
+                                      <FaEye /> View
+                                    </Link>
 
-                                <Link
-                                  to={''}
-                                  className="btn btn-sm bg-success-light"
-                                >
-                                  <FaCheck /> Accept
-                                </Link>
-                                <Link
-                                  to={''}
-                                  className="btn btn-sm bg-danger-light"
-                                >
-                                  <FaTimes /> Cancel
-                                </Link>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
+                                    <Link
+                                      to={''}
+                                      className="btn btn-sm bg-success-light"
+                                    >
+                                      <FaCheck /> Accept
+                                    </Link>
+                                    <Link
+                                      to={''}
+                                      className="btn btn-sm bg-danger-light"
+                                    >
+                                      <FaTimes /> Cancel
+                                    </Link>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          ))}
                       </table>
                     </div>
                   </div>
@@ -122,19 +158,20 @@ function DoctorDashboard() {
                         <th>Patient Name today</th>
                         <th>Appt Date</th>
                         <th>Purpose</th>
-                        <th>Type</th>
                         <th className="text-center">Paid Amount</th>
                         <th></th>
                       </tr>
                     </thead>
-                    <tbody>
+                    {today_appointment&&today_appointment.map((row)=>(
+
+                    <tbody key={row._id}>
                       <tr>
                         <td>
                           <h2 className="table-avatar">
                             <Link to={''} className="avatar avatar-sm mr-2">
                               <img
                                 alt="User"
-                                src={mm}
+                                src={row.userId['profile_image']}
                                 className="avatar-img rounded-circle"
                               />
                             </Link>
@@ -142,8 +179,8 @@ function DoctorDashboard() {
                               to={'/doctor/patient-profile'}
                               style={{ marginLeft: '6px' }}
                             >
-                              Richard Wilson minha
-                              <span>#PT0016</span>
+                              {row.userId['name']}
+                              <span>#{row['payId'].substr(4, 6)}</span>
                             </Link>
                           </h2>
                         </td>
@@ -152,8 +189,7 @@ function DoctorDashboard() {
                           <span className="d-block text-info">10.00 AM</span>
                         </td>
                         <td>General</td>
-                        <td>New Patient</td>
-                        <td className="text-center">$150</td>
+                        <td className="text-center">₹{row['amount']}</td>
                         <td className="text-right">
                           <div className="table-action pe-5">
                             <Link to={''} className="btn btn-sm bg-info-light">
@@ -176,6 +212,7 @@ function DoctorDashboard() {
                         </td>
                       </tr>
                     </tbody>
+                    ))}
                   </table>
                 </div>
               </div>
