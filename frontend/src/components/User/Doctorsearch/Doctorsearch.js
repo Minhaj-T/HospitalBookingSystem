@@ -75,6 +75,7 @@ function Doctorsearch() {
   if (fullData.loading) {
     return <Spinner />;
   }
+  
   return (
     <>
     <Header/>

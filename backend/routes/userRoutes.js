@@ -6,7 +6,8 @@ const {
   editUser,
   editUserPassword,
   fetchAllDoctors,
-  getDoctor
+  getDoctor,
+  getAppointments
 } = require('../controllers/usersController');
 const{fetchSpecialties}=require('../controllers/adminControllers');
 const router = express.Router();
@@ -20,5 +21,6 @@ router.post('/edit-password', protect,editUserPassword);
 router.get('/fetch-allDoctors',fetchAllDoctors);
 router.get('/get-doctor',getDoctor);
 router.get('/fetch-specialties',fetchSpecialties);
+router.get('/get-appointments',protect,getAppointments)
 
 module.exports = router;

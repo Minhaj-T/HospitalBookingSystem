@@ -7,10 +7,51 @@ import body_temp from '../../../images/pt-dashboard-02.png'
 import glucose_level from '../../../images/pt-dashboard-03.png'
 import blood_pressure from '../../../images/pt-dashboard-04.png'
 import { useSelector } from 'react-redux';
-
+import { useEffect, useState } from 'react';
+import * as api from '../../../api/index';
+import { errorHandler } from '../../../utilities/errorMessege';
+import {notification} from '../../../utilities/notification'
+import Spinner from '../Spinner/Spinner';
+import moment from 'moment';
 
 function UserDashBoard() {
+  const [Fulldata, setFulldata] = useState({loading:false,done:false})
   const { user } = useSelector((state) => state.auth);
+
+  //create a tocken
+  const {token}=user?user:"";
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  useEffect(() => {
+    !Fulldata.done && fetchAllAppointments()
+  }, [])
+const fetchAllAppointments= async()=>{
+  setFulldata((prev)=>({ ...prev, loading: true}))
+  try {
+    const {data}=await api.getAllappointment(config);
+    if (data?.data) {
+    setFulldata((prev)=>({
+       ...prev,
+       ...data, 
+       loading: false, 
+       done: true}));
+    }
+  } catch (error) {
+    return notification.error(errorHandler(error))
+  }
+}
+
+console.log("ggg",Fulldata)
+
+// Loading page
+if (Fulldata.loading) {
+  return <Spinner />;
+}
+  
   return (
     <>
       <div className="row">
@@ -144,6 +185,9 @@ function UserDashBoard() {
                           <th></th>
                         </tr>
                       </thead>
+                      {Fulldata?.data && 
+                       Fulldata?.data.map((row)=>(
+
                       <tbody>
                         <tr>
                           <td>
@@ -151,25 +195,37 @@ function UserDashBoard() {
                               <Link to={''} className="avatar avatar-sm mr-2">
                                 <img
                                   className="avatar-img rounded-circle"
-                                  src={mm}
+                                  src={row['doctorId']?.profile_image}
                                   alt="User"
                                 />
                               </Link>
-                              <Link to={''}>
-                                Dr. Olga Barlow <span>Dental</span>
+                              <Link to={''} style={{paddingLeft: '5px'}}>
+                                Dr.{row['doctorId']?.name}{" "}{row['doctorId']?.lastname} <span>{row['doctorId']?.specialization}</span>
                               </Link>
                             </h2>
                           </td>
                           <td>
-                            5 Nov 2019{' '}
+                          {row['slotDate']}{' '}
                             <span className="d-block text-info">5.00 PM</span>
                           </td>
-                          <td>1 Nov 2019</td>
-                          <td>$100</td>
+                          <td>{moment().format('YYYY-M-D')}</td>
+                          <td>₹{row['amount']}</td>
                           <td>
+                            {row['status']==='true' &&
                             <span className="badge badge-pill bg-success-light">
                               Confirm
                             </span>
+                            }
+                            {row['status']==='false' &&
+                            <span className="badge badge-pill bg-danger-light">
+                              Rejected
+                            </span>
+                            }
+                            {row['status']==='pending' &&
+                            <span className="badge badge-pill bg-warning-light">
+                              Pending
+                            </span>
+                            }
                           </td>
                           <td className="text-right">
                             <div className="table-action">
@@ -189,6 +245,8 @@ function UserDashBoard() {
                           </td>
                         </tr>
                       </tbody>
+
+                       ))}
                     </table>
                   </div>
                 </div>
@@ -223,7 +281,7 @@ function UserDashBoard() {
                                   alt="User"
                                 />
                               </Link>
-                              <Link to={''}>
+                              <Link to={''} style={{paddingLeft: '5px'}}>
                                 Dr. Olga Barlow <span>Dental</span>
                               </Link>
                             </h2>
@@ -288,7 +346,7 @@ function UserDashBoard() {
                                   alt="User"
                                 />
                               </Link>
-                              <Link to={''}>
+                              <Link to={''} style={{paddingLeft: '5px'}}>
                                 Dr. John Gibbs <span>Dental</span>
                               </Link>
                             </h2>
@@ -333,27 +391,29 @@ function UserDashBoard() {
                           <th></th>
                         </tr>
                       </thead>
+                      {Fulldata?.data && 
+                       Fulldata?.data.map((row)=>(
                       <tbody>
                         <tr>
                           <td>
-                            <Link to={''}>#INV-0001</Link>
+                            <Link to={''}>#{row['payId'].substr(4, 6)}</Link>
                           </td>
                           <td>
                             <h2 className="table-avatar">
                               <Link to={''} className="avatar avatar-sm mr-2">
                                 <img
                                   className="avatar-img rounded-circle"
-                                  src={mm}
+                                  src={row['doctorId']?.profile_image}
                                   alt="User"
                                 />
                               </Link>
-                              <Link to={''}>
-                                Dr. Olga Barlow <span>#0010</span>
+                              <Link to={''} style={{paddingLeft: '5px'}}>
+                                Dr. {row['doctorId']?.name} <span>#{row['doctorId']?.doctorID}</span>
                               </Link>
                             </h2>
                           </td>
-                          <td>$550</td>
-                          <td>5 Nov 2019</td>
+                          <td>₹{row['amount']}</td>
+                          <td>{row['date'].substr(0, 10)}</td>
                           <td className="text-right">
                             <div className="table-action">
                               <Link
@@ -372,6 +432,7 @@ function UserDashBoard() {
                           </td>
                         </tr>
                       </tbody>
+                      ))}
                     </table>
                   </div>
                 </div>

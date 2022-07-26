@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
 const Doctor = require('../models/doctorModel');
 const Specialities = require('../models/specialties');
+const Transactions = require('../models/transactions');
 
 // @desc  Register New User
 // @rout  POST /api/users/signup
@@ -283,6 +284,16 @@ const getDoctor = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc  get the appointment using user id
+// @rout  POST /api/users/get-appointments
+const getAppointments=asyncHandler(async(req, res)=>{
+  const userId = req.user._id;
+  const data= await Transactions.find({userId:userId})
+  .populate({path: "userId",  select:  {_id: 1, name: 1,profile_image:1,mobile:1,email:1,state:1,city:1}})
+  .populate({path: "doctorId", select:{name:1, profile_image:1, specialization:1,lastname:1,doctorID:1}})
+  res.status(200).json({data})
+})
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '10d',
@@ -297,4 +308,5 @@ module.exports = {
   fetchAllDoctors,
   getDoctor,
   login_with_Google,
+  getAppointments
 };
