@@ -11,9 +11,21 @@ const get_all_appointments = async (token) => {
     return data;
   };
 
+//Change status appointment
+const changeStatusAppointment = async (Data,token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const { data } = await api.changeStatus_Appointment(Data,config);
+  return data;
+}
+
 
   const appointmentService={
-    get_all_appointments
+    get_all_appointments,
+    changeStatusAppointment
   };
   
   export default appointmentService;

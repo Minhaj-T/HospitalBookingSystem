@@ -1,16 +1,15 @@
 import './doctorDashboard.css';
 import { Link } from 'react-router-dom';
-import mm from '../../../images/myImage.jpg';
-import { FaEye, FaCheck, FaTimes } from 'react-icons/fa';
+import { FaEye, FaCheck, FaTimes, FaHandshake } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { notification } from '../../../utilities/notification';
 import { reset } from '../../../features/Doctor/appointments/appointmentSlice';
 import Spinner from '../../User/Spinner/Spinner';
 import moment from 'moment';
+import { changeStatus } from '../../../features/Doctor/appointments/appointmentSlice';
 
 function DoctorDashboard() {
-  const [TodayAppointment, setTodayAppointment] = useState("")
   const dispatch = useDispatch();
 
   // get the current state
@@ -26,9 +25,11 @@ function DoctorDashboard() {
   }, [appointment, isError, isSuccess, message, dispatch]);
 
   //filter the today date
-const today_date = moment().format('YYYY-M-D');
- const today_appointment=appointment?.filter(row=>moment().format(row['slotDate'])==today_date)
- 
+  const today_date = moment().format('YYYY-M-D');
+  const today_appointment = appointment?.filter(
+    (row) => moment().format(row['slotDate']) == today_date
+  );
+
   // Loading page
   if (isLoading) {
     return <Spinner />;
@@ -118,19 +119,87 @@ const today_date = moment().format('YYYY-M-D');
                                     >
                                       <FaEye /> View
                                     </Link>
+                                    {row?.status === 'pending' && (
+                                      <>
+                                        <Link
+                                          to={''}
+                                          className="btn btn-sm bg-success-light"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            const data = {
+                                              id: row._id,
+                                              status: true,
+                                            };
+                                            dispatch(changeStatus(data));
+                                          }}
+                                        >
+                                          <FaCheck /> Accept
+                                        </Link>
 
-                                    <Link
-                                      to={''}
-                                      className="btn btn-sm bg-success-light"
-                                    >
-                                      <FaCheck /> Accept
-                                    </Link>
-                                    <Link
-                                      to={''}
-                                      className="btn btn-sm bg-danger-light"
-                                    >
-                                      <FaTimes /> Cancel
-                                    </Link>
+                                        <Link
+                                          to={''}
+                                          className="btn btn-sm bg-danger-light"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            const data = {
+                                              id: row._id,
+                                              status: false,
+                                            };
+                                            dispatch(changeStatus(data));
+                                          }}
+                                        >
+                                          <FaTimes /> Cancel
+                                        </Link>
+                                      </>
+                                    )}
+                                    {row?.status == 'true' && (
+                                      <>
+                                        <Link
+                                          to={''}
+                                          className="btn btn-sm bg-danger-light"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            const data = {
+                                              id: row._id,
+                                              status: false,
+                                            };
+                                            dispatch(changeStatus(data));
+                                          }}
+                                        >
+                                          <FaTimes /> Cancel
+                                        </Link>
+                                        <Link
+                                          to={''}
+                                          className="btn btn-sm bg-success-light"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            const data = {
+                                              id: row._id,
+                                              status: 'complete',
+                                            };
+                                            dispatch(changeStatus(data));
+                                          }}
+                                        >
+                                          <FaHandshake /> Complete
+                                        </Link>
+                                      </>
+                                    )}
+                                    {row?.status == 'false' && (
+                                      <Link
+                                        to={''}
+                                        className="btn btn-sm bg-success-light"
+                                        onClick={(e) => {
+                                          e.preventDefault();
+                                          const data = {
+                                            id: row._id,
+                                            status: true,
+                                          };
+                                          dispatch(changeStatus(data));
+                                        }}
+                                      >
+                                        <FaCheck /> Accept
+                                      </Link>
+                                    )}
                                   </div>
                                 </td>
                               </tr>
@@ -162,57 +231,130 @@ const today_date = moment().format('YYYY-M-D');
                         <th></th>
                       </tr>
                     </thead>
-                    {today_appointment&&today_appointment.map((row)=>(
+                    {today_appointment &&
+                      today_appointment.map((row) => (
+                        <tbody key={row._id}>
+                          <tr>
+                            <td>
+                              <h2 className="table-avatar">
+                                <Link to={''} className="avatar avatar-sm mr-2">
+                                  <img
+                                    alt="User"
+                                    src={row.userId['profile_image']}
+                                    className="avatar-img rounded-circle"
+                                  />
+                                </Link>
+                                <Link
+                                  to={'/doctor/patient-profile'}
+                                  style={{ marginLeft: '6px' }}
+                                >
+                                  {row.userId['name']}
+                                  <span>#{row['payId'].substr(4, 6)}</span>
+                                </Link>
+                              </h2>
+                            </td>
+                            <td>
+                              11 Nov 2019
+                              <span className="d-block text-info">
+                                10.00 AM
+                              </span>
+                            </td>
+                            <td>General</td>
+                            <td className="text-center">₹{row['amount']}</td>
+                            <td className="text-right">
+                              <div className="table-action pe-5">
+                              <Link
+                                      to={''}
+                                      className="btn btn-sm bg-info-light"
+                                    >
+                                      <FaEye /> View
+                                    </Link>
+                                    {row?.status === 'pending' && (
+                                      <>
+                                        <Link
+                                          to={''}
+                                          className="btn btn-sm bg-success-light"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            const data = {
+                                              id: row._id,
+                                              status: true,
+                                            };
+                                            dispatch(changeStatus(data));
+                                          }}
+                                        >
+                                          <FaCheck /> Accept
+                                        </Link>
 
-                    <tbody key={row._id}>
-                      <tr>
-                        <td>
-                          <h2 className="table-avatar">
-                            <Link to={''} className="avatar avatar-sm mr-2">
-                              <img
-                                alt="User"
-                                src={row.userId['profile_image']}
-                                className="avatar-img rounded-circle"
-                              />
-                            </Link>
-                            <Link
-                              to={'/doctor/patient-profile'}
-                              style={{ marginLeft: '6px' }}
-                            >
-                              {row.userId['name']}
-                              <span>#{row['payId'].substr(4, 6)}</span>
-                            </Link>
-                          </h2>
-                        </td>
-                        <td>
-                          11 Nov 2019
-                          <span className="d-block text-info">10.00 AM</span>
-                        </td>
-                        <td>General</td>
-                        <td className="text-center">₹{row['amount']}</td>
-                        <td className="text-right">
-                          <div className="table-action pe-5">
-                            <Link to={''} className="btn btn-sm bg-info-light">
-                              <FaEye /> View
-                            </Link>
-
-                            <Link
-                              to={''}
-                              className="btn btn-sm bg-success-light"
-                            >
-                              <FaCheck /> Accept
-                            </Link>
-                            <Link
-                              to={''}
-                              className="btn btn-sm bg-danger-light"
-                            >
-                              <FaTimes /> Cancel
-                            </Link>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                    ))}
+                                        <Link
+                                          to={''}
+                                          className="btn btn-sm bg-danger-light"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            const data = {
+                                              id: row._id,
+                                              status: false,
+                                            };
+                                            dispatch(changeStatus(data));
+                                          }}
+                                        >
+                                          <FaTimes /> Cancel
+                                        </Link>
+                                      </>
+                                    )}
+                                    {row?.status == 'true' && (
+                                      <>
+                                        <Link
+                                          to={''}
+                                          className="btn btn-sm bg-danger-light"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            const data = {
+                                              id: row._id,
+                                              status: false,
+                                            };
+                                            dispatch(changeStatus(data));
+                                          }}
+                                        >
+                                          <FaTimes /> Cancel
+                                        </Link>
+                                        <Link
+                                          to={''}
+                                          className="btn btn-sm bg-success-light"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            const data = {
+                                              id: row._id,
+                                              status: 'complete',
+                                            };
+                                            dispatch(changeStatus(data));
+                                          }}
+                                        >
+                                          <FaHandshake /> Complete
+                                        </Link>
+                                      </>
+                                    )}
+                                    {row?.status == 'false' && (
+                                      <Link
+                                        to={''}
+                                        className="btn btn-sm bg-success-light"
+                                        onClick={(e) => {
+                                          e.preventDefault();
+                                          const data = {
+                                            id: row._id,
+                                            status: true,
+                                          };
+                                          dispatch(changeStatus(data));
+                                        }}
+                                      >
+                                        <FaCheck /> Accept
+                                      </Link>
+                                    )}
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      ))}
                   </table>
                 </div>
               </div>

@@ -6,7 +6,8 @@ const {
   editDoctorPassword,
   addSlotes,
   deleteSlotes,
-  getAppointments
+  getAppointments,
+  ChangeAppointmentStatus
 } = require('../controllers/doctorControllers');
 const { isDoctor } = require('../middlewares/authMiddleware');
 
@@ -16,5 +17,6 @@ router.put('/edit-password', isDoctor, editDoctorPassword);
 router.post('/add-timeSlots',isDoctor,addSlotes)
 router.patch('/delete-timeSlots',isDoctor,deleteSlotes)
 router.get('/get-appointments',isDoctor,getAppointments)
+router.patch('/changeStaus-appointments',isDoctor,ChangeAppointmentStatus)
 
 module.exports = router;

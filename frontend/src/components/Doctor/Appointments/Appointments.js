@@ -8,11 +8,15 @@ import {
   FaEye,
   FaCheck,
   FaTimes,
+  FaHandshake,
 } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {changeStatus} from '../../../features/Doctor/appointments/appointmentSlice'
 
 function Appointments() {
   const { appointment } = useSelector((state) => state.appointments);
+  const dispatch = useDispatch();
+
 
   return (
     <>
@@ -55,14 +59,55 @@ function Appointments() {
                   data-toggle="modal"
                   data-target="#appt_details"
                 >
-                  <FaEye /> View
+                  <FaEye/> View
                 </Link>
-                <Link to={''} className="btn btn-sm bg-success-light">
+                {row?.status==='pending' &&(
+                <>
+                <Link to={''} className="btn btn-sm bg-success-light" onClick={(e)=>{
+                  e.preventDefault();
+                  const data={id:row._id,status:true}
+                  dispatch(changeStatus(data))
+                }}>
                   <FaCheck /> Accept
                 </Link>
-                <Link to={''} className="btn btn-sm bg-danger-light">
+                
+                <Link to={''} className="btn btn-sm bg-danger-light" onClick={(e)=>{
+                  e.preventDefault();
+                  const data={id:row._id,status:false}
+                  dispatch(changeStatus(data))
+                }}>
                   <FaTimes /> Cancel
                 </Link>
+                </>
+                )}
+                {row?.status=='true' &&(
+                  <>
+                <Link to={''} className="btn btn-sm bg-danger-light" onClick={(e)=>{
+                  e.preventDefault();
+                  const data={id:row._id,status:false}
+                  dispatch(changeStatus(data))
+                }}>
+                  <FaTimes /> Cancel
+                </Link>
+                <Link to={''} className="btn btn-sm bg-success-light" onClick={(e)=>{
+                  e.preventDefault();
+                  const data={id:row._id,status:'complete'}
+                  dispatch(changeStatus(data))
+                }}>
+                  <FaHandshake /> Complete
+                </Link>
+
+                </>
+                )}
+                {row?.status=='false' &&(
+                <Link to={''} className="btn btn-sm bg-success-light" onClick={(e)=>{
+                  e.preventDefault();
+                  const data={id:row._id,status:true}
+                  dispatch(changeStatus(data))
+                }}>
+                  <FaCheck /> Accept
+                </Link>
+                )}
               </div>
             </div>
           ))}

@@ -9,6 +9,7 @@ const transactionSchema = mongoose.Schema({
     slotId:{type: mongoose.Schema.ObjectId},
     doctorId:{type: mongoose.Schema.ObjectId, ref: 'doctors'},
     day:{type:String},
+    status:{type:String, default:'pending'},
     slotDate:{type:String}
 })
 

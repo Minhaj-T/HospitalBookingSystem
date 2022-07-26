@@ -404,6 +404,21 @@ const getAppointments=asyncHandler(async(req, res)=>{
   res.status(200).json({data})
 })
 
+// @desc change the status of the appointment
+// @rout  PATCH /api/doctor/status-Doctor
+const ChangeAppointmentStatus = asyncHandler(async (req, res) => {
+  const { id, status } = req.body;
+  const appointment = await Transactions.findByIdAndUpdate(id, {status:status}, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+  const data= await Transactions.findById(appointment._id)
+  .populate({path: "userId",  select:  {_id: 1, name: 1,profile_image:1,mobile:1,email:1,state:1,city:1}})
+  .populate({path: "doctorId",select:{name  : 1}})
+  res.status(200).json({data})
+});
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '10d',
@@ -416,5 +431,6 @@ module.exports = {
   editDoctorPassword,
   addSlotes,
   deleteSlotes,
-  getAppointments
+  getAppointments,
+  ChangeAppointmentStatus,
 };

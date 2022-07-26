@@ -25,6 +25,19 @@ export const getAppointment = createAsyncThunk(
     }
   );
 
+  //change the appointment status 
+export const changeStatus = createAsyncThunk(
+  'changeStatus',
+  async (Data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().doctorAuth.doctor.token;
+      return await appointmentService.changeStatusAppointment(Data,token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(errorHandler(error));
+    }
+  }
+);
+
 const appointments = createSlice({
   name: 'appointments',
   initialState,
@@ -48,6 +61,24 @@ const appointments = createSlice({
         state.isSuccess = true;
       },
       [getAppointment.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.appointment = null;
+      },
+      [changeStatus.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [changeStatus.fulfilled]: (state, action) => {
+        const updatedData = state.appointment.map((doc) =>
+        doc._id === action.payload.data._id ? action.payload.data : doc
+        );
+        console.log(updatedData);
+        state.appointment = updatedData;
+        state.isLoading = false;
+        state.isSuccess = true;
+      },
+      [changeStatus.rejected]: (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
