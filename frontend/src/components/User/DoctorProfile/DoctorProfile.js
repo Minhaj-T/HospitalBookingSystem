@@ -44,7 +44,7 @@ function DoctorProfile() {
 
   return (
     <>
-      <div className="content">
+      <div className="content" style={{backgroundColor:'#f5f5f5'}}>
         <div className="container">
           <div className="card">
             <div className="card-body">

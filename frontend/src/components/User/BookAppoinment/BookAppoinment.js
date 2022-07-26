@@ -65,7 +65,7 @@ function BookAppoinment() {
   return (
     <>
       <Header />
-      <div className="content mt-5">
+      <div className="content mt-5"style={{backgroundColor:'#f5f5f5'}}>
         <div className="container">
           <div className="row">
             <div className="col-12">

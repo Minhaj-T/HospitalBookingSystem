@@ -37,7 +37,7 @@ function DoctorLayout({ children }) {
 
   return (
     <>
-      <div className="content">
+      <div className="content" style={{backgroundColor:'#f5f5f5'}}>
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">

@@ -139,7 +139,7 @@ function Checkout() {
     <>
       <Header />
       {/* <!-- Page Content --> */}
-      <div className="content">
+      <div className="content" style={{backgroundColor:'#f5f5f5'}}>
         <div className="container mt-5">
           <div className="row">
             <div className="col-md-7 col-lg-8">

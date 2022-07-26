@@ -11,7 +11,7 @@ function BookingSuccess() {
   return (
     <>
     <Header/>
-      <div className="content success-page-cont" style={{marginTop:'110px'}}>
+      <div className="content success-page-cont" style={{marginTop:'110px',backgroundColor:'#f5f5f5'}}>
         <div className="container-fluid">
           <div className="row justify-content-center">
             <div className="col-lg-6">

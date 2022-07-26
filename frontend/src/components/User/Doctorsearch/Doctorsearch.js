@@ -78,7 +78,7 @@ function Doctorsearch() {
   return (
     <>
     <Header/>
-      <div className="content mt-5">
+      <div className="content mt-5" style={{backgroundColor:'#f5f5f5'}}>
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-12 col-lg-4 col-xl-3 theiaStickySidebar">
