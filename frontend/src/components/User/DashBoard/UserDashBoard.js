@@ -205,8 +205,10 @@ if (Fulldata.loading) {
                             </h2>
                           </td>
                           <td>
-                          {row['slotDate']}{' '}
-                            <span className="d-block text-info">5.00 PM</span>
+                          {row?.slotDetails['Date']}
+                            <span className="d-block text-info">
+                            {row?.slotDetails['Slot']}
+                            </span>
                           </td>
                           <td>{moment().format('YYYY-M-D')}</td>
                           <td>₹{row['amount']}</td>
@@ -224,6 +226,11 @@ if (Fulldata.loading) {
                             {row['status']==='pending' &&
                             <span className="badge badge-pill bg-warning-light">
                               Pending
+                            </span>
+                            }
+                            {row['status']==='complete' &&
+                            <span className="badge badge-pill bg-primary-light">
+                              Completed
                             </span>
                             }
                           </td>
