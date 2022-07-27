@@ -33,6 +33,7 @@ const DoctorProfile = React.lazy(() => import('./components/User/DoctorProfile/D
 const BookAppoinment = React.lazy(() => import('./components/User/BookAppoinment/BookAppoinment'));
 const CheckoutPage = React.lazy(()=> import('./components/User/Chekout/Checkout'));
 const Bookingsuccess = React.lazy(()=> import('./components/User/bookingSuccess/BookingSuccess'));
+const Messenger = React.lazy(()=> import('./pages/user/Messenger/Messenger'));
 
 
 
@@ -99,6 +100,9 @@ function App() {
               : <Login/> }/>
               <Route path="booking-success" element={ user 
               ? <Bookingsuccess/> 
+              : <Login/> }/>
+              <Route path="messenger" element={ user 
+              ? <Messenger/> 
               : <Login/> }/>
             </Route>
 

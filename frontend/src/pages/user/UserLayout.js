@@ -63,7 +63,7 @@ function UserLayout({children}) {
                         </NavLink>
                       </li>
                       <li className="main">
-                        <NavLink to={'/#'}>
+                        <NavLink to={'/user/messenger'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaComments />
