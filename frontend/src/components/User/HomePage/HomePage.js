@@ -133,8 +133,8 @@ function HomePage() {
         </section>
 
     <section class="section section-doctor" style={{backgroundColor:'#f5f5f5'}}>
-			<div class="container-fluid mt-5">
-				<div class="section-header text-center">
+			<div class="container-fluid">
+				<div class="section-header text-center pt-4">
 					<h2>Book Our Best Doctor</h2>
 					<p class="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 				</div>
@@ -150,7 +150,7 @@ function HomePage() {
         </div>
 		</section>
       </div>
-    </>
+    </> 
   );
 }
 
