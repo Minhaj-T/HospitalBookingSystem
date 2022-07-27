@@ -6,11 +6,9 @@ const transactionSchema = mongoose.Schema({
     amount:{type:Number},
     method:{type:String},
     userId:{type: mongoose.Schema.ObjectId, ref: 'users'},
-    slotId:{type: mongoose.Schema.ObjectId},
     doctorId:{type: mongoose.Schema.ObjectId, ref: 'doctors'},
-    day:{type:String},
     status:{type:String, default:'pending'},
-    slotDate:{type:String}
+    slotDetails:{ type: mongoose.SchemaTypes.Mixed }
 })
 
 module.exports = mongoose.model("transactions", transactionSchema);

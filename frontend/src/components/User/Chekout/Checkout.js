@@ -29,7 +29,7 @@ function Checkout() {
       Authorization: `Bearer ${user['token']}`,
     },
   };
-
+console.log("qqqqq",state)
 
   useEffect(() => {
     !Doctor.done && getDoctor(id);
@@ -80,16 +80,10 @@ function Checkout() {
               ...response,
               amount: amount,
               doctorId:id,
-              slotId:Id,
-              Day:Day,
-              slotDate:Date
+              slotDetails:state
             },config);
 
             if (data.status) {
-              // showToast(data.message, "success");
-              // setPayStatus("SUCCESS");
-              // dispatch(getSponsorAds());
-              // setTransId(data.transId);
               notification.success(data.message); 
               navigate('/user/booking-success',
               {state:{

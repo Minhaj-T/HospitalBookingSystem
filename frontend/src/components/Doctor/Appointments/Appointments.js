@@ -38,7 +38,7 @@ function Appointments() {
                   </h3>
                   <div className="patient-details">
                     <h5>
-                      <FaClock /> 14 Nov 2019, 10.00 AM
+                      <FaClock /> {row?.slotDetails['Date']} {" ,"} {row?.slotDetails['Slot']}
                     </h5>
                     <h5>
                       <FaMapMarkerAlt /> {row.userId['city']}, {row.userId['state']}
