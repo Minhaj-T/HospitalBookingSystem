@@ -10,6 +10,7 @@ const {
   getAppointments
 } = require('../controllers/usersController');
 const{fetchSpecialties}=require('../controllers/adminControllers');
+const{deleteSlotes}=require('../controllers/doctorControllers');
 const router = express.Router();
 const { protect } = require('../middlewares/authMiddleware');
 
@@ -22,5 +23,6 @@ router.get('/fetch-allDoctors',fetchAllDoctors);
 router.get('/get-doctor',getDoctor);
 router.get('/fetch-specialties',fetchSpecialties);
 router.get('/get-appointments',protect,getAppointments)
+router.post('/delete-slot',protect,deleteSlotes)
 
 module.exports = router;

@@ -1,13 +1,28 @@
 import './bookingsuccess.css';
-import React from 'react';
+import * as api from '../../../api/index'
+import React, { useEffect } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import {Link,useLocation} from 'react-router-dom'
 import Header from '../Header/Header';
+import { useSelector } from 'react-redux';
 
 function BookingSuccess() {
+  const { user } = useSelector((state) => state.auth);
+
+  //create a tocken
+  const {token}=user?user:"";
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
     const { state } = useLocation(); 
-    const{name,day,slot}=state
-    console.log(state);   
+    useEffect(() => {
+      (async () => {
+          let {data} = await api.deleteSlote(state,config)
+          return null;
+      })();
+  }, []) 
   return (
     <>
     <Header/>

@@ -34,7 +34,7 @@ function BookAppoinment() {
     Id: active,
     Day: Day,
     Date: DayDate,
-    Slot:Slot
+    Slot: Slot,
   };
 
   const [Doctor, setDoctor] = useState({ loading: false, done: false });
@@ -61,11 +61,11 @@ function BookAppoinment() {
   if (Doctor.loading) {
     return <Spinner />;
   }
-  console.log(active);
+
   return (
     <>
       <Header />
-      <div className="content mt-5"style={{backgroundColor:'#f5f5f5'}}>
+      <div className="content mt-5" style={{ backgroundColor: '#f5f5f5' }}>
         <div className="container">
           <div className="row">
             <div className="col-12">
@@ -158,7 +158,7 @@ function BookAppoinment() {
                                   <span>{row.end}</span>
                                 </button>
                               ))}
-                              <div className="p-1"></div>
+                            <div className="p-1"></div>
                           </li>
                           <li>
                             {Doctor.monday &&
@@ -183,7 +183,7 @@ function BookAppoinment() {
                                   <span>{row.end}</span>
                                 </button>
                               ))}
-                              <div className="p-1"></div>
+                            <div className="p-1"></div>
                           </li>
                           <li>
                             {Doctor.monday &&
@@ -208,7 +208,7 @@ function BookAppoinment() {
                                   <span>{row.end}</span>
                                 </button>
                               ))}
-                              <div className="p-1"></div>
+                            <div className="p-1"></div>
                           </li>
                           <li>
                             {Doctor.monday &&
@@ -233,7 +233,7 @@ function BookAppoinment() {
                                   <span>{row.end}</span>
                                 </button>
                               ))}
-                              <div className="p-1"></div>
+                            <div className="p-1"></div>
                           </li>
                           <li>
                             {Doctor.monday &&
@@ -258,7 +258,7 @@ function BookAppoinment() {
                                   <span>{row.end}</span>
                                 </button>
                               ))}
-                              <div className="p-1"></div>
+                            <div className="p-1"></div>
                           </li>
                           <li>
                             {Doctor.monday &&
@@ -283,7 +283,7 @@ function BookAppoinment() {
                                   <span>{row.end}</span>
                                 </button>
                               ))}
-                              <div className="p-1"></div>
+                            <div className="p-1"></div>
                           </li>
                           <li>
                             {Doctor.monday &&
@@ -308,7 +308,7 @@ function BookAppoinment() {
                                   <span>{row.end}</span>
                                 </button>
                               ))}
-                             <div className="p-1"></div>
+                            <div className="p-1"></div>
                           </li>
                         </ul>
                       </div>
@@ -321,15 +321,17 @@ function BookAppoinment() {
               {/* /Schedule Widget */}
 
               {/* Submit Section */}
-              <div className="submit-section proceed-btn text-right">
-                <Link
-                  to={`/user/checkout/${Doctor['_id']}`}
-                  state={SlotDetails}
-                  className="btn btn-primary submit-btn"
-                >
-                  Proceed to Pay
-                </Link>
-              </div>
+              {Slot && (
+                <div className="submit-section proceed-btn text-right">
+                  <Link
+                    to={`/user/checkout/${Doctor['_id']}`}
+                    state={SlotDetails}
+                    className="btn btn-primary submit-btn"
+                  >
+                    Proceed to Pay
+                  </Link>
+                </div>
+              )}
               {/* /Submit Section */}
             </div>
           </div>

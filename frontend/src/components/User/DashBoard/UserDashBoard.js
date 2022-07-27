@@ -45,7 +45,6 @@ const fetchAllAppointments= async()=>{
   }
 }
 
-console.log("ggg",Fulldata)
 
 // Loading page
 if (Fulldata.loading) {
@@ -186,8 +185,7 @@ if (Fulldata.loading) {
                         </tr>
                       </thead>
                       {Fulldata?.data && 
-                       Fulldata?.data.map((row)=>(
-
+                       Fulldata?.data.map((row)=> (
                       <tbody>
                         <tr>
                           <td>

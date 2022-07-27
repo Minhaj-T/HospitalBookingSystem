@@ -88,10 +88,13 @@ console.log("qqqqq",state)
               navigate('/user/booking-success',
               {state:{
                 name:Doctor?.name,
+                doctorId:Doctor._id,
                 day:Day,
                 slot:Slot,
+                id:Id
               }}
               )
+
             }
           },
           modal: {

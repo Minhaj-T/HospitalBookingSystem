@@ -12,6 +12,7 @@ import {
 } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import {changeStatus} from '../../../features/Doctor/appointments/appointmentSlice'
+import EmptyPage from '../../EmptyPage/EmptyPage';
 
 function Appointments() {
   const { appointment } = useSelector((state) => state.appointments);
@@ -21,8 +22,9 @@ function Appointments() {
   return (
     <>
       <div className="appointments">
-        {appointment &&
-          appointment.map((row) => (
+        {appointment.length !==0 ?(
+          <>
+          {appointment.map((row) => (
             <div key={row._id} className="appointment-list">
               <div className="profile-info-widget">
                 <Link to={''} className="booking-doc-img">
@@ -111,6 +113,8 @@ function Appointments() {
               </div>
             </div>
           ))}
+          </>
+        ):(<EmptyPage/>)}
       </div>
     </>
   );

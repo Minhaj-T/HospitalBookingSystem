@@ -224,7 +224,7 @@ function DoctorDashboard() {
                   <table className="table table-hover table-center mb-0">
                     <thead>
                       <tr>
-                        <th>Patient Name today</th>
+                        <th>Patient Name</th>
                         <th>Appt Date</th>
                         <th>Purpose</th>
                         <th className="text-center">Paid Amount</th>

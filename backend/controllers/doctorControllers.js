@@ -311,8 +311,8 @@ const addSlotes = asyncHandler(async (req, res) => {
 // @desc  delete Slotes
 // @rout  POST /api/doctor/delete-timeSlots
 const deleteSlotes = asyncHandler(async (req, res) => {
-  const doctorId = req.doctor._id;
-
+  const doctorId =  req.body.doctorId || req.doctor._id;
+  
   const { day, id } = req.body;
   
   if (!day || !id) throw new Error('Invalid date');
