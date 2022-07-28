@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../../../components/Footer/Footer';
 import Header from '../../../components/User/Header/Header';
 import BookDoctor from '../../../components/User/HomePage/BookDoctor';
 import HomePage from '../../../components/User/HomePage/HomePage'
@@ -23,6 +24,7 @@ function Landingpage() {
     <Header/>
     <HomePage/>
     <BookDoctor></BookDoctor>
+    <Footer/>
     </>
   )
 }

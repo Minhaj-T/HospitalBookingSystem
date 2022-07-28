@@ -6,6 +6,7 @@ import { FaMapMarkerAlt, FaMoneyBillAlt, FaThumbsUp } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import Spinner from '../Spinner/Spinner';
 import Header from '../Header/Header'
+import Footer from '../../Footer/Footer';
 
 function Doctorsearch() {
   const [fullData, setFullData] = useState({ loading: false, done: false });
@@ -235,6 +236,7 @@ function Doctorsearch() {
             </div>
           </div>
         </div>
+        <Footer/> 
       </div>
     </>
   );
