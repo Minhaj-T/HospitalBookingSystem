@@ -1,6 +1,5 @@
-import './messenger.css';
-import Header from '../../../components/User/Header/Header';
-import Conversation from '../../../components/User/Chat/conversations/Conversation';
+import '../../user/Messenger/messenger.css';
+import Conversation from '../../../components/Doctor/chat/conversations/Conversation';
 import Message from '../../../components/User/Chat/message/Message';
 import ChatOnline from '../../../components/User/Chat/chatOnline/ChatOnline';
 import { useEffect, useRef, useState } from 'react';
@@ -18,12 +17,11 @@ function ChatUser() {
     currentChat: null,
   });
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
-  const [arrivalMessage, setArrivalMessage] = useState(null);
-  const scrollRef = useRef();
-  const { user } = useSelector((state) => state.auth);
   const socket=useRef()
-
+  const [newMessage, setNewMessage] = useState("");
+  const scrollRef = useRef();
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const { doctor } = useSelector((state) => state.doctorAuth);
 
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
@@ -42,23 +40,23 @@ function ChatUser() {
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, Fulldata['currentChat']]);
 
+ 
+
   useEffect(() => {
-    socket.current.emit("addUser", user._id);
+    socket.current.emit("addUser", doctor._id);
     socket.current.on("getUsers", (users) => {
       console.log(users)  
     })
   },[]);
-  
-
-  
 
   useEffect(() => {
     !Fulldata.done && getConversations();
   }, []);
+
   const getConversations = async () => {
     setFulldata((prev) => ({ ...prev, loading: true }));
     try {
-      const { data } = await api.getConversation(user?._id);
+      const { data } = await api.getConversation(doctor?._id);
       if (data) {
         setFulldata((prev) => ({
           ...prev,
@@ -87,17 +85,17 @@ function ChatUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const message = {
-      sender: user._id,
+      sender: doctor._id,
       text: newMessage,
       conversationId: Fulldata['currentChat']?._id,
     };
 
     const receiverId = Fulldata['currentChat'].members.find(
-      (member) => member !== user._id
+      (member) => member !== doctor._id
     );
 
     socket.current.emit("sendMessage", {
-      senderId: user._id,
+      senderId: doctor._id,
       receiverId,
       text: newMessage,
     });
@@ -120,11 +118,10 @@ function ChatUser() {
     return <Spinner />;
   }
 
-  console.log("Message",);
+  console.log("Message-doctor",Fulldata);
 
   return (
     <>
-      <Header />
       <div className="messenger ">
         <div className="chatMenu">
           <div className="chatMenuWrapper">
@@ -134,7 +131,7 @@ function ChatUser() {
                 <div key={c._id} onClick={() => setFulldata((prev)=> ({ ...prev,currentChat:c  }))}>
                   <Conversation
                     conversations={c}
-                    currentUser={user}
+                    currentUser={doctor}
                   />
                 </div>
               ))}
@@ -147,7 +144,7 @@ function ChatUser() {
                 <div className="chatBoxTop">
                   {messages.map((m) => (
                    <div ref={scrollRef}>
-                      <Message message={m} own={m.sender === user._id} />
+                      <Message message={m} own={m.sender === doctor._id} />
                     </div>
                   ))}
                 </div>

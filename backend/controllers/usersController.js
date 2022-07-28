@@ -284,6 +284,17 @@ const getDoctor = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc  get a User using id
+// @rout  GET /api/users/get-doctor/:id
+const getUser = asyncHandler(async (req, res) => {
+  const { id } = req.query;
+  const data = await User.findById(id);
+  if (!data) throw new Error(`Couldn't find ${id}`);
+  res.status(200).json({
+    data,
+  });
+});
+
 // @desc  get the appointment using user id
 // @rout  POST /api/users/get-appointments
 const getAppointments=asyncHandler(async(req, res)=>{
@@ -308,5 +319,6 @@ module.exports = {
   fetchAllDoctors,
   getDoctor,
   login_with_Google,
-  getAppointments
+  getAppointments,
+  getUser
 };

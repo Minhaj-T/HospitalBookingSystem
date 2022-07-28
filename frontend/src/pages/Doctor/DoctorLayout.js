@@ -105,7 +105,7 @@ function DoctorLayout({ children }) {
                         </NavLink>
                       </li>
                       <li className="main">
-                        <NavLink to={'/msg'}>
+                        <NavLink to={'/doctor/messenger'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
                             <FaComments />

@@ -16,3 +16,4 @@ export const getDoctor = (id) => API.get(`/get-doctor?id=${id}`)
 export const getAllSpecialites=()=> API.get ('/fetch-specialties');
 export const getAllappointment= (config) => API.get(`/get-appointments`,config)
 export const deleteSlote= (data,config) => API.post (`/delete-slot`,data,config)
+export const getUser = (id) => API.get(`/get-user?id=${id}`)

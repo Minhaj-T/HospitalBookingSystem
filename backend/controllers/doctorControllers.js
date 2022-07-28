@@ -12,6 +12,7 @@ const loginDoctor = asyncHandler(async (req, res) => {
   if(doctor.isBlocked)throw new Error(`Doctor ${doctor.name} is blocked by admin`);
   if (doctor && (await bcrypt.compare(password, doctor.password))) {
     res.status(200).json({
+      _id: doctor.id,
       name: doctor.name,
       lastname: doctor.lastname,
       email: doctor.email,
@@ -83,6 +84,7 @@ const editDoctorDetails = asyncHandler(async (req, res) => {
   });
   if (!doctor) throw new Error('doctor not found');
   res.status(200).json({
+    _id: doctor.id,
     name: doctor.name,
     lastname: doctor.lastname,
     email: doctor.email,
@@ -275,6 +277,7 @@ const addSlotes = asyncHandler(async (req, res) => {
   }
   const doctor = await Doctor.findById(doctorId);
   res.status(200).json({
+    _id: doctor.id,
     name: doctor.name,
     lastname: doctor.lastname,
     email: doctor.email,
@@ -360,6 +363,7 @@ const deleteSlotes = asyncHandler(async (req, res) => {
   }
   const doctor = await Doctor.findById(doctorId);
   res.status(200).json({
+    _id: doctor.id,
     name: doctor.name,
     lastname: doctor.lastname,
     email: doctor.email,

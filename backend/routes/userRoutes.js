@@ -7,7 +7,8 @@ const {
   editUserPassword,
   fetchAllDoctors,
   getDoctor,
-  getAppointments
+  getAppointments,
+  getUser
 } = require('../controllers/usersController');
 const{fetchSpecialties}=require('../controllers/adminControllers');
 const{deleteSlotes}=require('../controllers/doctorControllers');
@@ -24,5 +25,6 @@ router.get('/get-doctor',getDoctor);
 router.get('/fetch-specialties',fetchSpecialties);
 router.get('/get-appointments',protect,getAppointments)
 router.post('/delete-slot',protect,deleteSlotes)
+router.get('/get-user',getUser);
 
 module.exports = router;

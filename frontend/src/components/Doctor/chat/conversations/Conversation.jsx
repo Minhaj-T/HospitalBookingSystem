@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './conversation.css';
+import '../../../User/Chat/conversations/conversation.css';
 import * as api from '../../../../api/index';
 import { errorHandler } from '../../../../utilities/errorMessege';
 import { notification } from '../../../../utilities/notification';
@@ -9,13 +9,13 @@ export default function Conversation({ conversations, currentUser }) {
   const [Fulldata, setFulldata] = useState({ loading: false, done: false });
 
   useEffect(() => {
-    const doctorId = conversations.members.find((m) => m !== currentUser._id);
-    !Fulldata.done && getDoctor(doctorId);
+    const userId = conversations.members.find((m) => m !== currentUser._id);
+    !Fulldata.done && getUser(userId);
   }, [conversations, currentUser]);
-  const getDoctor = async (id) => {
+  const getUser = async (id) => {
     setFulldata((prev) => ({ ...prev, loading: true }));
     try {
-      const { data } = await api.getDoctor(id);
+      const { data } = await api.getUser(id);
       if (data) {
         setFulldata((prev) => ({
           ...prev,
@@ -33,7 +33,6 @@ export default function Conversation({ conversations, currentUser }) {
   if (Fulldata.loading) {
     return <Spinner />;
   }
- 
 
   return (
     <div className="conversation">
@@ -42,7 +41,7 @@ export default function Conversation({ conversations, currentUser }) {
         src={Fulldata.data?.profile_image}
         alt="profile_picture"
       />
-      <span className="conversationName">Dr. {Fulldata.data?.name}</span>
+      <span className="conversationName">{Fulldata.data?.name}</span>
     </div>
   );
 }

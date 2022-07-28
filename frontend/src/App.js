@@ -56,6 +56,7 @@ const ProfileSettings = React.lazy(() => import('./components/Doctor/ProfileSett
 const ChangePassword = React.lazy(() => import('./components/Doctor/ChangePassword/ChangePassword'));
 const UserChangePassword = React.lazy(()=>import('./components/User/ChangePassword/UserChangePassword'));
 const UserProfile = React.lazy(() =>import('./components/Doctor/UserProfile/UserProfile'));
+const Messenger2 = React.lazy(()=> import('./pages/Doctor/Messgenger/Messenger'));
 
 
 function App() {
@@ -143,6 +144,9 @@ function App() {
               : <DoctorLogin/> }/>
               <Route path="patient-profile" element={ doctor 
               ? <UserProfile/> 
+              : <DoctorLogin/> }/>
+              <Route path="messenger" element={ doctor 
+              ? <Messenger2/> 
               : <DoctorLogin/> }/>
             </Route>
 
