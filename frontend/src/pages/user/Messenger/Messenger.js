@@ -2,14 +2,14 @@ import './messenger.css';
 import Header from '../../../components/User/Header/Header';
 import Conversation from '../../../components/User/Chat/conversations/Conversation';
 import Message from '../../../components/User/Chat/message/Message';
-import ChatOnline from '../../../components/User/Chat/chatOnline/ChatOnline';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import * as api from '../../../api/messenger';
 import { errorHandler } from '../../../utilities/errorMessege';
 import { notification } from '../../../utilities/notification';
 import Spinner from '../../../components/User/Spinner/Spinner';
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client';
+import Footer from '../../../components/Footer/Footer';
 
 function ChatUser() {
   const [Fulldata, setFulldata] = useState({
@@ -18,16 +18,23 @@ function ChatUser() {
     currentChat: null,
   });
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
+  const [newMessage, setNewMessage] = useState('');
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [onlineUsers, setOnlineUsers] = useState([]);
   const scrollRef = useRef();
   const { user } = useSelector((state) => state.auth);
-  const socket=useRef()
-
+  const socket = useRef();
+  //create a tocken
+  const { token } = user ? user : '';
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
-    socket.current.on("getMessage", (data) => {
+    socket.current = io('ws://localhost:8900');
+    socket.current.on('getMessage', (data) => {
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
@@ -38,19 +45,16 @@ function ChatUser() {
 
   useEffect(() => {
     arrivalMessage &&
-    Fulldata['currentChat']?.members.includes(arrivalMessage.sender) && 
+      Fulldata['currentChat']?.members.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, Fulldata['currentChat']]);
 
   useEffect(() => {
-    socket.current.emit("addUser", user._id);
-    socket.current.on("getUsers", (users) => {
-      console.log(users)  
-    })
-  },[]);
-  
-
-  
+    socket.current.emit('addUser', user._id);
+    socket.current.on('getUsers', (users) => {
+      setOnlineUsers(users);
+    });
+  }, []);
 
   useEffect(() => {
     !Fulldata.done && getConversations();
@@ -96,7 +100,7 @@ function ChatUser() {
       (member) => member !== user._id
     );
 
-    socket.current.emit("sendMessage", {
+    socket.current.emit('sendMessage', {
       senderId: user._id,
       receiverId,
       text: newMessage,
@@ -105,14 +109,14 @@ function ChatUser() {
     try {
       const res = await api.savedMessage(message);
       setMessages([...messages, res?.data]);
-      setNewMessage("");
+      setNewMessage('');
     } catch (error) {
       return notification.error(errorHandler(error));
     }
-  }
+  };
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   // Loading page
@@ -120,7 +124,7 @@ function ChatUser() {
     return <Spinner />;
   }
 
-  console.log("Message",);
+  console.log('Message');
 
   return (
     <>
@@ -128,14 +132,21 @@ function ChatUser() {
       <div className="messenger ">
         <div className="chatMenu">
           <div className="chatMenuWrapper">
-            <input placeholder="Search for friends" className="chatMenuInput" />
+            <div className="serchSection">
+              <input
+                placeholder="Search for friends"
+                className="chatMenuInput"
+              />
+            </div>
             {Fulldata?.conversations &&
               Fulldata.conversations.map((c) => (
-                <div key={c._id} onClick={() => setFulldata((prev)=> ({ ...prev,currentChat:c  }))}>
-                  <Conversation
-                    conversations={c}
-                    currentUser={user}
-                  />
+                <div
+                  key={c._id}
+                  onClick={() =>
+                    setFulldata((prev) => ({ ...prev, currentChat: c }))
+                  }
+                >
+                  <Conversation conversations={c} currentUser={user} />
                 </div>
               ))}
           </div>
@@ -146,7 +157,7 @@ function ChatUser() {
               <>
                 <div className="chatBoxTop">
                   {messages.map((m) => (
-                   <div ref={scrollRef}>
+                    <div ref={scrollRef}>
                       <Message message={m} own={m.sender === user._id} />
                     </div>
                   ))}
@@ -170,12 +181,8 @@ function ChatUser() {
             )}
           </div>
         </div>
-        <div className="chatOnline">
-          <div className="chatOnlineWrapper">
-            <ChatOnline />
-          </div>
-        </div>
       </div>
+      <Footer />
     </>
   );
 }

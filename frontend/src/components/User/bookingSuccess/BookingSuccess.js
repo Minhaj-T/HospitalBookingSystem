@@ -16,13 +16,16 @@ function BookingSuccess() {
       Authorization: `Bearer ${token}`,
     },
   };
-    const { state } = useLocation(); 
+
+  const { state } = useLocation(); 
+ 
     useEffect(() => {
       (async () => {
           let {data} = await api.deleteSlote(state,config)
           return null;
       })();
   }, []) 
+  
   return (
     <>
     <Header/>

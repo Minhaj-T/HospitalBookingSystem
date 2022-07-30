@@ -3,6 +3,7 @@ import './checkout.css';
 import { Link, useParams, useLocation,useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import * as api from '../../../api/index';
+import * as api1 from '../../../api/messenger'
 import Spinner from '../Spinner/Spinner';
 import { FaCreditCard, FaMapMarkerAlt } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
@@ -29,7 +30,6 @@ function Checkout() {
       Authorization: `Bearer ${user['token']}`,
     },
   };
-console.log("qqqqq",state)
 
   useEffect(() => {
     !Doctor.done && getDoctor(id);
@@ -48,6 +48,19 @@ console.log("qqqqq",state)
       }));
     }
   };
+
+  //statrt chat with doctor
+  const ChatWithDoctor=async() => {
+    const data={
+          senderId:user._id,
+          receiverId:Doctor._id
+        }
+        let Data = await api1.newConversation(data)
+      console.log(",da=",Data)
+        return null;
+    }
+
+
 
 
   function loadRazorpay(e) {
@@ -94,7 +107,7 @@ console.log("qqqqq",state)
                 id:Id
               }}
               )
-
+             ChatWithDoctor();
             }
           },
           modal: {

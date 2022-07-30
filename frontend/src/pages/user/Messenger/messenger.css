@@ -5,18 +5,18 @@
   }
   
   .chatMenu {
-    flex: 3.5;
+    flex: 2;
   }
   
   .chatMenuInput {
+    background: #f1f1f1;
     width: 90%;
     padding: 10px 0;
     border: none;
-    border-bottom: 1px solid gray;
   }
   
   .chatBox {
-    flex: 5.5;
+    flex: 3.5;
   }
   
   .chatBoxWrapper {
@@ -24,6 +24,7 @@
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
   
   .chatBoxTop {
@@ -54,7 +55,7 @@
     margin-top: 5px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 15px;
   }
   
   .chatMessageInput {
@@ -109,4 +110,12 @@
       flex: 1px;
     }
   }
+  
+  .serchSection{
+    padding: 11px;
+    background-color: #f1f1f1;
+
+  }
+
+  
   
