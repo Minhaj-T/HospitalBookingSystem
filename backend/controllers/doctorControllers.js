@@ -403,7 +403,7 @@ const deleteSlotes = asyncHandler(async (req, res) => {
 const getAppointments=asyncHandler(async(req, res)=>{
   const id = req.doctor._id;
   const data= await Transactions.find({doctorId:id})
-  .populate({path: "userId",  select:  {_id: 1, name: 1,profile_image:1,mobile:1,email:1,state:1,city:1}})
+  .populate({path: "userId",  select:  {_id: 1, name: 1,profile_image:1,mobile:1,email:1,state:1,city:1,age:1,gender:1,blood_group:1}})
   .populate({path: "doctorId"})
   res.status(200).json({data})
 })
@@ -418,7 +418,7 @@ const ChangeAppointmentStatus = asyncHandler(async (req, res) => {
     useFindAndModify: false,
   });
   const data= await Transactions.findById(appointment._id)
-  .populate({path: "userId",  select:  {_id: 1, name: 1,profile_image:1,mobile:1,email:1,state:1,city:1}})
+  .populate({path: "userId",  select:  {_id: 1, name: 1,profile_image:1,mobile:1,email:1,state:1,city:1,age:1,gender:1,blood_group:1}})
   .populate({path: "doctorId",select:{name  : 1}})
   res.status(200).json({data})
 });

@@ -32,11 +32,17 @@ io.on("connection", (socket) => {
    //send and get message
    socket.on("sendMessage", ({ senderId, receiverId, text }) => {
     const user = getUser(receiverId);
-    io.to(user.socketId).emit("getMessage", {
+    console.log(user);
+    io.to(user?.socketId).emit("getMessage", {
       senderId,
       text,
     });
   });
+
+ // client-side
+socket.on("connect_error", (err) => {
+  console.log(err.message); // prints the message associated with the error
+});
 
   //when disconnect
   socket.on("disconnect", () => {

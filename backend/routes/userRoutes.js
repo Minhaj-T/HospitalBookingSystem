@@ -8,7 +8,8 @@ const {
   fetchAllDoctors,
   getDoctor,
   getAppointments,
-  getUser
+  getUser,
+  getUserAppointments
 } = require('../controllers/usersController');
 const{fetchSpecialties}=require('../controllers/adminControllers');
 const{deleteSlotes}=require('../controllers/doctorControllers');
@@ -24,6 +25,7 @@ router.get('/fetch-allDoctors',fetchAllDoctors);
 router.get('/get-doctor',getDoctor);
 router.get('/fetch-specialties',fetchSpecialties);
 router.get('/get-appointments',protect,getAppointments)
+router.get('/get-user-Allappointments',protect,getUserAppointments)
 router.post('/delete-slot',protect,deleteSlotes)
 router.get('/get-user',getUser);
 

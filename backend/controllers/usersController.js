@@ -296,13 +296,21 @@ const getUser = asyncHandler(async (req, res) => {
 });
 
 // @desc  get the appointment using user id
-// @rout  POST /api/users/get-appointments
+// @rout    GET /users /api/users/get-appointments
 const getAppointments=asyncHandler(async(req, res)=>{
   const userId = req.user._id;
   const data= await Transactions.find({userId:userId})
   .populate({path: "userId",  select:  {_id: 1, name: 1,profile_image:1,mobile:1,email:1,state:1,city:1}})
   .populate({path: "doctorId", select:{name:1, profile_image:1, specialization:1,lastname:1,doctorID:1}})
   res.status(200).json({data})
+})
+
+// @desc  get the appointment using user id
+// @rout    GET /users /api/users/get-user-Allappointments
+const getUserAppointments=asyncHandler(async(req, res)=>{
+  const userId = req.user._id;
+  const appointments= await Transactions.find({userId:userId})
+  res.status(200).json({appointments})
 })
 
 const generateToken = (id) => {
@@ -320,5 +328,6 @@ module.exports = {
   getDoctor,
   login_with_Google,
   getAppointments,
-  getUser
+  getUser,
+  getUserAppointments
 };
