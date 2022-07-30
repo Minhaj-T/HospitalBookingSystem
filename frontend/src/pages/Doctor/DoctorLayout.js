@@ -15,6 +15,7 @@ import {
   FaSignOutAlt,
 } from 'react-icons/fa';
 import { useEffect } from 'react';
+import Header from '../../components/Doctor/Header/Header'
 
 function DoctorLayout({ children }) {
   const dispatch = useDispatch();
@@ -37,7 +38,8 @@ function DoctorLayout({ children }) {
 
   return (
     <>
-      <div className="content" style={{backgroundColor:'#f5f5f5'}}>
+    <Header/>
+      <div className="content mt-5" style={{backgroundColor:'#f5f5f5'}}>
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
