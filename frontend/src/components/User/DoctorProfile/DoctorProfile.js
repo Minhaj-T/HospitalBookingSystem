@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   addFavorite_doctor,
   reset,
-  removeFavorite_doctor
+  removeFavorite_doctor,
 } from '../../../features/users/auth/authSlice';
 import { toast } from 'react-toastify';
 
@@ -50,7 +50,7 @@ function DoctorProfile() {
       }));
     }
   };
-  
+
   //add favorites
   const handleAddFavorite = (event) => {
     event.preventDefault();
@@ -59,7 +59,7 @@ function DoctorProfile() {
     };
     dispatch(addFavorite_doctor(data));
   };
-  
+
   //remove favorites
   const handleRemoveFavorite = (event) => {
     event.preventDefault();
@@ -81,7 +81,6 @@ function DoctorProfile() {
     return <Spinner />;
   }
 
-  console.log('a  ');
 
   return (
     <>

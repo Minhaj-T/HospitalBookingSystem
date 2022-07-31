@@ -1,10 +1,12 @@
 const asyncHandler = require('express-async-handler');
+const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
 const Doctor = require('../models/doctorModel');
 const Specialities = require('../models/specialties');
 const Transactions = require('../models/transactions');
+const ObjectId = mongoose.Types.ObjectId;
 
 // @desc  Register New User
 // @rout  POST /api/users/signup
@@ -342,13 +344,13 @@ const getUserAppointments = asyncHandler(async (req, res) => {
 const addfavourites = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const { doctorId } = req.body;
-  const exists = await User.findOne({ userId }).elemMatch('favourites', {
-    doctorId,
+  const exists = await User.findOne( {_id:userId} ).elemMatch('favourites', {
+    doctorId:ObjectId(doctorId),
   });
-  if (exists) throw new Error('The doctor already exists');
 
+  if (exists) throw new Error('The doctor already exists');
   const Data = await User.findByIdAndUpdate(userId, {
-    $push: { favourites: { doctorId } },
+    $push: { favourites: {  doctorId:ObjectId(doctorId)  } },
   });
   const user = await User.findById(userId);
   res.status(200).json({
@@ -380,11 +382,10 @@ const addfavourites = asyncHandler(async (req, res) => {
 // @desc  remove the doctor from user favorites
 // @rout  PUT /api/users/remove-favourites
 const removeFavorite= asyncHandler(async (req, res) => {
-  console.log("ddd",req.body);
   const userId = req.user._id;
   const { doctorId } = req.body;
   const Data = await User.findByIdAndUpdate(userId, {
-    $pull: { favourites: { doctorId } },
+    $pull: { favourites: { doctorId:ObjectId(doctorId)   } },
   });
   const user = await User.findById(userId);
   res.status(200).json({
@@ -413,6 +414,29 @@ const removeFavorite= asyncHandler(async (req, res) => {
   });
 });
 
+// @desc  get the all favourite doctor details
+// @rout  GET /api/users/get-favourites
+const getFavourites = asyncHandler(async(req,res)=>{
+  const userId = req.user._id;
+  const data= await User.findById(userId).populate({
+    path: 'favourites.doctorId',
+    select: {
+      _id: 1,
+      name: 1,
+      profile_image: 1,
+      mobile: 1,
+      email: 1,
+      state: 1,
+      city: 1,
+      specialization:1
+    },
+  })
+res.status(200).send({data})
+
+
+})
+
+
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -433,4 +457,5 @@ module.exports = {
   getUserAppointments,
   addfavourites,
   removeFavorite,
+  getFavourites,
 };

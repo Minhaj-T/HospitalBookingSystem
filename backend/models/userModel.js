@@ -14,9 +14,10 @@ const userSchema = mongoose.Schema({
         required:[true,'Please add a Password']
     },
     isBlocked:{type:Boolean, default:false},
-    favourites: {
-        type: Array,
-      },
+    favourites: [{
+       doctorId: {type: mongoose.Schema.ObjectId, ref: 'doctors'}
+    }
+    ],
     address:{
         type:String,
     },

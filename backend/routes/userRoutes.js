@@ -11,7 +11,8 @@ const {
   getUser,
   getUserAppointments,
   addfavourites,
-  removeFavorite
+  removeFavorite,
+  getFavourites,
 } = require('../controllers/usersController');
 const{fetchSpecialties}=require('../controllers/adminControllers');
 const{deleteSlotes}=require('../controllers/doctorControllers');
@@ -32,5 +33,6 @@ router.post('/delete-slot',protect,deleteSlotes)
 router.get('/get-user',getUser);
 router.post('/add-favourites',protect,addfavourites)
 router.put('/remove-favourites',protect,removeFavorite)
+router.get('/get-favourites',protect,getFavourites)
 
 module.exports = router;
