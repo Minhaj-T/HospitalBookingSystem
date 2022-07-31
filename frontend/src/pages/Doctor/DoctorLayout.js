@@ -33,7 +33,7 @@ function DoctorLayout({ children }) {
     if (doctor?.token) {
       navigate("/doctor/");
     }
-  }, [doctor]);
+  }, []);
   
 
   return (
