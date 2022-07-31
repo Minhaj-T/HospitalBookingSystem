@@ -9,7 +9,9 @@ const {
   getDoctor,
   getAppointments,
   getUser,
-  getUserAppointments
+  getUserAppointments,
+  addfavourites,
+  removeFavorite
 } = require('../controllers/usersController');
 const{fetchSpecialties}=require('../controllers/adminControllers');
 const{deleteSlotes}=require('../controllers/doctorControllers');
@@ -28,5 +30,7 @@ router.get('/get-appointments',protect,getAppointments)
 router.get('/get-user-Allappointments',protect,getUserAppointments)
 router.post('/delete-slot',protect,deleteSlotes)
 router.get('/get-user',getUser);
+router.post('/add-favourites',protect,addfavourites)
+router.put('/remove-favourites',protect,removeFavorite)
 
 module.exports = router;

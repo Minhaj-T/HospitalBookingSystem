@@ -13,7 +13,7 @@ class ErrorBoundary extends React.Component {
   componentDidCatch(error, info) {
     setTimeout(()=>{
         window.location.replace("/")
-    },5000)
+    },10000)
     this.setState({ error: error, errorInfo: info });
   }
   render() {

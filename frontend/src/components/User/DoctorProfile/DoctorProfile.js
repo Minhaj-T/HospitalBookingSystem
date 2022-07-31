@@ -1,6 +1,6 @@
 import './doctorprofile.css';
 import '../Doctorsearch/doctorsearch.css';
-import * as api from '../../../api/index'
+import * as api from '../../../api/index';
 import { Link, useParams } from 'react-router-dom';
 import {
   FaMapMarkerAlt,
@@ -13,12 +13,25 @@ import {
 import { useEffect, useState } from 'react';
 import Spinner from '../Spinner/Spinner';
 import moment from 'moment';
+import Header from '../Header/Header';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addFavorite_doctor,
+  reset,
+  removeFavorite_doctor
+} from '../../../features/users/auth/authSlice';
+import { toast } from 'react-toastify';
 
 function DoctorProfile() {
   const { id } = useParams();
-  
+  const dispatch = useDispatch();
+
+  // get the current state
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
   const [Doctor, setDoctor] = useState({ loading: false, done: false });
- 
 
   useEffect(() => {
     !Doctor.done && getDoctor(id);
@@ -26,8 +39,8 @@ function DoctorProfile() {
 
   const getDoctor = async (id) => {
     setDoctor((prev) => ({ ...prev, loading: true }));
-    let {data} = await api.getDoctor(id)
-    
+    let { data } = await api.getDoctor(id);
+
     if (data?.data) {
       setDoctor((prev) => ({
         ...prev,
@@ -37,39 +50,65 @@ function DoctorProfile() {
       }));
     }
   };
+  
+  //add favorites
+  const handleAddFavorite = (event) => {
+    event.preventDefault();
+    const data = {
+      doctorId: Doctor?._id,
+    };
+    dispatch(addFavorite_doctor(data));
+  };
+  
+  //remove favorites
+  const handleRemoveFavorite = (event) => {
+    event.preventDefault();
+    const data = {
+      doctorId: Doctor?._id,
+    };
+    dispatch(removeFavorite_doctor(data));
+  };
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, dispatch]);
+
   // Loading page
-  if (Doctor.loading) {
+  if (Doctor.loading || isLoading) {
     return <Spinner />;
   }
 
+  console.log('a  ');
+
   return (
     <>
-      <div className="content" style={{backgroundColor:'#f5f5f5'}}>
+      <Header />
+      <div className="content mt-5" style={{ backgroundColor: '#f5f5f5' }}>
         <div className="container">
           <div className="card">
             <div className="card-body">
               <div className="doctor-widget">
                 <div className="doc-info-left">
                   <div className="doctor-img">
-                    <img src={Doctor?.profile_image}className="img-fluid" alt="User" />
+                    <img
+                      src={Doctor?.profile_image}
+                      className="img-fluid"
+                      alt="User"
+                    />
                   </div>
                   <div className="doc-info-cont">
-                    <h4 className="doc-name">Dr.{Doctor?.name}{" "}{Doctor?.lastname}</h4>
-                    <p className="doc-speciality">
-                    {Doctor?.degree}
-                    </p>
+                    <h4 className="doc-name">
+                      Dr.{Doctor?.name} {Doctor?.lastname}
+                    </h4>
+                    <p className="doc-speciality">{Doctor?.degree}</p>
                     <p className="doc-department">{Doctor?.specialization}</p>
-                    {/* <div className="rating">
-                      <i className="fas fa-star filled"></i>
-                      <i className="fas fa-star filled"></i>
-                      <i className="fas fa-star filled"></i>
-                      <i className="fas fa-star filled"></i>
-                      <i className="fas fa-star"></i>
-                      <span className="d-inline-block average-rating">(35)</span>
-                    </div> */}
                     <div className="clinic-details">
                       <p className="doc-location">
-                        <FaMapMarkerAlt /> {Doctor?.state},{Doctor?.country} - <Link to={""}>Get Directions</Link>
+                        <FaMapMarkerAlt /> {Doctor?.state},{Doctor?.country} -{' '}
+                        <Link to={''}>Get Directions</Link>
                       </p>
                     </div>
                   </div>
@@ -84,19 +123,36 @@ function DoctorProfile() {
                         <FaMapMarkerAlt /> {Doctor?.city}, {Doctor?.state}
                       </li>
                       <li>
-                        <FaMoneyBillAlt /> ₹100 per hour{' '}
+                        <FaMoneyBillAlt /> ₹1000 per hour{' '}
                       </li>
                     </ul>
                   </div>
                   <div className="doctor-action">
-                    <Link to={""} className="btn btn-white fav-btn">
-                      <FaBookmark />
-                    </Link>
-                    <Link to={""} className="btn btn-white msg-btn">
+                    {user['favourites'].some(
+                      (D) => D.doctorId === Doctor._id
+                    ) ? (
+                      <Link
+                        to={''}
+                        className="btn btn-white fav-btn active"
+                        onClick={handleRemoveFavorite}
+                      >
+                        <FaBookmark />
+                      </Link>
+                    ) : (
+                      <Link
+                        to={''}
+                        className="btn btn-white fav-btn"
+                        onClick={handleAddFavorite}
+                      >
+                        <FaBookmark />
+                      </Link>
+                    )}
+
+                    <Link to={''} className="btn btn-white msg-btn">
                       <FaCommentAlt />
                     </Link>
                     <Link
-                    to={""}
+                      to={''}
                       className="btn btn-white call-btn"
                       data-toggle="modal"
                       data-target="#voice_call"
@@ -105,7 +161,9 @@ function DoctorProfile() {
                     </Link>
                   </div>
                   <div className="clinic-booking">
-                    <Link to={""} className="apt-btn">Book Appointment</Link>
+                    <Link to={''} className="apt-btn">
+                      Book Appointment
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -119,7 +177,7 @@ function DoctorProfile() {
                   <li className="nav-item">
                     <Link
                       className="nav-link active"
-                      to={"#doc_overview"}
+                      to={'#doc_overview'}
                       data-bs-toggle="tab"
                     >
                       Overview
@@ -128,7 +186,7 @@ function DoctorProfile() {
                   <li className="nav-item">
                     <Link
                       className="nav-link"
-                      to={"#doc_business_hours"}
+                      to={'#doc_business_hours'}
                       data-bs-toggle="tab"
                     >
                       Business Hours
@@ -151,10 +209,7 @@ function DoctorProfile() {
                       {/* About Details  */}
                       <div className="widget about-widget">
                         <h4 className="widget-title">About Me</h4>
-                        <p>
-                        {Doctor?.biography}
-                          
-                        </p>
+                        <p>{Doctor?.biography}</p>
                       </div>
                       {/* /About Details  */}
 
@@ -169,11 +224,13 @@ function DoctorProfile() {
                               </div>
                               <div className="experience-content">
                                 <div className="timeline-content">
-                                  <Link to={""} className="name">
+                                  <Link to={''} className="name">
                                     {Doctor?.college}
                                   </Link>
                                   <div>{Doctor?.degree}</div>
-                                  <span className="time">{Doctor?.completion}</span>
+                                  <span className="time">
+                                    {Doctor?.completion}
+                                  </span>
                                 </div>
                               </div>
                             </li>
@@ -193,11 +250,11 @@ function DoctorProfile() {
                               </div>
                               <div className="experience-content">
                                 <div className="timeline-content">
-                                  <Link to={""} className="name">
+                                  <Link to={''} className="name">
                                     {Doctor?.hospitalname}
                                   </Link>
                                   <span className="time">
-                                     {Doctor?.from}-{Doctor?.to}
+                                    {Doctor?.from}-{Doctor?.to}
                                   </span>
                                 </div>
                               </div>
@@ -303,7 +360,6 @@ function DoctorProfile() {
                     </div>
                   </div>
                 </div>
-                
 
                 {/* Business Hours Content  */}
                 <div
@@ -327,43 +383,57 @@ function DoctorProfile() {
                                     Open Now
                                   </span>
                                 </span>
-                                <span className="time">07:00 AM - 09:00 PM</span>
+                                <span className="time">
+                                  07:00 AM - 09:00 PM
+                                </span>
                               </div>
                             </div>
                             <div className="listing-day">
                               <div className="day">Monday</div>
                               <div className="time-items">
-                                <span className="time">07:00 AM - 09:00 PM</span>
+                                <span className="time">
+                                  07:00 AM - 09:00 PM
+                                </span>
                               </div>
                             </div>
                             <div className="listing-day">
                               <div className="day">Tuesday</div>
                               <div className="time-items">
-                                <span className="time">07:00 AM - 09:00 PM</span>
+                                <span className="time">
+                                  07:00 AM - 09:00 PM
+                                </span>
                               </div>
                             </div>
                             <div className="listing-day">
                               <div className="day">Wednesday</div>
                               <div className="time-items">
-                                <span className="time">07:00 AM - 09:00 PM</span>
+                                <span className="time">
+                                  07:00 AM - 09:00 PM
+                                </span>
                               </div>
                             </div>
                             <div className="listing-day">
                               <div className="day">Thursday</div>
                               <div className="time-items">
-                                <span className="time">07:00 AM - 09:00 PM</span>
+                                <span className="time">
+                                  07:00 AM - 09:00 PM
+                                </span>
                               </div>
                             </div>
                             <div className="listing-day">
                               <div className="day">Friday</div>
                               <div className="time-items">
-                                <span className="time">07:00 AM - 09:00 PM</span>
+                                <span className="time">
+                                  07:00 AM - 09:00 PM
+                                </span>
                               </div>
                             </div>
                             <div className="listing-day">
                               <div className="day">Saturday</div>
                               <div className="time-items">
-                                <span className="time">07:00 AM - 09:00 PM</span>
+                                <span className="time">
+                                  07:00 AM - 09:00 PM
+                                </span>
                               </div>
                             </div>
                             <div className="listing-day closed">

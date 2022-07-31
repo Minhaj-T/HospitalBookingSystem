@@ -27,9 +27,6 @@ const loginwithGoogle = async (userData) => {
   return data;
 };
 
-
-
-
 // Edituser
 const editUser = async (token, userData) => {
   const config = {
@@ -45,7 +42,7 @@ const editUser = async (token, userData) => {
 };
 
 // Edit password
-const editPassword = async(token,Data) => {
+const editPassword = async (token, Data) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -53,7 +50,35 @@ const editPassword = async(token,Data) => {
   };
   const { data } = await api.editUserPassword(Data, config);
   return data;
-}
+};
+
+// add-favourites doctor
+const addFavorites = async (token, Data) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const { data } = await api.favoriteDoctor(Data, config);
+  if (data) {
+    localStorage.setItem('user', JSON.stringify(data));
+  }
+  return data;
+};
+
+// remove-favourites doctor
+const removeFavorites = async (token, Data) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const { data } = await api.RemovefavoriteDoctor(Data, config);
+  if (data) {
+    localStorage.setItem('user', JSON.stringify(data));
+  }
+  return data;
+};
 
 // Logout user
 const logout = () => [localStorage.removeItem('user')];
@@ -64,7 +89,9 @@ const authService = {
   login,
   editUser,
   editPassword,
-  loginwithGoogle
+  loginwithGoogle,
+  addFavorites,
+  removeFavorites,
 };
 
 export default authService;

@@ -73,6 +73,32 @@ export const editUser_Password = createAsyncThunk(
   }
 );
 
+// add favorite-doctor 
+export const addFavorite_doctor = createAsyncThunk(
+  'auth/addFavorite_doctor',
+  async (Data, thunkAPI) => {
+    try {
+      const token = await thunkAPI.getState().auth.user.token;
+      return await authService.addFavorites(token, Data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(errorHandler(error));
+    }
+  }
+);
+
+// romove favorite-doctor 
+export const removeFavorite_doctor = createAsyncThunk(
+  'auth/removeFavorite_doctor',
+  async (Data, thunkAPI) => {
+    try {
+      const token = await thunkAPI.getState().auth.user.token;
+      return await authService.removeFavorites(token, Data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(errorHandler(error));
+    }
+  }
+);
+
 // Logout the user
 export const logout = createAsyncThunk('auth/logout', async () => {
   await authService.logout();
@@ -165,7 +191,32 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload;
-      state.user = null;
+    },
+    [addFavorite_doctor.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [addFavorite_doctor.fulfilled]: (state, action) => {
+      state.user = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    },
+    [addFavorite_doctor.rejected]: (state, action) => {
+      state.message = action.payload;
+      state.isLoading = false;
+      state.isError = true;
+    },
+    [removeFavorite_doctor.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [removeFavorite_doctor.fulfilled]: (state, action) => {
+      state.user = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+    },
+    [removeFavorite_doctor.rejected]: (state, action) => {
+      state.message = action.payload;
+      state.isLoading = false;
+      state.isError = true;
     },
     [logout.fulfilled]: (state) => {
       state.user = null;

@@ -96,6 +96,7 @@ const registerUser = asyncHandler(async (req, res) => {
       weight: user.weight,
       weight_unit: user.weight,
       zip_code: user.zip_code,
+      favourites: user.favourites,
     });
   } else {
     res.status(400);
@@ -110,7 +111,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
   //get for user email
   const user = await User.findOne({ email });
-  if(user.isBlocked)throw new Error(`User ${user.email} is blocked`);
+  if (user.isBlocked) throw new Error(`User ${user.email} is blocked`);
   if (user && (await bcrypt.compare(password, user.password))) {
     res.status(200).json({
       _id: user.id,
@@ -134,6 +135,7 @@ const loginUser = asyncHandler(async (req, res) => {
       weight: user.weight,
       weight_unit: user.weight,
       zip_code: user.zip_code,
+      favourites: user.favourites,
     });
   } else {
     res.status(400);
@@ -144,12 +146,12 @@ const loginUser = asyncHandler(async (req, res) => {
 // @desc  Authenticate User
 // @rout  POST /api/users/login
 const login_with_Google = asyncHandler(async (req, res) => {
-  const { email,email_verified } = req.body;
+  const { email, email_verified } = req.body;
 
-  if(!email_verified)throw new Error('email not verified');
+  if (!email_verified) throw new Error('email not verified');
   // //get for user email
   const user = await User.findOne({ email });
-  if(user.isBlocked)throw new Error(`User ${user.email} is blocked`);
+  if (user.isBlocked) throw new Error(`User ${user.email} is blocked`);
   if (user) {
     res.status(200).json({
       _id: user.id,
@@ -173,6 +175,7 @@ const login_with_Google = asyncHandler(async (req, res) => {
       weight: user.weight,
       weight_unit: user.weight,
       zip_code: user.zip_code,
+      favourites: user.favourites,
     });
   } else {
     res.status(400);
@@ -223,6 +226,7 @@ const editUser = asyncHandler(async (req, res) => {
       weight: user.weight,
       weight_unit: user.weight,
       zip_code: user.zip_code,
+      favourites: user.favourites,
     });
   } catch (error) {
     res.status(400).json(error);
@@ -297,21 +301,118 @@ const getUser = asyncHandler(async (req, res) => {
 
 // @desc  get the appointment using user id
 // @rout    GET /users /api/users/get-appointments
-const getAppointments=asyncHandler(async(req, res)=>{
+const getAppointments = asyncHandler(async (req, res) => {
   const userId = req.user._id;
-  const data= await Transactions.find({userId:userId})
-  .populate({path: "userId",  select:  {_id: 1, name: 1,profile_image:1,mobile:1,email:1,state:1,city:1}})
-  .populate({path: "doctorId", select:{name:1, profile_image:1, specialization:1,lastname:1,doctorID:1}})
-  res.status(200).json({data})
-})
+  const data = await Transactions.find({ userId: userId })
+    .populate({
+      path: 'userId',
+      select: {
+        _id: 1,
+        name: 1,
+        profile_image: 1,
+        mobile: 1,
+        email: 1,
+        state: 1,
+        city: 1,
+      },
+    })
+    .populate({
+      path: 'doctorId',
+      select: {
+        name: 1,
+        profile_image: 1,
+        specialization: 1,
+        lastname: 1,
+        doctorID: 1,
+      },
+    });
+  res.status(200).json({ data });
+});
 
 // @desc  get the appointment using user id
 // @rout    GET /users /api/users/get-user-Allappointments
-const getUserAppointments=asyncHandler(async(req, res)=>{
+const getUserAppointments = asyncHandler(async (req, res) => {
   const userId = req.user._id;
-  const appointments= await Transactions.find({userId:userId})
-  res.status(200).json({appointments})
-})
+  const appointments = await Transactions.find({ userId: userId });
+  res.status(200).json({ appointments });
+});
+
+// @desc  add the doctor from user favorites
+// @rout  POST /api/users/add-favourites
+const addfavourites = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  const { doctorId } = req.body;
+  const exists = await User.findOne({ userId }).elemMatch('favourites', {
+    doctorId,
+  });
+  if (exists) throw new Error('The doctor already exists');
+
+  const Data = await User.findByIdAndUpdate(userId, {
+    $push: { favourites: { doctorId } },
+  });
+  const user = await User.findById(userId);
+  res.status(200).json({
+    _id: user.id,
+    name: user.name,
+    email: user.email,
+    token: generateToken(user._id),
+    address: user.address,
+    mobile: user.mobile,
+    age: user.age,
+    allergies: user.allergies,
+    blood_group: user.blood_group,
+    bp: user.bp,
+    city: user.city,
+    gender: user.gender,
+    glucose: user.glucose,
+    heart_rate: user.heart_rate,
+    height: user.height,
+    height_unit: user.height_unit,
+    profile_image: user.profile_image,
+    state: user.state,
+    weight: user.weight,
+    weight_unit: user.weight,
+    zip_code: user.zip_code,
+    favourites: user.favourites,
+  });
+});
+
+// @desc  remove the doctor from user favorites
+// @rout  PUT /api/users/remove-favourites
+const removeFavorite= asyncHandler(async (req, res) => {
+  console.log("ddd",req.body);
+  const userId = req.user._id;
+  const { doctorId } = req.body;
+  const Data = await User.findByIdAndUpdate(userId, {
+    $pull: { favourites: { doctorId } },
+  });
+  const user = await User.findById(userId);
+  res.status(200).json({
+    _id: user.id,
+    name: user.name,
+    email: user.email,
+    token: generateToken(user._id),
+    address: user.address,
+    mobile: user.mobile,
+    age: user.age,
+    allergies: user.allergies,
+    blood_group: user.blood_group,
+    bp: user.bp,
+    city: user.city,
+    gender: user.gender,
+    glucose: user.glucose,
+    heart_rate: user.heart_rate,
+    height: user.height,
+    height_unit: user.height_unit,
+    profile_image: user.profile_image,
+    state: user.state,
+    weight: user.weight,
+    weight_unit: user.weight,
+    zip_code: user.zip_code,
+    favourites: user.favourites,
+  });
+});
+
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -329,5 +430,7 @@ module.exports = {
   login_with_Google,
   getAppointments,
   getUser,
-  getUserAppointments
+  getUserAppointments,
+  addfavourites,
+  removeFavorite,
 };

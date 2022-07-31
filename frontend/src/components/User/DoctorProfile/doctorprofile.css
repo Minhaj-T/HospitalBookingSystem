@@ -23,6 +23,11 @@
 	border-color: #fb1612;
 	color: #fff;
 }
+.doctor-action .fav-btn.active {
+	background-color: #fb1612;
+	border-color: #fb1612;
+	color: #fff;
+}
 .msg-btn:hover, .msg-btn:focus {
 	background-color: #09e5ab;
 	border-color: #09e5ab;
