@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const { customAlphabet } = require('nanoid');
 const Doctor = require('../models/doctorModel');
 const User = require('../models/userModel');
+const Transactions = require('../models/transactions');
 const Specialties = require('../models/specialties');
 const jwt = require('jsonwebtoken');
 // const { find, findByIdAndUpdate } = require("../models/adminModel");
@@ -239,6 +240,63 @@ const deleteSpecialties = asyncHandler(async (req, res) => {
   }
 });
 
+//Reports and chart
+
+// @desc  get all widget values
+// @rout GET /api/admin/get-widget-count
+const widgetsValues = asyncHandler(async (req, res) => {
+  const TotelUsers = await User.countDocuments({});
+  const TotelDoctors = await Doctor.countDocuments({});
+  const TotelAppointments = await Transactions.countDocuments({});
+  const [{ amount }] = await Transactions.aggregate([
+    { $group: { _id: null, amount: { $sum: '$amount' } } },
+    { $project: { _id: 0, amount: 1 } },
+  ]);
+
+  const data = {
+    TotelUsers,
+    TotelDoctors,
+    TotelAppointments,
+    TotelEarnings: amount,
+  };
+
+  res.status(200).json({ data });
+});
+
+// @desc get the values on appointments status
+// @rout GET /api/admin/appointment-statistics
+const appointmentStatus = asyncHandler(async (req, res) => {
+  const PendingAppointments = await Transactions.find({
+    status: 'pending',
+  }).countDocuments();
+  const acceptedAppointments = await Transactions.find({
+    status: 'true',
+  }).countDocuments();
+  const canceledAppointments = await Transactions.find({
+    status: 'false',
+  }).countDocuments();
+  const completedAppointments = await Transactions.find({
+    status: 'complete',
+  }).countDocuments();
+  const appointments = {
+    PendingAppointments,
+    acceptedAppointments,
+    canceledAppointments,
+    completedAppointments,
+  };
+  res.status(200).json({ appointments });
+});
+
+// @desc get the latest transactions
+// @rout GET /api/admin/latest-transactions
+const latestTransactions = asyncHandler(async (req, res) => {
+  const transactions = await Transactions.find()
+    .populate({ path: 'userId', select: { name: 1, _id: 0, profile_image: 1 } })
+    .sort({ $natural: -1 })
+    .limit(5);
+  res.status(200).json({ transactions });
+});
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '10d',
@@ -259,4 +317,7 @@ module.exports = {
   deleteSpecialties,
   removeUser,
   blockDoctor,
+  widgetsValues,
+  appointmentStatus,
+  latestTransactions,
 };

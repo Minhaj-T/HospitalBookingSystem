@@ -22,3 +22,7 @@ export const blockDoctor = (id,status) => API.patch(`/block-doctor?id=${id}&stat
 export const fetchSpecialties=()=>API.get('/fetch-specialties')
 export const addSpecialities=(specialties)=>API.post('/add-specialties',specialties)
 export const deleteSpecialties=(Id)=>API.delete(`/delete-specialties/${Id}`)
+
+export const widgetValues=(config)=> API.get('/get-widget-count',config)
+export const appointmentStatistics=(config)=> API.get('/appointment-statistics',config);
+export const latestTransactions=(config)=> API.get('/latest-transactions',config);

@@ -13,6 +13,7 @@
       .title {
         font-size: 16px;
         font-weight: 500;
+        color: gray;
       }
     }
   
@@ -64,6 +65,8 @@
             align-items: center;
             margin-top: 10px;
             font-size: 14px;
+            justify-content: center;
+            font-weight: 600;
   
             &.positive {
               color: green;
@@ -71,6 +74,9 @@
   
             &.negative {
               color: red;
+            }
+            &.warning {
+              color: rgb(228, 144, 19);
             }
           }
         }

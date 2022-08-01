@@ -4,8 +4,9 @@ const router=express.Router()
 const {loginAdmin ,addDoctors ,fetchUsers,blockUser ,fetchDoctors 
     ,editUser ,editDoctor ,deleteDoctor ,addSpecialities 
     ,fetchSpecialties ,deleteSpecialties ,removeUser
-     ,blockDoctor}=require('../controllers/adminControllers');
-// const { isAdmin } = require('../middlewares/authMiddleware')
+     ,blockDoctor,widgetsValues,appointmentStatus,
+    latestTransactions,}=require('../controllers/adminControllers');
+const { isAdmin } = require('../middlewares/authMiddleware')
 
 router.post('/login', loginAdmin);
 router.get('/fetch-users', fetchUsers);
@@ -20,4 +21,7 @@ router.delete("/delete-doctor/:id",deleteDoctor)
 router.get('/fetch-specialties',fetchSpecialties)
 router.post('/add-specialties',addSpecialities)
 router.delete("/delete-specialties/:id",deleteSpecialties)
+router.get('/get-widget-count',isAdmin,widgetsValues)
+router.get('/appointment-statistics',isAdmin,appointmentStatus)
+router.get('/latest-transactions',isAdmin,latestTransactions)
 module.exports=router;

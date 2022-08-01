@@ -3,15 +3,11 @@ import './widgets.scss';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
+import BookOnlineIcon from '@mui/icons-material/BookOnline';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
-const Widgets = ({ type }) => {
+const Widgets = ({ type,Total,diff }) => {
     let data;
-  
-    //temporary
-    const amount = 100;
-    const diff = 20;
   
     switch (type) {
       case "user":
@@ -30,13 +26,13 @@ const Widgets = ({ type }) => {
           ),
         };
         break;
-      case "order":
+      case "doctors":
         data = {
-          title: "ORDERS",
+          title: "DOCTORS",
           isMoney: false,
-          link: "View all orders",
+          link: "See all Doctors",
           icon: (
-            <ShoppingCartOutlinedIcon
+            <LocalHospitalIcon
               className="icon"
               style={{
                 backgroundColor: "rgba(218, 165, 32, 0.2)",
@@ -46,22 +42,22 @@ const Widgets = ({ type }) => {
           ),
         };
         break;
-      case "earning":
+      case "appointments":
         data = {
-          title: "EARNINGS",
-          isMoney: true,
-          link: "View net earnings",
+          title: "APPOINTMENTS",
+          isMoney: false,
+          link: "See all appointments",
           icon: (
-            <MonetizationOnOutlinedIcon
+            <BookOnlineIcon
               className="icon"
               style={{ backgroundColor: "rgba(0, 128, 0, 0.2)", color: "green" }}
             />
           ),
         };
         break;
-      case "balance":
+      case "earnings":
         data = {
-          title: "BALANCE",
+          title: "EARNINGS",
           isMoney: true,
           link: "See details",
           icon: (
@@ -84,7 +80,7 @@ const Widgets = ({ type }) => {
         <div className="left">
           <span className="title">{data.title}</span>
           <span className="counter">
-            {data.isMoney && "$"} {amount}
+            {data.isMoney && "₹"} {Total}
           </span>
           <span className="link">{data.link}</span>
         </div>

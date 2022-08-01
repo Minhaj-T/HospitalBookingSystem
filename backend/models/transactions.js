@@ -9,6 +9,9 @@ const transactionSchema = mongoose.Schema({
     doctorId:{type: mongoose.Schema.ObjectId, ref: 'doctors'},
     status:{type:String, default:'pending'},
     slotDetails:{ type: mongoose.SchemaTypes.Mixed }
+},
+{
+    timestamps:true
 })
 
 module.exports = mongoose.model("transactions", transactionSchema);
