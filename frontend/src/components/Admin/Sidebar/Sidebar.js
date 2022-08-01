@@ -46,10 +46,12 @@ function Sidebar() {
                 </li>
                 </Link>
                 <p className="title">STATICS</p>
+                <Link to='/admin/report' style={{ textDecoration: 'none' }}> 
                 <li>
                     <OutlinedFlagIcon className="icon"/>
                     <span>Reports</span>
                 </li>
+                </Link>
             </ul>
         </div>
         <div className="bottom">
