@@ -13,6 +13,10 @@ const adminSchema = mongoose.Schema({
         type:String,
         required:[true,'Please add a Password']
     },
+    profile_img:{
+        type:String,
+    }
+    
 },
     {
         timestamps:true

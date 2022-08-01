@@ -20,6 +20,7 @@ const loginAdmin = asyncHandler(async (req, res) => {
       _id: admin.id,
       name: admin.name,
       email: admin.email,
+      profile_img:admin.profile_img,
       token: generateToken(admin._id),
     });
   } else {

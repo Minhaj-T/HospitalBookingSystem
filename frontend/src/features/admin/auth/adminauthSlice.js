@@ -148,6 +148,11 @@ export const deleteSpecialties = createAsyncThunk(
   }
 );
 
+// Logout the admin
+export const logout = createAsyncThunk('auth/Admin_logout', async () => {
+  await adminauthService.logout();
+});
+
 const adminauthSlice = createSlice({
   name: 'adminAuth',
   initialState,
@@ -337,6 +342,13 @@ const adminauthSlice = createSlice({
       state.isError = true;
       state.message = action.payload;
       state.doctors = null;
+    },
+    [logout.fulfilled]: (state) => {
+      state.admin = null;
+      state.users=null;
+      state.doctors=null;
+      state.specialties=null;
+      state.isSuccess = false;
     },
   },
 });

@@ -75,6 +75,9 @@ export const deleteSpecialty = async (Id) => {
   return data;
 };
 
+// Logout user
+const logout = () => [localStorage.removeItem('admininfo')];
+
 const adminauthService = {
   login,
   fetchallUsers,
@@ -86,6 +89,7 @@ const adminauthService = {
   deleteSpecialty,
   BlockUsers,
   RemoveUser,
-  BlockDoctors
+  BlockDoctors,
+  logout,
 };
 export default adminauthService;
