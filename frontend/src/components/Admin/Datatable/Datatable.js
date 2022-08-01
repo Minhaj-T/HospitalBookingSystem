@@ -46,7 +46,6 @@ function Datatable() {
   };
 
   const columns = [
-    { field: '', headerName: 'No', width: 50 },
     { field: '_id', headerName: 'User-ID', width: 170 },
     {
       field: 'name',
@@ -122,6 +121,7 @@ function Datatable() {
 
   return (
     <>
+    <div className="listContainer">
       <div className="datatable">
         <div style={{ height: 400, width: '100%' }}>
           <DataGrid
@@ -132,6 +132,7 @@ function Datatable() {
             rowsPerPageOptions={[5]}
           />
         </div>
+      </div>
       </div>
 
       <div>

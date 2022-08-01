@@ -35,7 +35,6 @@ function SpecialtiesDatatable() {
   };
 
   const columns = [
-    { field: '', headerName: 'No', width: 50 },
     {
       field: 'name',
       headerName: 'Specialties',

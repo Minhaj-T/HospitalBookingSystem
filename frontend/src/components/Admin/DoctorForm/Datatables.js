@@ -47,7 +47,6 @@ function Datatables() {
   };
 
   const columns = [
-    { field: '', headerName: 'No', width: 50 },
     { field: 'doctorID', headerName: 'Doctor-ID', width: 170 },
     {
       field: 'name',
@@ -97,25 +96,26 @@ function Datatables() {
       renderCell: (params) => {
         return (
           <>
-            <div className="cellAction">
-              {/* <CustomizedDialogs id={params.id ? params.id:""}/> */}
+            
+              <div className="cellAction">
+                {/* <CustomizedDialogs id={params.id ? params.id:""}/> */}
 
-              <div className="deleteButton">
-                <Link to="" style={{ textDecoration: 'none' }}>
-                  <Button
-                    onClick={() => {
-                      setDeleteId(params.id);
-                      handleOpen();
-                    }}
-                    variant="outlined"
-                    size="small"
-                    color="error"
-                  >
-                    Delete
-                  </Button>
-                </Link>
+                <div className="deleteButton">
+                  <Link to="" style={{ textDecoration: 'none' }}>
+                    <Button
+                      onClick={() => {
+                        setDeleteId(params.id);
+                        handleOpen();
+                      }}
+                      variant="outlined"
+                      size="small"
+                      color="error"
+                    >
+                      Delete
+                    </Button>
+                  </Link>
+                </div>
               </div>
-            </div>
 
             <div>
               <Modal
@@ -170,6 +170,7 @@ function Datatables() {
   const rows = doctors ? doctors : '';
 
   return (
+    <div className="listContainer">
     <div className="datatable">
       <div style={{ height: 400, width: '100%' }}>
         <DataGrid
@@ -180,6 +181,7 @@ function Datatables() {
           rowsPerPageOptions={[5]}
         />
       </div>
+    </div>
     </div>
   );
 }
