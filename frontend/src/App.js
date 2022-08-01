@@ -45,6 +45,7 @@ const AdminDashboard = React.lazy(() =>import('./pages/Admin/admindashboard/admi
 const List = React.lazy(() => import('./pages/Admin/Lists/List'));
 const AddDoctor = React.lazy(() => import('./pages/Admin/AddDoctor/AddDoctor'));
 const Specialties = React.lazy(() => import('./pages/Admin/Specialties/Specialties'));
+const Appointment= React.lazy(() => import('./components/Admin/Appointment/Appointment'));
 
 // Doctors
 const DoctorLogin = React.lazy(() => import('./components/Doctor/Login/DoctorLogin'));
@@ -122,6 +123,9 @@ function App() {
               : <AdminLogin/> }/>
               <Route path="specialties" element={ admin 
               ? <Layout children={<Specialties/>}  /> 
+              : <AdminLogin/> }/>
+              <Route path="appointments" element={ admin 
+              ? <Layout children={<Appointment/>}  /> 
               : <AdminLogin/> }/>
             </Route>
 

@@ -290,10 +290,11 @@ const appointmentStatus = asyncHandler(async (req, res) => {
 // @desc get the latest transactions
 // @rout GET /api/admin/latest-transactions
 const latestTransactions = asyncHandler(async (req, res) => {
+  const { limit } = req.query;
   const transactions = await Transactions.find()
     .populate({ path: 'userId', select: { name: 1, _id: 0, profile_image: 1 } })
     .sort({ $natural: -1 })
-    .limit(5);
+    .limit(limit);
   res.status(200).json({ transactions });
 });
 

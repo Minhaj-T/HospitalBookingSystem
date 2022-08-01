@@ -34,15 +34,15 @@ function AdminDashboard() {
   };
 
   useEffect(() => {
-    !Fulldata.done && getFavoriteDoctors();
+    !Fulldata.done && getFavoriteDoctors(5);
   }, []);
 
-  const getFavoriteDoctors = async () => {
+  const getFavoriteDoctors = async (limit) => {
     setFulldata((prev) => ({ ...prev, loading: true }));
     try {
       const { data } = await api.widgetValues(config);
       const appointments= await api.appointmentStatistics(config)
-      const transactions = await api.latestTransactions(config);
+      const transactions = await api.latestTransactions(limit,config);
       if (data?.data&&appointments&&transactions) {
         setFulldata((prev) => ({
           ...prev,

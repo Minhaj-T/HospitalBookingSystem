@@ -10,7 +10,7 @@ import moment from 'moment'
 
 function List({Transactions}) {
   return (
-    <>
+    <>  
     <TableContainer component={Paper} className="table">
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>

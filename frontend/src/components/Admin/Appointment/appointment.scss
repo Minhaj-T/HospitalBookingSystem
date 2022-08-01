@@ -1,0 +1,36 @@
+.listContainer {
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+    padding: 20px;
+    margin: 20px;
+  
+    .listTitle {
+      font-weight: 500;
+      color: gray;
+      margin-bottom: 15px;
+    }
+  }
+
+  .cellWithStatus1 {
+    padding: 5px;
+    width: 65px;
+    border-radius: 5px;
+    text-align: center;
+    
+    &.false {
+      background-color: rgba(255, 0, 0, 0.185);
+      color: crimson;
+    }
+    &.complete {
+      background-color: rgba(8, 141, 8, 0.281);
+      color: green;
+    }
+    &.pending {
+      background-color: rgba(201, 198, 14, 0.281);
+      color: rgb(154, 179, 13);
+    }
+    &.true {
+      background-color: rgba(13, 170, 175, 0.281);
+      color: rgb(16, 133, 133);
+    }
+  }

@@ -20,10 +20,12 @@ function Sidebar() {
                 </li>
                 </Link>
                 <p className="title">LISTS</p>
+                <Link to="/admin/appointments" style={{ textDecoration: "none" }}>
                 <li>
                     <BookOnlineOutlined className="icon"/>
                     <span>Appointments</span>
                 </li>
+                </Link>
                 <Link to="/admin/specialties" style={{ textDecoration: "none" }}>
                 <li>
                     <LocalHospitalIcon className="icon"/>
