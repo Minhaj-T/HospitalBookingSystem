@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
-const asyncHandler = require("express-async-handler");
-const User = require("../models/userModel");
+const jwt = require('jsonwebtoken');
+const asyncHandler = require('express-async-handler');
+const User = require('../models/userModel');
 const Admin = require('../models/adminModel');
 const Doctor = require('../models/doctorModel');
 
@@ -10,94 +10,85 @@ const protect = asyncHandler(async (req, res, next) => {
 
   if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
+    req.headers.authorization.startsWith('Bearer')
   ) {
     try {
       // Get token from header
-      token = req.headers.authorization.split(" ")[1];
+      token = req.headers.authorization.split(' ')[1];
 
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       // Get user from the token
-      req.user = await User.findById(decoded.id).select("-password");
+      req.user = await User.findById(decoded.id).select('-password');
 
       next();
     } catch (error) {
-      console.log(error);
       res.status(401);
-      throw new Error("Not authorized");
+      throw new Error('Not authorized');
     }
   }
 
   if (!token) {
     res.status(401);
-    throw new Error("Not authorized, no token");
+    throw new Error('Not authorized, no token');
   }
 });
 
 //admin protect routes
-const isAdmin=asyncHandler(async(req,res, next)=>{
+const isAdmin = asyncHandler(async (req, res, next) => {
   let token;
   if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-){
-  try {
-    token = req.headers.authorization.split(" ")[1];
-      console.log("this is the tocken", token);
-      
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    try {
+      token = req.headers.authorization.split(' ')[1];
 
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log("this is the JWT_SECRET",decoded );
 
       // Get user from the token
-      req.admin = await Admin.findById(decoded.id).select("-password");
-      console.log("the user fetched the jwt", req.admin);
+      req.admin = await Admin.findById(decoded.id).select('-password');
 
       next();
-  } catch (error) {
-    console.log(error);
+    } catch (error) {
       res.status(401);
-      throw new Error("Not authorized");
+      throw new Error('Not authorized');
+    }
   }
-}
-if (!token) {
-  res.status(401);
-  throw new Error("Not authorized, no token");
-}
-})
+  if (!token) {
+    res.status(401);
+    throw new Error('Not authorized, no token');
+  }
+});
 
 //admin protect routes
-const isDoctor=asyncHandler(async(req,res, next)=>{
+const isDoctor = asyncHandler(async (req, res, next) => {
   let token;
   if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-){
-  try {
-    token = req.headers.authorization.split(" ")[1];
-    
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    try {
+      token = req.headers.authorization.split(' ')[1];
+
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       // Get user from the token
-      req.doctor = await Doctor.findById(decoded.id).select("-password");
+      req.doctor = await Doctor.findById(decoded.id).select('-password');
 
       next();
-  } catch (error) {
-    console.log(error);
+    } catch (error) {
       res.status(401);
-      throw new Error("Not authorized");
+      throw new Error('Not authorized');
+    }
   }
-}
-if (!token) {
-  res.status(401);
-  throw new Error("Not authorized, no token");
-}
-})
+  if (!token) {
+    res.status(401);
+    throw new Error('Not authorized, no token');
+  }
+});
 
-
-
-module.exports = { protect,isAdmin,isDoctor };
+module.exports = { protect, isAdmin, isDoctor };
