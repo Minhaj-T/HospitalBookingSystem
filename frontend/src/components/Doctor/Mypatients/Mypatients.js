@@ -1,16 +1,13 @@
 import './mypatients.css';
 import { Link, } from 'react-router-dom';
-import mm from '../../../images/myImage.jpg';
 import { FaMapMarkedAlt } from 'react-icons/fa';
 import {useSelector} from 'react-redux';
 function Mypatients() {
-  const { doctor } = useSelector((state) => state.doctorAuth);
   const { appointment } = useSelector((state) => state.appointments);
 
   return ( 
     <>
 
-    
       <div className="row row-grid">
     {appointment&&appointment.map((row)=>(
         <div className="col-md-6 col-lg-4 col-xl-3">

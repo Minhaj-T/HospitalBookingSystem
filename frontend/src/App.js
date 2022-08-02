@@ -152,7 +152,7 @@ function App() {
               <Route path="change-password" element={ doctor 
               ? <DoctorLayout children={<ChangePassword/>}/> 
               : <DoctorLogin/> }/>
-              <Route path="patient-profile" element={ doctor 
+              <Route path="patient-profile/:id" element={ doctor 
               ? <UserProfile/> 
               : <DoctorLogin/> }/>
               <Route path="messenger" element={ doctor 

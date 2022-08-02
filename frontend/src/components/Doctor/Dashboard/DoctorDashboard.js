@@ -30,6 +30,7 @@ function DoctorDashboard() {
     (row) => moment().format(row?.slotDetails['Date']) == today_date
   );
 
+
   // Loading page
   if (isLoading) {
     return <Spinner />;
@@ -93,7 +94,7 @@ function DoctorDashboard() {
                                       />
                                     </Link>
                                     <Link
-                                      to={'/doctor/patient-profile'}
+                                      to={`/doctor/patient-profile/${row?._id}`}
                                       style={{ marginLeft: '6px' }}
                                     >
                                       {row.userId['name']}
