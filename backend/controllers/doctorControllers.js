@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcryptjs');
 const Doctor = require('../models/doctorModel');
+const Prescription = require('../models/Prescription');
 const Transactions= require('../models/transactions');
 const jwt = require('jsonwebtoken');
 
@@ -423,6 +424,24 @@ const ChangeAppointmentStatus = asyncHandler(async (req, res) => {
   res.status(200).json({data})
 });
 
+// @desc add prescription
+// @rout  POST /api/doctor/add-prescription
+const addPrescription = asyncHandler(async(req, res) => {
+  const{formFields,userId,doctorId}=req.body;
+  const prescription= Prescription({
+    date: new Date(),
+    userId:userId,
+    doctorId:doctorId,
+    prescription:[...formFields]
+  },
+  )
+  await prescription.save();
+  res.status(200).json({
+    status: true,
+    message: "Prescription Added Successfully !",
+  })
+})
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '10d',
@@ -437,4 +456,5 @@ module.exports = {
   deleteSlotes,
   getAppointments,
   ChangeAppointmentStatus,
+  addPrescription,
 };

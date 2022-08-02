@@ -3,8 +3,23 @@ import { Link } from 'react-router-dom';
 import { FaPlusCircle, FaRegTrashAlt } from 'react-icons/fa';
 import { useState } from 'react';
 import moment from 'moment';
+import * as api from '../../../api/doctors';
+import { useSelector } from 'react-redux';
+import Spinner from '../../User/Spinner/Spinner';
+import { errorHandler } from '../../../utilities/errorMessege';
+import { notification } from '../../../utilities/notification';
 
-function AddPrescription({ doctor }) {
+function AddPrescription({ userId, doctor1 }) {
+  const [Loading, setLoading] = useState(false);
+
+  //create a tocken
+  const { doctor } = useSelector((state) => state.doctorAuth);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${doctor['token']}`,
+    },
+  };
+
   const [formFields, setFormFields] = useState([
     { name: '', quantity: '', days: '', time: '' },
   ]);
@@ -15,9 +30,22 @@ function AddPrescription({ doctor }) {
     setFormFields(data);
   };
 
-  const submit = (e) => {
-    e.preventDefault();
-    console.log('this is my data', formFields);
+  const submit = async () => {
+    try {
+      setLoading(true);
+      const Data = {
+        formFields: formFields,
+        userId,
+        doctorId: doctor1['_id'],
+      };
+      const { data } = await api.addPrescription(Data, config);
+      if (!data) throw new Error('the prescription failed !');
+      setLoading(false);
+      setFormFields([{ name: '', quantity: '', days: '', time: '' }]);
+      notification.success(data.message);
+    } catch (error) {
+      return notification.error(errorHandler(error));
+    }
   };
 
   const addFields = () => {
@@ -36,8 +64,10 @@ function AddPrescription({ doctor }) {
     setFormFields(data);
   };
 
-  console.log('this is my data', formFields);
-  console.log('first', doctor);
+  // Loading page
+  if (Loading) {
+    return <Spinner />;
+  }
 
   return (
     <>
@@ -75,12 +105,12 @@ function AddPrescription({ doctor }) {
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="biller-info">
-                        <h4 className="d-block">Dr {doctor?.name}</h4>
+                        <h4 className="d-block">Dr {doctor1?.name}</h4>
                         <span className="d-block text-sm text-muted">
-                          {doctor?.specialization}
+                          {doctor1?.specialization}
                         </span>
                         <span className="d-block text-sm text-muted">
-                          {doctor?.state},{doctor?.country}
+                          {doctor1?.state},{doctor1?.country}
                         </span>
                       </div>
                     </div>
@@ -88,7 +118,7 @@ function AddPrescription({ doctor }) {
                       <div className="billing-info">
                         <h4 className="d-block">{moment().format('ll')}</h4>
                         <span className="d-block text-muted">
-                          #{(doctor?._id).substr(0, 10)}
+                          #{(doctor1?._id).substr(0, 10)}
                         </span>
                       </div>
                     </div>
@@ -232,7 +262,7 @@ function AddPrescription({ doctor }) {
                     <div className="col-md-12 text-right">
                       <div className="signature-wrap">
                         <div className="sign-name">
-                          <p className="mb-0">( Dr. {doctor?.name} )</p>
+                          <p className="mb-0">( Dr. {doctor1?.name} )</p>
                         </div>
                       </div>
                     </div>
@@ -251,6 +281,7 @@ function AddPrescription({ doctor }) {
               <button
                 type="button"
                 className="btn btn-primary"
+                data-bs-dismiss="modal"
                 onClick={() => {
                   submit();
                 }}

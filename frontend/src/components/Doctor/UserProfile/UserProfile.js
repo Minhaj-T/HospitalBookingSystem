@@ -23,7 +23,6 @@ function UserProfile() {
   return (
     <>
     <Header />
-    
       <div className="row" style={{marginTop:'5.3rem',backgroundColor:'#f5f5f5'}}>
         <div className="col-md-5 col-lg-4 col-xl-3">
           <div className="card widget-profile pat-widget-profile">
@@ -104,7 +103,7 @@ function UserProfile() {
                 {/* Prescription Tab */}
                 <div className="tab-pane fade show active" id="pres">
                   <div className="text-right">
-                      <AddPrescription doctor={current_appointment?.doctorId}/>
+                      <AddPrescription userId={current_appointment?.userId['_id']} doctor1={current_appointment?.doctorId}/>
                   </div>
                   <div className="card card-table mb-0">
                     <div className="card-body">

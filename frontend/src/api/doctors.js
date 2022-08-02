@@ -11,5 +11,6 @@ export const editDoctorDetails=(Data,config)=>API.put('/edit-doctorDetails', Dat
 export const editDoctorPassword = (NewPassword,config) => API.put(`/edit-password`, NewPassword,config);
 export const addTimeSlots=(Data,config) => API.post(`/add-timeSlots`, Data,config);
 export const deleteTimeSlots=(Data,config) => API.patch(`/delete-timeSlots`, Data,config);
-export const getAllappointment= (config) => API.get(`/get-appointments`,config)
-export const changeStatus_Appointment= (Data,config) => API.patch('/changeStaus-appointments',Data,config)
+export const getAllappointment= (config) => API.get(`/get-appointments`,config);
+export const changeStatus_Appointment= (Data,config) => API.patch('/changeStaus-appointments',Data,config);
+export const addPrescription= (Data,config) => API.post(`/add-prescription`, Data,config);
