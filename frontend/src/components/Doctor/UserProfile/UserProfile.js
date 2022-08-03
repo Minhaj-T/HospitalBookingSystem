@@ -7,18 +7,13 @@ import { useSelector } from 'react-redux';
 import Header from '../Header/Header';
 import AddPrescription from '../AddPrescription/AddPrescription';
 import { useEffect } from 'react';
+import AddMedicalrecords from '../AddMedicalrecords/AddMedicalrecords';
 
 function UserProfile() {
   const { id } = useParams();
   const { appointment } = useSelector((state) => state.appointments);
   //filter the appointment
   const [current_appointment] = appointment?.filter((row) => row?._id == id);
-
-  console.log('this is the current appointment', current_appointment);
-
-    
-
-  
 
   return (
     <>
@@ -166,14 +161,7 @@ function UserProfile() {
                 {/* Medical Records Tab */}
                 <div className="tab-pane fade" id="medical">
                   <div className="text-right">
-                    <Link
-                      to={''}
-                      className="add-new-btn"
-                      data-toggle="modal"
-                      data-target="#add_medical_records"
-                    >
-                      Add Medical Records
-                    </Link>
+                    <AddMedicalrecords userId={current_appointment?.userId['_id']} doctor1={current_appointment?.doctorId}/>
                   </div>
                   <div className="card card-table mb-0">
                     <div className="card-body">

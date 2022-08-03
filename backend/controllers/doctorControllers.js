@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const Doctor = require('../models/doctorModel');
 const Prescription = require('../models/Prescription');
 const Transactions= require('../models/transactions');
+const MedicalRecords= require('../models/medicalRecords');
 const jwt = require('jsonwebtoken');
 
 // @desc  Authenticate doctor
@@ -442,6 +443,27 @@ const addPrescription = asyncHandler(async(req, res) => {
   })
 })
 
+// @desc add medical records
+// @rout  POST /api/doctor/add-medical-records
+const addMedicalRecords = asyncHandler(async(req, res) => {
+  const{date,userId,doctorId,description,document}=req.body;
+  const medicalRecords= MedicalRecords({
+    date,
+    userId,
+    doctorId,
+    description,
+    document
+  },
+  )
+  await medicalRecords.save();
+  res.status(200).json({
+    status: true,
+    message: "Docs Added Successfully !",
+  })
+})
+
+
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '10d',
@@ -457,4 +479,5 @@ module.exports = {
   getAppointments,
   ChangeAppointmentStatus,
   addPrescription,
+  addMedicalRecords
 };
