@@ -2,12 +2,12 @@ import '../../User/DashBoard/userdashboard.css';
 import '../Mypatients/mypatients.css';
 import './userprofile.css';
 import { Link, useParams } from 'react-router-dom';
-import { FaPrint, FaEye, FaMapMarkerAlt, FaEdit } from 'react-icons/fa';
+import { FaPrint, FaEye, FaMapMarkerAlt } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import Header from '../Header/Header';
 import AddPrescription from '../AddPrescription/AddPrescription';
-import { useEffect } from 'react';
 import AddMedicalrecords from '../AddMedicalrecords/AddMedicalrecords';
+import AddBilling from '../AddBilling/AddBilling';
 
 function UserProfile() {
   const { id } = useParams();
@@ -232,9 +232,7 @@ function UserProfile() {
                 {/* Billing Tab */}
                 <div className="tab-pane" id="billing">
                   <div className="text-right ">
-                    <Link className="add-new-btn" to={''}>
-                      Add Billing
-                    </Link>
+                  <AddBilling userId={current_appointment?.userId['_id']} doctor1={current_appointment?.doctorId}/>
                   </div>
                   <div className="card card-table mb-0">
                     <div className="card-body">

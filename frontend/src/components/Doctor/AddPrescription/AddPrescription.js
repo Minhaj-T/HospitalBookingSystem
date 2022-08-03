@@ -1,4 +1,4 @@
-import './addPrescription.css';
+
 import { Link } from 'react-router-dom';
 import { FaPlusCircle, FaRegTrashAlt } from 'react-icons/fa';
 import { useState } from 'react';

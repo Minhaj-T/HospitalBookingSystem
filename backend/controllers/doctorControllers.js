@@ -4,6 +4,7 @@ const Doctor = require('../models/doctorModel');
 const Prescription = require('../models/Prescription');
 const Transactions= require('../models/transactions');
 const MedicalRecords= require('../models/medicalRecords');
+const Billing = require('../models/billing');
 const jwt = require('jsonwebtoken');
 
 // @desc  Authenticate doctor
@@ -462,6 +463,24 @@ const addMedicalRecords = asyncHandler(async(req, res) => {
   })
 })
 
+// @desc add Bill
+// @rout  POST /api/doctor/add-billing
+const addBill = asyncHandler(async(req, res) => {
+  const{formFields,userId,doctorId}=req.body;
+  const billing= Billing({
+    date: new Date(),
+    userId:userId,
+    doctorId:doctorId,
+    bill:[...formFields]
+  }
+  )
+  await billing.save();
+  res.status(200).json({
+    status: true,
+    message: "Billing Added Successfully !",
+  })
+})
+
 
 
 const generateToken = (id) => {
@@ -479,5 +498,6 @@ module.exports = {
   getAppointments,
   ChangeAppointmentStatus,
   addPrescription,
-  addMedicalRecords
+  addMedicalRecords,
+  addBill
 };

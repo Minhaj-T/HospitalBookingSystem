@@ -9,7 +9,8 @@ const {
   getAppointments,
   ChangeAppointmentStatus,
   addPrescription,
-  addMedicalRecords
+  addMedicalRecords,
+  addBill
 } = require('../controllers/doctorControllers');
 const { isDoctor } = require('../middlewares/authMiddleware');
 
@@ -22,5 +23,6 @@ router.get('/get-appointments',isDoctor,getAppointments)
 router.patch('/changeStatus-appointments',isDoctor,ChangeAppointmentStatus)
 router.post('/add-prescription',isDoctor,addPrescription)
 router.post('/add-medical-records',isDoctor,addMedicalRecords)
+router.post('/add-billing',isDoctor,addBill)
 
 module.exports = router;
