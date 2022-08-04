@@ -1,3 +1,4 @@
+const { Router } = require('express');
 const express = require('express');
 const router = express.Router();
 const {
@@ -12,7 +13,8 @@ const {
   addMedicalRecords,
   addBill,
   getPrescription,
-  getMedicalRecords
+  getMedicalRecords,
+  getAllbills
   
 } = require('../controllers/doctorControllers');
 const { isDoctor } = require('../middlewares/authMiddleware');
@@ -29,5 +31,6 @@ router.post('/add-medical-records',isDoctor,addMedicalRecords)
 router.post('/add-billing',isDoctor,addBill)
 router.get('/get-prescription',isDoctor,getPrescription)
 router.get('/get-medical-records',isDoctor,getMedicalRecords)
+router.get('/get-bills',isDoctor,getAllbills)
 
 module.exports = router;

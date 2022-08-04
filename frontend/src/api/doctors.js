@@ -18,3 +18,4 @@ export const addMedicalRecords= (Data,config) => API.post(`/add-medical-records`
 export const addBilling=(Data,config) => API.post(`/add-billing`, Data,config);
 export const getPrescription=(config)=> API.get(`/get-prescription`,config);
 export const getMedicalRecords=(config)=> API.get('/get-medical-records',config);
+export const getbills=(config)=> API.get('/get-bills',config);

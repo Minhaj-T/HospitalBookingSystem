@@ -3,22 +3,12 @@ import { Link } from 'react-router-dom';
 import { FaPlusCircle, FaRegTrashAlt } from 'react-icons/fa';
 import { useState } from 'react';
 import moment from 'moment';
-import * as api from '../../../api/doctors';
-import { useSelector } from 'react-redux';
-import Spinner from '../../User/Spinner/Spinner';
-import { errorHandler } from '../../../utilities/errorMessege';
+import { useDispatch, useSelector } from 'react-redux';
 import { notification } from '../../../utilities/notification';
+import { addBills } from '../../../features/Doctor/userProfile/userProfileSlice';
 
 function AddBilling({userId,doctor1}) {
-    const [Loading, setLoading] = useState(false);
-
-    //create a tocken
-    const { doctor } = useSelector((state) => state.doctorAuth);
-    const config = {
-      headers: {
-        Authorization: `Bearer ${doctor['token']}`,
-      },
-    };
+  const dispatch = useDispatch();
   
     const [formFields, setFormFields] = useState([
       { title: '', amount: '' },
@@ -31,21 +21,14 @@ function AddBilling({userId,doctor1}) {
     };
   
     const submit = async () => {
-      try {
-        setLoading(true);
         const Data = {
           formFields: formFields,
           userId,
           doctorId: doctor1['_id'],
         };
-        const { data } = await api.addBilling(Data, config);
-        if (!data) throw new Error('the prescription failed !');
-        setLoading(false);
-        setFormFields([{ title: '',amount:"" }]);
-        notification.success(data.message);
-      } catch (error) {
-        return notification.error(errorHandler(error));
-      }
+      dispatch(addBills(Data));
+      setFormFields([{ title: '',amount:"" }]);
+      notification.success("Bill added successfully...!");
     };
   
     const addFields = () => {
@@ -62,10 +45,6 @@ function AddBilling({userId,doctor1}) {
       setFormFields(data);
     };
   
-    // Loading page
-    if (Loading) {
-      return <Spinner />;
-    }
   
     return (
       <>

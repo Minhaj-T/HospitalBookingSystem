@@ -51,9 +51,20 @@ const AddMedicalrecords = async (Data,token) => {
           Authorization: `Bearer ${token}`,
         },
       };
-    const { data } = await api(config);
+    const { data } = await api.getbills(config);
     return data;
   }; 
+
+//add-addMedicalRecords
+const Addbills = async (Data,token) => {
+  const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+  const { data } = await api.addBilling(Data,config);
+  return data;
+};
 
 
 
@@ -63,6 +74,7 @@ const userProfileService={
     GetBillingRecords,
     AddPrescription,
     AddMedicalrecords,
+    Addbills,
 
 }
 

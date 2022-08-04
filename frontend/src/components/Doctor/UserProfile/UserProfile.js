@@ -20,7 +20,7 @@ function UserProfile() {
   const { id } = useParams();
   const { appointment } = useSelector((state) => state.appointments);
   //filter the appointment
-  const [current_appointment] = appointment?.filter((row) => row?._id == id);
+  const [current_appointment] = appointment?.filter((row) => row?._id === id);
 
   // get the current state
   const {
@@ -49,11 +49,15 @@ function UserProfile() {
     dispatch,
   ]);
   const user_prescription = prescription?.filter(
-    (row) => row?.userId == current_appointment?.userId['_id']
+    (row) => row?.userId === current_appointment?.userId['_id']
   );
 
   const user_medicalRecords = medicalRecords?.filter(
-    (row) => row?.userId == current_appointment?.userId['_id']
+    (row) => row?.userId === current_appointment?.userId['_id']
+  );
+
+  const user_billing = billing?.filter(
+    (row) => row?.userId === current_appointment?.userId['_id']
   );
 
   console.log('user Profile page', isLoading);
@@ -284,7 +288,8 @@ function UserProfile() {
                                     <div className="main">
                                       <a
                                         className="btn btn-sm bg-info-light"
-                                        target="_blank" rel="noreferrer"
+                                        target="_blank"
+                                        rel="noreferrer"
                                         href={row['document']}
                                       >
                                         <FaEye /> View
@@ -323,9 +328,11 @@ function UserProfile() {
                             </tr>
                           </thead>
                           <tbody>
+                          {user_billing&&
+                              user_billing.map((row) => (
                             <tr>
                               <td>
-                                <Link to={''}>#INV-0010</Link>
+                                <Link to={''}>#{row['_id'].substr(0, 10)}</Link>
                               </td>
                               <td>
                                 <h2 className="table-avatar">
@@ -335,25 +342,19 @@ function UserProfile() {
                                   >
                                     <img
                                       className="avatar-img rounded-circle"
-                                      src="assets/img/doctors/doctor-thumb-01.jpg"
+                                      src={row?.doctorId['profile_image']}
                                       alt="User"
                                     />
                                   </Link>
-                                  <Link to={''}>
-                                    Ruby Perrin <span>Dental</span>
+                                  <Link to={''} style={{ paddingLeft: '10px' }}>
+                                 Dr {row?.doctorId['name']} <span>{row?.doctorId['specialization']}</span>
                                   </Link>
                                 </h2>
                               </td>
                               <td>$450</td>
-                              <td>14 Nov 2019</td>
+                              <td>{moment(row?.date).format('LL')}</td>
                               <td className="text-right">
                                 <div className="main">
-                                  <Link
-                                    to={''}
-                                    className="btn btn-sm bg-primary-light"
-                                  >
-                                    <FaPrint /> Print
-                                  </Link>
                                   <Link
                                     to={''}
                                     className="btn btn-sm bg-info-light"
@@ -363,6 +364,7 @@ function UserProfile() {
                                 </div>
                               </td>
                             </tr>
+                           ))}
                           </tbody>
                         </table>
                       </div>

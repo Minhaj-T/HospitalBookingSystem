@@ -78,6 +78,19 @@ export const billingRecords = createAsyncThunk(
   }
 );
 
+//add Bills
+  export const addBills = createAsyncThunk(
+    'userProfile/addBills',
+    async (Data, thunkAPI) => {
+      try {
+        const token = thunkAPI.getState().doctorAuth.doctor.token;
+        return await userProfileService.Addbills(Data,token);
+      } catch (error) {
+        return thunkAPI.rejectWithValue(errorHandler(error));
+      }
+    }
+  );
+
 
   const userProfileSlice=createSlice({
     name: 'userProfile',
@@ -117,13 +130,13 @@ export const billingRecords = createAsyncThunk(
             state.message = action.payload;
             state.isLoading = false;
             state.isError = true;
-            state.prescription = null;
+            state.medicalRecords = null;
           },
           [billingRecords.pending]: (state) => {
             state.isLoading = true;
           },
           [billingRecords.fulfilled]: (state, action) => {
-            state.prescription = action.payload;
+            state.billing = action.payload?.bills;
             state.isLoading = false;
             state.isSuccess = true;
           },
@@ -131,7 +144,7 @@ export const billingRecords = createAsyncThunk(
             state.message = action.payload;
             state.isLoading = false;
             state.isError = true;
-            state.prescription = null;
+            state.billing = null;
           },
           [addPrescription.pending]: (state) => {
             state.isLoading = true;
@@ -159,7 +172,21 @@ export const billingRecords = createAsyncThunk(
             state.message = action.payload;
             state.isLoading = false;
             state.isError = true;
-            state.prescription = null;
+            state.medicalRecords = null;
+          },
+          [addBills.pending]: (state) => {
+            state.isLoading = true;
+          },
+          [addBills.fulfilled]: (state, action) => {
+            state.billing.push(...action.payload.Data);
+            state.isLoading = true;
+            state.isSuccess = true;
+          },
+          [addBills.rejected]: (state, action) => {
+            state.message = action.payload;
+            state.isLoading = false;
+            state.isError = true;
+            state.billing = null;
           },
       }
   })
