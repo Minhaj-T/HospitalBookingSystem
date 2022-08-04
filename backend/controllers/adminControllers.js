@@ -24,7 +24,8 @@ const loginAdmin = asyncHandler(async (req, res) => {
       token: generateToken(admin._id),
     });
   } else {
-    res.status(400);
+    res.status(400)
+    throw new Error('invalid the Admin data');
     throw new Error('invalid the Admin data');
   }
 });

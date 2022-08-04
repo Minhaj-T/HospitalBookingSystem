@@ -20,17 +20,18 @@ export const login = createAsyncThunk(
   'auth/adminlogin',
   async (admin, thunkAPI) => {
     try {
-      return adminauthService.login(admin);
+      return await adminauthService.login(admin);
     } catch (error) {
       return thunkAPI.rejectWithValue(errorHandler(error));
     }
   }
 );
 
+
 //fetch all users
 export const fetchUsers = createAsyncThunk('fetch-Users', async (thunkAPI) => {
   try {
-    return adminauthService.fetchallUsers();
+    return await adminauthService.fetchallUsers();
   } catch (error) {
     return thunkAPI.rejectWithValue(errorHandler(error));
   }
@@ -42,7 +43,7 @@ export const Blockusers = createAsyncThunk(
   async (data, thunkAPI) => {
     const { id, status } = data;
     try {
-      return adminauthService.BlockUsers(id, status);
+      return await adminauthService.BlockUsers(id, status);
     } catch (error) {
       return thunkAPI.rejectWithValue(errorHandler(error));
     }
@@ -54,7 +55,7 @@ export const Deleteuser = createAsyncThunk(
   'delete-Users',
   async (id, thunkAPI) => {
     try {
-      return adminauthService.RemoveUser(id);
+      return await adminauthService.RemoveUser(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(errorHandler(error));
     }
@@ -67,7 +68,7 @@ export const allDoctors = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().adminAuth.admin.token;
-      return adminauthService.getallDoctors(token);
+      return await adminauthService.getallDoctors(token);
     } catch (error) {
       return thunkAPI.rejectWithValue(errorHandler(error));
     }
@@ -80,7 +81,7 @@ export const addDoctor = createAsyncThunk(
   async (doctor, thunkAPI) => {
     try {
       const token = thunkAPI.getState().adminAuth.admin.token;
-      return adminauthService.addDoctor(doctor);
+      return await adminauthService.addDoctor(doctor);
     } catch (error) {
       return thunkAPI.rejectWithValue(errorHandler(error));
     }
@@ -105,7 +106,7 @@ export const BlockDoctors = createAsyncThunk(
   async (data, thunkAPI) => {
     const { id, status } = data;
     try {
-      return adminauthService.BlockDoctors(id, status);
+      return await adminauthService.BlockDoctors(id, status);
     } catch (error) {
       return thunkAPI.rejectWithValue(errorHandler(error));
     }
@@ -174,6 +175,7 @@ const adminauthSlice = createSlice({
       state.admin = action.payload;
     },
     [login.rejected]: (state, action) => {
+      console.log(action.payload,"888888");
       state.isLoading = false;
       state.isSuccess = false;
       state.isError = true;

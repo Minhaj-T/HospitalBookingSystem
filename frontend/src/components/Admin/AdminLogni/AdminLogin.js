@@ -6,6 +6,9 @@ import { reset,login} from '../../../features/admin/auth/adminauthSlice'
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Spinner from "../../User/Spinner/Spinner"; 
+import { useForm } from "react-hook-form";
+import { notification } from "../../../utilities/notification";
+
 
 // TODO: admin form validation pending
 //style proportys
@@ -19,20 +22,13 @@ const btnstyle = { margin: "8px 0" };
 
 
 function AdminLogin() {
+  const { register, handleSubmit, formState: { errors } } = useForm({mode: "all"});
   const [formData, setformData] = useState({
     email: "",
     password: "",
   });
+  const pattern=  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ ;
 
-  console.log(formData);
-  const onChange = (e) => {
-    setformData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const { email, password } = formData;
 
   const dispatch=useDispatch()
   const navigate=useNavigate();
@@ -49,8 +45,8 @@ function AdminLogin() {
     dispatch(reset());
   }, [admin, isError, isSuccess, message, navigate, dispatch]);
   
-  const onSubmit=(e)=>{
-    e.preventDefault();
+  const onSubmit = (e) => {
+    const{email, password}=e;
     if(email && password){
       const userData = {
         email,
@@ -58,20 +54,21 @@ function AdminLogin() {
       };
       dispatch(login(userData));
     }else{
-      console.log("email or password is not avalable");
+      notification.error('Please fill the Details..')
     }
+}
+    
 
      // Loading page
   if (isLoading) {
     return <Spinner />;
   }
 
-  }
   return (
     <>
       <Grid>
         <Paper elevation={10} style={paperStyle}>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
           <Grid align="center">
             <img alt="mainlog-img" src={Mainlogo}/>
           </Grid>
@@ -80,28 +77,30 @@ function AdminLogin() {
           <Grid item>
             <TextField
               variant="standard"
-              value={email}
               name="email"
-              onChange={onChange}
               label="Email"
               placeholder="Enter your email"
               fullWidth
-              required
+              {...register("email",{ required: true,pattern:pattern })}
             />
+            {errors.email && <p style={{color:'red'}}>Please check the Email</p>}
           </Grid>
           <br />
           <Grid item>
             <TextField
               variant="standard"
               label="Password"
-              value={password}
+              
               name="password"
               placeholder="Enter password"
-              type="password"
-              onChange={onChange}
+            
               fullWidth
-              required
+              {...register("password", {
+                required: true,
+                minLength:6
+            })}
             />
+            {errors.password && <p style={{color: 'red'}}>Please check the Password</p>}
           </Grid>
 
           <br />
