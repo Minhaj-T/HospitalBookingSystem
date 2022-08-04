@@ -16,4 +16,5 @@ export const changeStatus_Appointment= (Data,config) => API.patch('/changeStatus
 export const addPrescription= (Data,config) => API.post(`/add-prescription`, Data,config);
 export const addMedicalRecords= (Data,config) => API.post(`/add-medical-records`, Data,config);
 export const addBilling=(Data,config) => API.post(`/add-billing`, Data,config);
-export const getPrescription=()=> API.get(`/get-prescription`);
+export const getPrescription=(config)=> API.get(`/get-prescription`,config);
+export const getMedicalRecords=(config)=> API.get('/get-medical-records',config);

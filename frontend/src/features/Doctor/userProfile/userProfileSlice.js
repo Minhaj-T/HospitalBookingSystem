@@ -52,6 +52,19 @@ export const getMedicalRecords = createAsyncThunk(
     }
   );
 
+  //add medicalRecords
+export const addMedicalRecords = createAsyncThunk(
+  'userProfile/addmedicalRecords',
+  async (Data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().doctorAuth.doctor.token;
+      return await userProfileService.AddMedicalrecords(Data,token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(errorHandler(error));
+    }
+  }
+);
+
   //Get all billingRecords
 export const billingRecords = createAsyncThunk(
   'userProfile/billingRecords',
@@ -96,7 +109,7 @@ export const billingRecords = createAsyncThunk(
             state.isLoading = true;
           },
           [getMedicalRecords.fulfilled]: (state, action) => {
-            state.prescription = action.payload;
+            state.medicalRecords = action.payload?.medicalRecords;
             state.isLoading = false;
             state.isSuccess = true;
           },
@@ -125,10 +138,24 @@ export const billingRecords = createAsyncThunk(
           },
           [addPrescription.fulfilled]: (state, action) => {
             state.prescription.push(...action.payload.Data);
-            state.isLoading = true;
+            state.isLoading = false;
             state.isSuccess = true;
           },
           [addPrescription.rejected]: (state, action) => {
+            state.message = action.payload;
+            state.isLoading = false;
+            state.isError = true;
+            state.prescription = null;
+          },
+          [addMedicalRecords.pending]: (state) => {
+            state.isLoading = true;
+          },
+          [addMedicalRecords.fulfilled]: (state, action) => {
+            state.medicalRecords.push(...action.payload.Data);
+            state.isLoading = true;
+            state.isSuccess = true;
+          },
+          [addMedicalRecords.rejected]: (state, action) => {
             state.message = action.payload;
             state.isLoading = false;
             state.isError = true;

@@ -2,28 +2,20 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UploadDocument } from '../../../utilities/cloudnarydocumentUpload';
 import { toast } from 'react-toastify';
-import * as api from '../../../api/doctors';
-import { useSelector } from 'react-redux';
-import { errorHandler } from '../../../utilities/errorMessege';
+import { useDispatch} from 'react-redux';
 import { notification } from '../../../utilities/notification';
-import Spinner from '../../User/Spinner/Spinner';
+import { addMedicalRecords } from '../../../features/Doctor/userProfile/userProfileSlice';
+
 
 function AddMedicalrecords({ userId, doctor1 }) {
-  const [Loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
   const [Document, setDocument] = useState(null);
   const [FormData, setFormData] = useState({
     date: '',
     description: '',
   });
   const { date, description } = FormData;
-
-  //create a tocken
-  const { doctor } = useSelector((state) => state.doctorAuth);
-  const config = {
-    headers: {
-      Authorization: `Bearer ${doctor['token']}`,
-    },
-  };
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -41,16 +33,9 @@ function AddMedicalrecords({ userId, doctor1 }) {
       doctorId: doctor1['_id'],
       userId,
     };
-    try {
-      setLoading(true);
-      const { data } = await api.addMedicalRecords(Data, config);
-      if (!data) throw new Error('the prescription failed !');
-      setLoading(false);
-      setFormData({ date: '', description: '' });
-      notification.success(data.message);
-    } catch (error) {
-      return notification.error(errorHandler(error));
-    }
+    dispatch(addMedicalRecords(Data))
+    setFormData({ date: '', description: '' });
+    notification.success("Document uploaded successfully..!");
   };
 
   //dump the document into cloudinary
@@ -75,10 +60,6 @@ function AddMedicalrecords({ userId, doctor1 }) {
     }
   };
 
-  // Loading page
-  if (Loading) {
-    return <Spinner />;
-  }
 
   return (
     <>

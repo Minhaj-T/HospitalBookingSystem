@@ -457,10 +457,11 @@ const addMedicalRecords = asyncHandler(async(req, res) => {
     document
   },
   )
-  await medicalRecords.save();
+  const data=await medicalRecords.save();
+  const Data = await MedicalRecords.find({_id:data._id})
+  .populate({ path: 'doctorId', select: { name: 1, _id: 0, profile_image: 1,specialization:1 } })
   res.status(200).json({
-    status: true,
-    message: "Docs Added Successfully !",
+    Data
   })
 })
 
@@ -493,6 +494,17 @@ const getPrescription=asyncHandler(async(req,res)=>{
   res.status(200).json({ prescription })
 })
 
+// @desc get all document
+// @rout  GET /api/doctor/get-medical-records
+const getMedicalRecords=asyncHandler(async(req,res)=>{
+  const { limit } = req.query;
+  const medicalRecords = await MedicalRecords.find({})
+  .populate({ path: 'doctorId', select: { name: 1, _id: 0, profile_image: 1,specialization:1 } })
+  .sort({ $natural: -1 })
+  .limit(limit);
+  res.status(200).json({ medicalRecords })
+})
+
 
 
 const generateToken = (id) => {
@@ -512,5 +524,7 @@ module.exports = {
   addPrescription,
   addMedicalRecords,
   addBill,
-  getPrescription
+  getPrescription,
+  getMedicalRecords
+
 };

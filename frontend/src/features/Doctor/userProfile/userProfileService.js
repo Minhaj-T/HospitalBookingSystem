@@ -29,9 +29,20 @@ const AddPrescription = async (Data,token) => {
           Authorization: `Bearer ${token}`,
         },
       };
-    const { data } = await api(config);
+    const { data } = await api.getMedicalRecords(config);
     return data;
   };  
+
+  //add-addMedicalRecords
+const AddMedicalrecords = async (Data,token) => {
+  const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+  const { data } = await api.addMedicalRecords(Data,config);
+  return data;
+};
 
    //get Billing-Records
    const GetBillingRecords = async (token) => {
@@ -50,7 +61,8 @@ const userProfileService={
     GetPrescription,
     GetMedicalRecords,
     GetBillingRecords,
-    AddPrescription
+    AddPrescription,
+    AddMedicalrecords,
 
 }
 
