@@ -3,29 +3,77 @@ import '../Mypatients/mypatients.css';
 import './userprofile.css';
 import { Link, useParams } from 'react-router-dom';
 import { FaPrint, FaEye, FaMapMarkerAlt } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Header from '../Header/Header';
 import AddPrescription from '../AddPrescription/AddPrescription';
 import AddMedicalrecords from '../AddMedicalrecords/AddMedicalrecords';
 import AddBilling from '../AddBilling/AddBilling';
+import { useEffect } from 'react';
+import { notification } from '../../../utilities/notification';
+import { reset } from '../../../features/Doctor/userProfile/userProfileSlice';
+import moment from 'moment';
+import CustomizedDialogs from './PrescriptionModal';
+import Spinner from '../../User/Spinner/Spinner';
 
 function UserProfile() {
+  const dispatch = useDispatch();
   const { id } = useParams();
   const { appointment } = useSelector((state) => state.appointments);
   //filter the appointment
   const [current_appointment] = appointment?.filter((row) => row?._id == id);
 
+  // get the current state
+  const {
+    prescription,
+    medicalRecords,
+    billing,
+    isLoading,
+    isError,
+    isSuccess,
+    message,
+  } = useSelector((state) => state.userprofile);
+
+  useEffect(() => {
+    if (isError) {
+      notification.error(message);
+    }
+    dispatch(reset());
+  }, [
+    prescription,
+    medicalRecords,
+    billing,
+    isLoading,
+    isError,
+    isSuccess,
+    message,
+    dispatch,
+  ]);
+  const user_prescription = prescription?.filter(
+    (row) => row?.userId == current_appointment?.userId['_id']
+  );
+
+  // Loading page
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
     <>
-    <Header />
-      <div className="row" style={{marginTop:'5.3rem',backgroundColor:'#f5f5f5'}}>
+      <Header />
+      <div
+        className="row"
+        style={{ marginTop: '5.3rem', backgroundColor: '#f5f5f5' }}
+      >
         <div className="col-md-5 col-lg-4 col-xl-3">
           <div className="card widget-profile pat-widget-profile">
             <div className="card-body">
               <div className="pro-widget-content">
                 <div className="profile-info-widget">
                   <Link to={''} className="booking-doc-img">
-                    <img src={current_appointment?.userId['profile_image']} alt="User" />
+                    <img
+                      src={current_appointment?.userId['profile_image']}
+                      alt="User"
+                    />
                   </Link>
                   <div className="profile-det-info">
                     <h3>
@@ -34,10 +82,12 @@ function UserProfile() {
 
                     <div className="patient-details">
                       <h5>
-                        <b>Patient ID :</b>{current_appointment?.userId['_id'].slice(0, 5)}
+                        <b>Patient ID :</b>
+                        {current_appointment?.userId['_id'].slice(0, 5)}
                       </h5>
                       <h5 className="mb-0">
-                        <FaMapMarkerAlt /> {current_appointment?.userId['city']}, {current_appointment?.userId['state']}
+                        <FaMapMarkerAlt /> {current_appointment?.userId['city']}
+                        , {current_appointment?.userId['state']}
                       </h5>
                     </div>
                   </div>
@@ -49,10 +99,15 @@ function UserProfile() {
                     Phone <span>{current_appointment?.userId['mobile']}</span>
                   </li>
                   <li>
-                    Age <span>{current_appointment?.userId['age']} Years old, {current_appointment?.userId['gender']}</span>
+                    Age{' '}
+                    <span>
+                      {current_appointment?.userId['age']} Years old,{' '}
+                      {current_appointment?.userId['gender']}
+                    </span>
                   </li>
                   <li>
-                    Blood Group <span>{current_appointment?.userId['blood_group']}</span>
+                    Blood Group{' '}
+                    <span>{current_appointment?.userId['blood_group']}</span>
                   </li>
                 </ul>
               </div>
@@ -98,7 +153,10 @@ function UserProfile() {
                 {/* Prescription Tab */}
                 <div className="tab-pane fade show active" id="pres">
                   <div className="text-right">
-                      <AddPrescription userId={current_appointment?.userId['_id']} doctor1={current_appointment?.doctorId}/>
+                    <AddPrescription
+                      userId={current_appointment?.userId['_id']}
+                      doctor1={current_appointment?.doctorId}
+                    />
                   </div>
                   <div className="card card-table mb-0">
                     <div className="card-body">
@@ -107,49 +165,53 @@ function UserProfile() {
                           <thead>
                             <tr>
                               <th>Date </th>
-                              <th>Name</th>
+                              <th>Prescription ID</th>
                               <th>Created by </th>
                               <th></th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>14 Nov 2019</td>
-                              <td>Prescription 1</td>
-                              <td>
-                                <h2 className="table-avatar">
-                                  <Link
-                                    to={''}
-                                    className="avatar avatar-sm mr-2"
-                                  >
-                                    <img
-                                      className="avatar-img rounded-circle"
-                                      src="assets/img/doctors/doctor-thumb-01.jpg"
-                                      alt="User"
-                                    />
-                                  </Link>
-                                  <Link to={''}>
-                                    Dr. Ruby Perrin <span>Dental</span>
-                                  </Link>
-                                </h2>
-                              </td>
-                              <td className="text-right">
-                                <div className="main">
-                                  <Link
+                            {user_prescription &&
+                              user_prescription.map((row) => (
+                                <tr key={row._id}>
+                                  <td>{moment(row?.date).format('LL')}</td>
+                                  <td>{row['_id'].substr(0, 10)}</td>
+                                  <td>
+                                    <h2 className="table-avatar">
+                                      <Link
+                                        to={''}
+                                        className="avatar avatar-sm mr-2"
+                                      >
+                                        <img
+                                          className="avatar-img rounded-circle"
+                                          src={row?.doctorId['profile_image']}
+                                          alt="User"
+                                        />
+                                      </Link>
+                                      <Link
+                                        to={''}
+                                        style={{ paddingLeft: '10px' }}
+                                      >
+                                        Dr {row?.doctorId['name']}{' '}
+                                        <span>
+                                          {row?.doctorId['specialization']}
+                                        </span>
+                                      </Link>
+                                    </h2>
+                                  </td>
+                                  <td className="text-right">
+                                    <div className="main">
+                                      {/* <Link
                                     to={''}
                                     className="btn btn-sm bg-primary-light"
                                   >
                                     <FaPrint /> Print
-                                  </Link>
-                                  <Link
-                                    to={''}
-                                    className="btn btn-sm bg-info-light"
-                                  >
-                                    <FaEye /> View
-                                  </Link>
-                                </div>
-                              </td>
-                            </tr>
+                                  </Link> */}
+                                      <CustomizedDialogs id={row._id} />
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))}
                           </tbody>
                         </table>
                       </div>
@@ -161,7 +223,10 @@ function UserProfile() {
                 {/* Medical Records Tab */}
                 <div className="tab-pane fade" id="medical">
                   <div className="text-right">
-                    <AddMedicalrecords userId={current_appointment?.userId['_id']} doctor1={current_appointment?.doctorId}/>
+                    <AddMedicalrecords
+                      userId={current_appointment?.userId['_id']}
+                      doctor1={current_appointment?.doctorId}
+                    />
                   </div>
                   <div className="card card-table mb-0">
                     <div className="card-body">
@@ -232,7 +297,10 @@ function UserProfile() {
                 {/* Billing Tab */}
                 <div className="tab-pane" id="billing">
                   <div className="text-right ">
-                  <AddBilling userId={current_appointment?.userId['_id']} doctor1={current_appointment?.doctorId}/>
+                    <AddBilling
+                      userId={current_appointment?.userId['_id']}
+                      doctor1={current_appointment?.doctorId}
+                    />
                   </div>
                   <div className="card card-table mb-0">
                     <div className="card-body">

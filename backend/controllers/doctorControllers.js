@@ -437,10 +437,11 @@ const addPrescription = asyncHandler(async(req, res) => {
     prescription:[...formFields]
   },
   )
-  await prescription.save();
+  const data=await prescription.save()
+  const Data = await Prescription.find({_id:data._id})
+  .populate({ path: 'doctorId', select: { name: 1, _id: 0, profile_image: 1,specialization:1 } })
   res.status(200).json({
-    status: true,
-    message: "Prescription Added Successfully !",
+    Data
   })
 })
 
@@ -481,6 +482,17 @@ const addBill = asyncHandler(async(req, res) => {
   })
 })
 
+// @desc get all prescription
+// @rout  GET /api/doctor/get-prescription
+const getPrescription=asyncHandler(async(req,res)=>{
+  const { limit } = req.query;
+  const prescription = await Prescription.find({})
+  .populate({ path: 'doctorId', select: { name: 1, _id: 0, profile_image: 1,specialization:1 } })
+  .sort({ $natural: -1 })
+  .limit(limit);
+  res.status(200).json({ prescription })
+})
+
 
 
 const generateToken = (id) => {
@@ -499,5 +511,6 @@ module.exports = {
   ChangeAppointmentStatus,
   addPrescription,
   addMedicalRecords,
-  addBill
+  addBill,
+  getPrescription
 };

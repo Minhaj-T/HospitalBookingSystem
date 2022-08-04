@@ -1,24 +1,13 @@
-
 import { Link } from 'react-router-dom';
 import { FaPlusCircle, FaRegTrashAlt } from 'react-icons/fa';
 import { useState } from 'react';
 import moment from 'moment';
-import * as api from '../../../api/doctors';
-import { useSelector } from 'react-redux';
-import Spinner from '../../User/Spinner/Spinner';
-import { errorHandler } from '../../../utilities/errorMessege';
+import { useDispatch, useSelector } from 'react-redux';
 import { notification } from '../../../utilities/notification';
+import { addPrescription } from '../../../features/Doctor/userProfile/userProfileSlice';
 
 function AddPrescription({ userId, doctor1 }) {
-  const [Loading, setLoading] = useState(false);
-
-  //create a tocken
-  const { doctor } = useSelector((state) => state.doctorAuth);
-  const config = {
-    headers: {
-      Authorization: `Bearer ${doctor['token']}`,
-    },
-  };
+  const dispatch = useDispatch();
 
   const [formFields, setFormFields] = useState([
     { name: '', quantity: '', days: '', time: '' },
@@ -31,21 +20,14 @@ function AddPrescription({ userId, doctor1 }) {
   };
 
   const submit = async () => {
-    try {
-      setLoading(true);
-      const Data = {
-        formFields: formFields,
-        userId,
-        doctorId: doctor1['_id'],
-      };
-      const { data } = await api.addPrescription(Data, config);
-      if (!data) throw new Error('the prescription failed !');
-      setLoading(false);
-      setFormFields([{ name: '', quantity: '', days: '', time: '' }]);
-      notification.success(data.message);
-    } catch (error) {
-      return notification.error(errorHandler(error));
-    }
+    const Data = {
+      formFields: formFields,
+      userId,
+      doctorId: doctor1['_id'],
+    };
+    dispatch(addPrescription(Data));
+    setFormFields([{ name: '', quantity: '', days: '', time: '' }]);
+    notification.success('Prescription added Successfully !');
   };
 
   const addFields = () => {
@@ -63,11 +45,6 @@ function AddPrescription({ userId, doctor1 }) {
     data.splice(index, 1);
     setFormFields(data);
   };
-
-  // Loading page
-  if (Loading) {
-    return <Spinner />;
-  }
 
   return (
     <>
