@@ -8,7 +8,11 @@ import { reset } from '../../../features/Doctor/appointments/appointmentSlice';
 import Spinner from '../../User/Spinner/Spinner';
 import moment from 'moment';
 import { changeStatus } from '../../../features/Doctor/appointments/appointmentSlice';
-import { billingRecords,getMedicalRecords,getPrescription } from '../../../features/Doctor/userProfile/userProfileSlice';
+import {
+  billingRecords,
+  getMedicalRecords,
+  getPrescription,
+} from '../../../features/Doctor/userProfile/userProfileSlice';
 
 function DoctorDashboard() {
   const dispatch = useDispatch();
@@ -19,9 +23,9 @@ function DoctorDashboard() {
   );
 
   useEffect(() => {
-    dispatch(billingRecords())
-    dispatch(getMedicalRecords())
-    dispatch(getPrescription())
+    dispatch(billingRecords());
+    dispatch(getMedicalRecords());
+    dispatch(getPrescription());
     if (isError) {
       notification.error(message);
     }
@@ -33,7 +37,6 @@ function DoctorDashboard() {
   const today_appointment = appointment?.filter(
     (row) => moment().format(row?.slotDetails['Date']) == today_date
   );
-
 
   // Loading page
   if (isLoading) {
@@ -140,7 +143,6 @@ function DoctorDashboard() {
                                         >
                                           <FaCheck /> Accept
                                         </Link>
-
                                         <Link
                                           to={''}
                                           className="btn btn-sm bg-danger-light"

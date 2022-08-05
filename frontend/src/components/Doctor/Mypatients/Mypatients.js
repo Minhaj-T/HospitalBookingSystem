@@ -20,7 +20,7 @@ function Mypatients() {
                       </Link>
                       <div className="profile-det-info">
                         <h3>
-                          <Link to={''}>{row.userId['name']}</Link>
+                          <Link to={`/doctor/patient-profile/${row?._id}`}>{row.userId['name']}</Link>
                         </h3>
 
                         <div className="patient-details">

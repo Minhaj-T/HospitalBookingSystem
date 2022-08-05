@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import { useSelector } from 'react-redux';
 import Footer from '../../Footer/Footer';
+import { notification } from '../../../utilities/notification';
 
 function BookingSuccess() {
   const { user } = useSelector((state) => state.auth);
@@ -22,7 +23,11 @@ function BookingSuccess() {
 
   useEffect(() => {
     (async () => {
-      let { data } = await api.deleteSlote(state, config);
+      try {
+        let { data } = await api.deleteSlote(state, config);
+      } catch (error) {
+        notification.error(error);
+      }
       return null;
     })();
   }, []);

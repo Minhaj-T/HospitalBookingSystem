@@ -318,7 +318,6 @@ function UserProfile() {
                             <tr>
                               <th>Invoice No</th>
                               <th>Doctor</th>
-                              <th>Amount</th>
                               <th>Paid On</th>
                               <th></th>
                             </tr>
@@ -355,7 +354,6 @@ function UserProfile() {
                                       </Link>
                                     </h2>
                                   </td>
-                                  <td>$450</td>
                                   <td>{moment(row?.date).format('LL')}</td>
                                   <td className="text-right">
                                     <div className="main">
