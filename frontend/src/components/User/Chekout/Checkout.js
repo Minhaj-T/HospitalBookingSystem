@@ -11,6 +11,7 @@ import { createRazorOrder, verifyAndPay } from '../../../api/payment';
 import { notification } from '../../../utilities/notification';
 import { calculateTime } from '../../../utilities/DateItration';
 import Footer from '../../Footer/Footer';
+import { errorHandler } from '../../../utilities/errorMessege';
 
 function Checkout() {
   const navigate = useNavigate();
@@ -35,27 +36,34 @@ function Checkout() {
   }, []);
 
   const getDoctor = async (id) => {
-    setDoctor((prev) => ({ ...prev, loading: true }));
-    let { data } = await api.getDoctor(id);
-    if (data?.data) {
-      setDoctor((prev) => ({
-        ...prev,
-        ...data?.data,
-        loading: false,
-        done: true,
-      }));
+    try {
+      setDoctor((prev) => ({ ...prev, loading: true }));
+      let { data } = await api.getDoctor(id);
+      if (data?.data) {
+        setDoctor((prev) => ({
+          ...prev,
+          ...data?.data,
+          loading: false,
+          done: true,
+        }));
+      }
+    } catch (error) {
+      notification.error(errorHandler(error));
     }
   };
 
-  //statrt chat with doctor
+  //start chat with doctor
   const ChatWithDoctor = async () => {
-    const data = {
-      senderId: user._id,
-      receiverId: Doctor._id,
-    };
-    let Data = await api1.newConversation(data);
-    console.log(',da=', Data);
-    return null;
+    try {
+      const data = {
+        senderId: user._id,
+        receiverId: Doctor._id,
+      };
+      let Data = await api1.newConversation(data);
+      return null;
+    } catch (error) {
+      notification.error(errorHandler(error));
+    }
   };
 
   function loadRazorpay(e) {
@@ -139,7 +147,7 @@ function Checkout() {
   if (Doctor.loading) {
     return <Spinner />;
   }
-  console.log('ckeckout', Day);
+
   return (
     <>
       <Header />

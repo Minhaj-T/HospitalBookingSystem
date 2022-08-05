@@ -318,7 +318,7 @@ function UserProfile() {
                             <tr>
                               <th>Invoice No</th>
                               <th>Doctor</th>
-                              <th>Paid On</th>
+                              <th>Date</th>
                               <th></th>
                             </tr>
                           </thead>

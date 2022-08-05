@@ -5,8 +5,10 @@ import { FcInfo } from 'react-icons/fc';
 import { FaMapMarkerAlt, FaMoneyBillAlt, FaThumbsUp } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import Spinner from '../Spinner/Spinner';
-import Header from '../Header/Header'
+import Header from '../Header/Header';
 import Footer from '../../Footer/Footer';
+import { notification } from '../../../utilities/notification';
+import { errorHandler } from '../../../utilities/errorMessege';
 
 function Doctorsearch() {
   const [fullData, setFullData] = useState({ loading: false, done: false });
@@ -15,9 +17,9 @@ function Doctorsearch() {
     date: '',
     gender: '',
     specialization: '',
-    searchInput:'',
+    searchInput: '',
   });
-  const { date, gender, specialization,searchInput } = formData;
+  const { date, gender, specialization, searchInput } = formData;
 
   useEffect(() => {
     !fullData.done && fetchAllDetails(0, 10);
@@ -25,18 +27,22 @@ function Doctorsearch() {
 
   //  fetch the all doctors data
   const fetchAllDetails = async (skip, limit) => {
-    setFullData((prev) => ({ ...prev, loading: true }));
-    let { data } = await api.getAllDoctors(skip, limit);
-    let Specialites = await api.getAllSpecialites();
-    if (data?.doctor && Specialites.data) {
-      setFullData((prev) => ({
-        ...prev,
-        ...Specialites.data,
-        ...data,
-        loading: false,
-        done: true,
-      }));
-      setData(data.doctor);
+    try {
+      setFullData((prev) => ({ ...prev, loading: true }));
+      let { data } = await api.getAllDoctors(skip, limit);
+      let Specialites = await api.getAllSpecialites();
+      if (data?.doctor && Specialites.data) {
+        setFullData((prev) => ({
+          ...prev,
+          ...Specialites.data,
+          ...data,
+          loading: false,
+          done: true,
+        }));
+        setData(data.doctor);
+      }
+    } catch (error) {
+      notification(errorHandler(error));
     }
   };
 
@@ -54,7 +60,8 @@ function Doctorsearch() {
     if (searchInput) {
       updatedList = updatedList.filter(
         (item) =>
-          item.name.toLowerCase().search(searchInput.toLowerCase().trim()) !== -1
+          item.name.toLowerCase().search(searchInput.toLowerCase().trim()) !==
+          -1
       );
     }
     setData(updatedList);
@@ -62,7 +69,7 @@ function Doctorsearch() {
 
   useEffect(() => {
     applyFilters();
-  }, [date, gender, specialization,searchInput]);
+  }, [date, gender, specialization, searchInput]);
 
   //  fetch the input form doctor serch section
   const onChange = (e) => {
@@ -76,11 +83,11 @@ function Doctorsearch() {
   if (fullData.loading) {
     return <Spinner />;
   }
-  
+
   return (
     <>
-    <Header/>
-      <div className="content mt-5" style={{backgroundColor:'#f5f5f5'}}>
+      <Header />
+      <div className="content mt-5" style={{ backgroundColor: '#f5f5f5' }}>
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-12 col-lg-4 col-xl-3 theiaStickySidebar">
@@ -95,7 +102,7 @@ function Doctorsearch() {
                       className="form-control"
                       value={searchInput}
                       onChange={onChange}
-                      placeholder="Search here.." 
+                      placeholder="Search here.."
                       name="searchInput"
                     />
                   </div>
@@ -131,10 +138,6 @@ function Doctorsearch() {
                       ))}
                   </div>
                   <div className="btn-search">
-                    {/* <button type="button" className="btn btn-block" onClick={
-                      }>
-                      Search
-                    </button> */}
                   </div>
                 </div>
               </div>
@@ -159,16 +162,11 @@ function Doctorsearch() {
                           <div className="doc-info-cont">
                             <h4 className="doc-name">
                               <Link to={''}>
-                                Dr.{row.name}{" "}{row.lastname}
+                                Dr.{row.name} {row.lastname}
                               </Link>
                             </h4>
                             <p className="doc-speciality">{row.degree}</p>
                             <h5 className="doc-department">
-                              {/* <img
-                            src="assets/img/specialities/specialities-05.png"
-                            className="img-fluid"
-                            alt="Speciality"
-                          /> */}
                               {row.specialization}
                             </h5>
                             <div className="clinic-details">
@@ -226,7 +224,7 @@ function Doctorsearch() {
             </div>
           </div>
         </div>
-        <Footer/> 
+        <Footer />
       </div>
     </>
   );

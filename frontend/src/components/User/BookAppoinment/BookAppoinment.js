@@ -8,6 +8,8 @@ import Spinner from '../Spinner/Spinner';
 import { iterateDate } from '../../../utilities/DateItration';
 import moment from 'moment';
 import Footer from '../../Footer/Footer';
+import { notification } from '../../../utilities/notification';
+import { errorHandler } from '../../../utilities/errorMessege';
 
 function BookAppoinment() {
   const [Date, setDate] = useState([]);
@@ -46,15 +48,19 @@ function BookAppoinment() {
   }, []);
 
   const getDoctor = async (id) => {
-    setDoctor((prev) => ({ ...prev, loading: true }));
-    let { data } = await api.getDoctor(id);
-    if (data?.data) {
-      setDoctor((prev) => ({
-        ...prev,
-        ...data?.data,
-        loading: false,
-        done: true,
-      }));
+    try {
+      setDoctor((prev) => ({ ...prev, loading: true }));
+      let { data } = await api.getDoctor(id);
+      if (data?.data) {
+        setDoctor((prev) => ({
+          ...prev,
+          ...data?.data,
+          loading: false,
+          done: true,
+        }));
+      }
+    } catch (error) {
+      notification.error(errorHandler(error))
     }
   };
 

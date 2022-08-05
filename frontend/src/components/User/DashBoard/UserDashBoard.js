@@ -1,5 +1,4 @@
 import './userdashboard.css';
-import mm from '../../../images/myImage.jpg';
 import { FaPrint, FaEye } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import heart_rate from '../../../images/pt-dashboard-01.png';
@@ -14,8 +13,10 @@ import { notification } from '../../../utilities/notification';
 import Spinner from '../Spinner/Spinner';
 import moment from 'moment';
 import { reset } from '../../../features/Doctor/userProfile/userProfileSlice';
-import CustomizedDialogs from '../../Doctor/UserProfile/PrescriptionModal';
-import CustomizedDialogs1 from '../../Doctor/UserProfile/BillingModal';
+import BillingModal from './BillingModal';
+import PrescriptionModal from './PrescriptionModal';
+
+
 
 function UserDashBoard() {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ function UserDashBoard() {
     isError,
     isSuccess,
     message,
-  } = useSelector((state) => state.userprofile);
+  } = useSelector((state) => state.userDetails);
 
   useEffect(() => {
     if (isError) {
@@ -72,7 +73,7 @@ function UserDashBoard() {
   const fetchAllAppointments = async () => {
     setFulldata((prev) => ({ ...prev, loading: true }));
     try {
-      const { data } = await api.getAllappointment(config);
+      const { data } = await api.getAllappointment(config,5);
       if (data?.data) {
         setFulldata((prev) => ({
           ...prev,
@@ -325,7 +326,7 @@ function UserDashBoard() {
                               </td>
                               <td className="text-right">
                                 <div className="table-action">
-                                  <CustomizedDialogs id={row._id} />
+                                  <PrescriptionModal id={row._id} />
                                 </div>
                               </td>
                             </tr>
@@ -415,8 +416,7 @@ function UserDashBoard() {
                         <tr>
                           <th>Invoice No</th>
                           <th>Doctor</th>
-                          <th>Amount</th>
-                          <th>Paid On</th>
+                          <th>Date</th>
                           <th></th>
                         </tr>
                       </thead>
@@ -447,11 +447,10 @@ function UserDashBoard() {
                                   </Link>
                                 </h2>
                               </td>
-                              <td>$450</td>
                               <td>{moment(row?.date).format('LL')}</td>
                               <td className="text-right">
                                 <div className="main">
-                                  <CustomizedDialogs1 id={row._id} />
+                                  <BillingModal id={row._id} />
                                 </div>
                               </td>
                             </tr>

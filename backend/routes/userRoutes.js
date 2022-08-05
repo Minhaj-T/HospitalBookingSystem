@@ -15,7 +15,7 @@ const {
   getFavourites,
 } = require('../controllers/usersController');
 const{fetchSpecialties}=require('../controllers/adminControllers');
-const{deleteSlotes}=require('../controllers/doctorControllers');
+const{deleteSlotes, getPrescription, getMedicalRecords, getAllbills}=require('../controllers/doctorControllers');
 const router = express.Router();
 const { protect } = require('../middlewares/authMiddleware');
 
@@ -34,5 +34,9 @@ router.get('/get-user',getUser);
 router.post('/add-favourites',protect,addfavourites)
 router.put('/remove-favourites',protect,removeFavorite)
 router.get('/get-favourites',protect,getFavourites)
+router.get('/get-prescription',protect,getPrescription)
+router.get('/get-medical-records',protect,getMedicalRecords)
+router.get('/get-bills',protect,getAllbills)
+
 
 module.exports = router;

@@ -164,7 +164,7 @@ export const billingRecords = createAsyncThunk(
             state.isLoading = true;
           },
           [addMedicalRecords.fulfilled]: (state, action) => {
-            state.medicalRecords.push(...action.payload.Data);
+            state.medicalRecords.unshift(...action.payload.Data);
             state.isLoading = true;
             state.isSuccess = true;
           },
@@ -178,7 +178,7 @@ export const billingRecords = createAsyncThunk(
             state.isLoading = true;
           },
           [addBills.fulfilled]: (state, action) => {
-            state.billing.push(...action.payload.Data);
+            state.billing.unshift(...action.payload.Data);
             state.isLoading = true;
             state.isSuccess = true;
           },

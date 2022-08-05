@@ -1,5 +1,4 @@
 import './favourites.css';
-import mm from '../../../images/myImage.jpg';
 import { Link } from 'react-router-dom';
 import { FcOk, FcInfo } from 'react-icons/fc';
 import { FaMapMarkerAlt, FaClock, FaMoneyBillAlt } from 'react-icons/fa';

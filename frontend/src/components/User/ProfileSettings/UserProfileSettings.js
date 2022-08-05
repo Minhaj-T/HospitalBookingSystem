@@ -9,6 +9,8 @@ import {
 } from '../../../features/users/auth/authSlice';
 import Spinner from '../Spinner/Spinner';
 import { UploadImage } from '../../../utilities/cloudinaryImageUpload';
+import { errorHandler } from '../../../utilities/errorMessege';
+import { notification } from '../../../utilities/notification';
 
 function UserProfileSettings() {
   const dispatch = useDispatch();
@@ -47,7 +49,7 @@ function UserProfileSettings() {
       setPic(data.secure_url.toString());
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      notification(errorHandler(error));
     }
   };
 

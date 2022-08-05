@@ -304,6 +304,7 @@ const getUser = asyncHandler(async (req, res) => {
 // @desc  get the appointment using user id
 // @rout    GET /users /api/users/get-appointments
 const getAppointments = asyncHandler(async (req, res) => {
+  const {limit}=req.query;
   const userId = req.user._id;
   const data = await Transactions.find({ userId: userId })
     .populate({
@@ -327,7 +328,9 @@ const getAppointments = asyncHandler(async (req, res) => {
         lastname: 1,
         doctorID: 1,
       },
-    });
+    })
+    .sort({ $natural: -1 })
+    .limit(limit);
   res.status(200).json({ data });
 });
 

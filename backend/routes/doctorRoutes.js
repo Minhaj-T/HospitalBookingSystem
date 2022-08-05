@@ -17,7 +17,7 @@ const {
   getAllbills
   
 } = require('../controllers/doctorControllers');
-const { isDoctor,isValid } = require('../middlewares/authMiddleware');
+const { isDoctor } = require('../middlewares/authMiddleware');
 
 router.post('/login', loginDoctor);
 router.put('/edit-doctorDetails', isDoctor, editDoctorDetails);
@@ -29,8 +29,8 @@ router.patch('/changeStatus-appointments',isDoctor,ChangeAppointmentStatus)
 router.post('/add-prescription',isDoctor,addPrescription)
 router.post('/add-medical-records',isDoctor,addMedicalRecords)
 router.post('/add-billing',isDoctor,addBill)
-router.get('/get-prescription',isValid,getPrescription)
-router.get('/get-medical-records',isValid,getMedicalRecords)
-router.get('/get-bills',isValid,getAllbills)
+router.get('/get-prescription',isDoctor,getPrescription)
+router.get('/get-medical-records',isDoctor,getMedicalRecords)
+router.get('/get-bills',isDoctor,getAllbills)
 
 module.exports = router;

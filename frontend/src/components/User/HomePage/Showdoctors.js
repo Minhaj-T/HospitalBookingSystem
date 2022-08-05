@@ -1,4 +1,5 @@
 import './showdoctors.scss';
+import '../FavouriteDoctor/favourites.css'
 import { TiStar } from 'react-icons/ti';
 import { FaMapMarkerAlt, FaMoneyBillAlt } from 'react-icons/fa';
 import { FcInspection } from 'react-icons/fc';

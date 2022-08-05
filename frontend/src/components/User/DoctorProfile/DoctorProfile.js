@@ -82,7 +82,6 @@ function DoctorProfile() {
     return <Spinner />;
   }
 
-
   return (
     <>
       <Header />
@@ -363,7 +362,7 @@ function DoctorProfile() {
             </div>
           </div>
         </div>
-      <Footer/>
+        <Footer />
       </div>
     </>
   );

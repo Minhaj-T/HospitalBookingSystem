@@ -7,6 +7,7 @@ import Header from '../Header/Header';
 import { useSelector } from 'react-redux';
 import Footer from '../../Footer/Footer';
 import { notification } from '../../../utilities/notification';
+import { errorHandler } from '../../../utilities/errorMessege';
 
 function BookingSuccess() {
   const { user } = useSelector((state) => state.auth);
@@ -26,7 +27,7 @@ function BookingSuccess() {
       try {
         let { data } = await api.deleteSlote(state, config);
       } catch (error) {
-        notification.error(error);
+        notification.error(errorHandler(error));
       }
       return null;
     })();

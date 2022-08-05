@@ -16,16 +16,16 @@ import {
   billingRecords,
   getMedicalRecords,
   getPrescription,
-} from '../../features/Doctor/userProfile/userProfileSlice';
+} from '../../features/users/userDetails/userDetailsSlice';
 import { useEffect } from 'react';
 import Footer from '../../components/Footer/Footer';
 
 function UserLayout({ children }) {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(billingRecords());
-    dispatch(getMedicalRecords());
-    dispatch(getPrescription());
+    dispatch(billingRecords(5));
+    dispatch(getMedicalRecords(5));
+    dispatch(getPrescription(5));
   }, []);
 
   const { user } = useSelector((state) => state.auth);
