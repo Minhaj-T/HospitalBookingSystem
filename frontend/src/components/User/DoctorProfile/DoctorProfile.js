@@ -21,6 +21,7 @@ import {
   removeFavorite_doctor,
 } from '../../../features/users/auth/authSlice';
 import { toast } from 'react-toastify';
+import Footer from '../../Footer/Footer';
 
 function DoctorProfile() {
   const { id } = useParams();
@@ -261,101 +262,6 @@ function DoctorProfile() {
                           </ul>
                         </div>
                       </div>
-                      {/* /Experience Details  */}
-
-                      {/* Awards Details  */}
-                      {/* <div className="widget awards-widget">
-                        <h4 className="widget-title">Awards</h4>
-                        <div className="experience-box">
-                          <ul className="experience-list">
-                            <li>
-                              <div className="experience-user">
-                                <div className="before-circle"></div>
-                              </div>
-                              <div className="experience-content">
-                                <div className="timeline-content">
-                                  <p className="exp-year">July 2019</p>
-                                  <h4 className="exp-title">Humanitarian Award</h4>
-                                  <p>
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit. Proin Link ipsum tellus.
-                                    Interdum et malesuada fames ac ante ipsum
-                                    primis in faucibus.
-                                  </p>
-                                </div>
-                              </div>
-                            </li>
-                            <li>
-                              <div className="experience-user">
-                                <div className="before-circle"></div>
-                              </div>
-                              <div className="experience-content">
-                                <div className="timeline-content">
-                                  <p className="exp-year">March 2011</p>
-                                  <h4 className="exp-title">
-                                    Certificate for International Volunteer
-                                    Service
-                                  </h4>
-                                  <p>
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit. Proin Link ipsum tellus.
-                                    Interdum et malesuada fames ac ante ipsum
-                                    primis in faucibus.
-                                  </p>
-                                </div>
-                              </div>
-                            </li>
-                            <li>
-                              <div className="experience-user">
-                                <div className="before-circle"></div>
-                              </div>
-                              <div className="experience-content">
-                                <div className="timeline-content">
-                                  <p className="exp-year">May 2008</p>
-                                  <h4 className="exp-title">
-                                    The Dental Professional of The Year Award
-                                  </h4>
-                                  <p>
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit. Proin Link ipsum tellus.
-                                    Interdum et malesuada fames ac ante ipsum
-                                    primis in faucibus.
-                                  </p>
-                                </div>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div> */}
-                      {/* /Awards Details  */}
-
-                      {/* Services List  */}
-                      {/* <div className="service-list">
-                        <h4>Services</h4>
-                        <ul className="clearfix">
-                          <li>Tooth cleaning </li>
-                          <li>Root Canal Therapy</li>
-                          <li>Implants</li>
-                          <li>Composite Bonding</li>
-                          <li>Fissure Sealants</li>
-                          <li>Surgical Extractions</li>
-                        </ul>
-                      </div> */}
-                      {/* /Services List  */}
-
-                      {/* Specializations List  */}
-                      {/* <div className="service-list">
-                        <h4>Specializations</h4>
-                        <ul className="clearfix">
-                          <li>Children Care</li>
-                          <li>Dental Care</li>
-                          <li>Oral and Maxillofacial Surgery </li>
-                          <li>Orthodontist</li>
-                          <li>Periodontist</li>
-                          <li>Prosthodontics</li>
-                        </ul>
-                      </div> */}
-                      {/* /Specializations List  */}
                     </div>
                   </div>
                 </div>
@@ -457,6 +363,7 @@ function DoctorProfile() {
             </div>
           </div>
         </div>
+      <Footer/>
       </div>
     </>
   );

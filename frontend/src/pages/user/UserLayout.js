@@ -9,25 +9,30 @@ import {
   FaMapMarkerAlt,
   FaBirthdayCake,
   FaBookmark,
-} from 'react-icons/fa'
-import Header from "../../components/User/Header/Header";
+} from 'react-icons/fa';
+import Header from '../../components/User/Header/Header';
 import { useDispatch, useSelector } from 'react-redux';
-import { billingRecords,getMedicalRecords,getPrescription } from '../../features/Doctor/userProfile/userProfileSlice';
+import {
+  billingRecords,
+  getMedicalRecords,
+  getPrescription,
+} from '../../features/Doctor/userProfile/userProfileSlice';
 import { useEffect } from 'react';
+import Footer from '../../components/Footer/Footer';
 
-function UserLayout({children}) {
-  const dispatch= useDispatch();
+function UserLayout({ children }) {
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(billingRecords())
-    dispatch(getMedicalRecords())
-    dispatch(getPrescription())
-  }, [])
-  
+    dispatch(billingRecords());
+    dispatch(getMedicalRecords());
+    dispatch(getPrescription());
+  }, []);
+
   const { user } = useSelector((state) => state.auth);
   return (
     <>
-    <Header/>
-      <div className="content" style={{backgroundColor:'#f5f5f5'}}>
+      <Header />
+      <div className="content" style={{ backgroundColor: '#f5f5f5' }}>
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
@@ -41,10 +46,12 @@ function UserLayout({children}) {
                       <h3>{user.name}</h3>
                       <div className="patient-details">
                         <h5>
-                          <FaBirthdayCake /> {user.age?user.age:'XX'} years old
+                          <FaBirthdayCake /> {user.age ? user.age : 'XX'} years
+                          old
                         </h5>
                         <h5 className="mb-0">
-                          <FaMapMarkerAlt /> {user.city?user.city:'XXXX'}, {user.state?user.state:'XXXX'}
+                          <FaMapMarkerAlt /> {user.city ? user.city : 'XXXX'},{' '}
+                          {user.state ? user.state : 'XXXX'}
                         </h5>
                       </div>
                     </div>
@@ -113,12 +120,11 @@ function UserLayout({children}) {
                 </div>
               </div>
             </div>
-            <div className="col-md-7 col-lg-8 col-xl-9 mt-5" >
-            {children}
-            </div>
+            <div className="col-md-7 col-lg-8 col-xl-9 mt-5">{children}</div>
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

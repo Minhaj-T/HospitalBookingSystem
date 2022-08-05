@@ -107,10 +107,9 @@ function HomePage() {
         <section className="section section-category">
           <div className="container">
             <div className="section-header text-center">
-              <h2>Browse by Specialities</h2>
+              <h2>Consult top doctors online for any health concern</h2>
               <p className="sub-title">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Private online consultations with verified doctors in all specialists
               </p>
             </div>
             <div className="row">
@@ -136,7 +135,7 @@ function HomePage() {
 			<div class="container-fluid">
 				<div class="section-header text-center pt-4">
 					<h2>Book Our Best Doctor</h2>
-					<p class="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+					<p class="sub-title">Book doctor appointment online instantly with top specialists.</p>
 				</div>
 				<div class="row">
 					<div class="col-lg-12">

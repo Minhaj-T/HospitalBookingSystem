@@ -1,35 +1,39 @@
 import './bookingsuccess.css';
-import * as api from '../../../api/index'
+import * as api from '../../../api/index';
 import React, { useEffect } from 'react';
 import { FaCheck } from 'react-icons/fa';
-import {Link,useLocation} from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import { useSelector } from 'react-redux';
+import Footer from '../../Footer/Footer';
 
 function BookingSuccess() {
   const { user } = useSelector((state) => state.auth);
 
   //create a tocken
-  const {token}=user?user:"";
+  const { token } = user ? user : '';
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
 
-  const { state } = useLocation(); 
- 
-    useEffect(() => {
-      (async () => {
-          let {data} = await api.deleteSlote(state,config)
-          return null;
-      })();
-  }, []) 
-  
+  const { state } = useLocation();
+
+  useEffect(() => {
+    (async () => {
+      let { data } = await api.deleteSlote(state, config);
+      return null;
+    })();
+  }, []);
+
   return (
     <>
-    <Header/>
-      <div className="content success-page-cont" style={{marginTop:'110px',backgroundColor:'#f5f5f5'}}>
+      <Header />
+      <div
+        className="content success-page-cont"
+        style={{ marginTop: '110px', backgroundColor: '#f5f5f5' }}
+      >
         <div className="container-fluid">
           <div className="row justify-content-center">
             <div className="col-lg-6">
@@ -44,9 +48,13 @@ function BookingSuccess() {
                     <h3>Appointment booked Successfully!</h3>
                     <p>
                       Appointment booked with <strong>Dr. {state?.name}</strong>
-                      <br /> on <strong>{state?.day}{" "} {state?.slot}</strong>
+                      <br /> on{' '}
+                      <strong>
+                        {state?.day} {state?.slot}
+                      </strong>
                     </p>
-                    <Link to={""} 
+                    <Link
+                      to={'/'}
                       href="invoice-view.html"
                       className="btn btn-primary view-inv-btn"
                     >
@@ -60,6 +68,7 @@ function BookingSuccess() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

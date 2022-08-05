@@ -1,29 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import './checkout.css';
-import { Link, useParams, useLocation,useNavigate } from 'react-router-dom';
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import * as api from '../../../api/index';
-import * as api1 from '../../../api/messenger'
+import * as api1 from '../../../api/messenger';
 import Spinner from '../Spinner/Spinner';
 import { FaCreditCard, FaMapMarkerAlt } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import {
-  createRazorOrder,
-  verifyAndPay,
-} from "../../../api/payment";
-import {notification} from '../../../utilities/notification'
-import {calculateTime} from '../../../utilities/DateItration' 
+import { createRazorOrder, verifyAndPay } from '../../../api/payment';
+import { notification } from '../../../utilities/notification';
+import { calculateTime } from '../../../utilities/DateItration';
+import Footer from '../../Footer/Footer';
 
 function Checkout() {
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const { id } = useParams();
   const { state } = useLocation();
   const { user } = useSelector((state) => state.auth);
   const [Doctor, setDoctor] = useState({ loading: false, done: false });
   const { Id, Day, Date, Slot } = state;
-  const [fullAmount, setfullAmount] = useState("")
-  const [start,end] = Slot.split('-');
- 
+  const [fullAmount, setfullAmount] = useState('');
+  const [start, end] = Slot.split('-');
+
   //create a tocken
   const config = {
     headers: {
@@ -33,7 +31,7 @@ function Checkout() {
 
   useEffect(() => {
     !Doctor.done && getDoctor(id);
-    setfullAmount(calculateTime(start, end))
+    setfullAmount(calculateTime(start, end));
   }, []);
 
   const getDoctor = async (id) => {
@@ -50,64 +48,63 @@ function Checkout() {
   };
 
   //statrt chat with doctor
-  const ChatWithDoctor=async() => {
-    const data={
-          senderId:user._id,
-          receiverId:Doctor._id
-        }
-        let Data = await api1.newConversation(data)
-      console.log(",da=",Data)
-        return null;
-    }
-
-
-
+  const ChatWithDoctor = async () => {
+    const data = {
+      senderId: user._id,
+      receiverId: Doctor._id,
+    };
+    let Data = await api1.newConversation(data);
+    console.log(',da=', Data);
+    return null;
+  };
 
   function loadRazorpay(e) {
     e.preventDefault();
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     script.onerror = () => {
-      alert("Razorpay SDK failed to load. Are you online?");
+      alert('Razorpay SDK failed to load. Are you online?');
     };
 
     script.onload = async () => {
       try {
         setDoctor((prev) => ({ ...prev, loading: true }));
         const result = await createRazorOrder({
-          amount: fullAmount *100,
+          amount: fullAmount * 100,
         });
 
-
-        const { amount,  id:order_id, currency, key } = result.data;
+        const { amount, id: order_id, currency, key } = result.data;
 
         const options = {
           key: key,
           amount: amount.toString(),
           currency: currency,
-          name: "Carewell",
-          description: "Payment for Campaign",
+          name: 'Carewell',
+          description: 'Payment for Campaign',
           order_id: order_id,
           handler: async function (response) {
-            const { data } = await verifyAndPay({
-              ...response,
-              amount: amount,
-              doctorId:id,
-              slotDetails:state
-            },config);
+            const { data } = await verifyAndPay(
+              {
+                ...response,
+                amount: amount,
+                doctorId: id,
+                slotDetails: state,
+              },
+              config
+            );
 
             if (data.status) {
-              notification.success(data.message); 
-              navigate('/user/booking-success',
-              {state:{
-                name:Doctor?.name,
-                doctorId:Doctor._id,
-                day:Day,
-                slot:Slot,
-                id:Id
-              }}
-              )
-             ChatWithDoctor();
+              notification.success(data.message);
+              navigate('/user/booking-success', {
+                state: {
+                  name: Doctor?.name,
+                  doctorId: Doctor._id,
+                  day: Day,
+                  slot: Slot,
+                  id: Id,
+                },
+              });
+              ChatWithDoctor();
             }
           },
           modal: {
@@ -125,7 +122,7 @@ function Checkout() {
             address: user?.email,
           },
           theme: {
-            color: "#2a1961",
+            color: '#2a1961',
           },
         };
         setDoctor((prev) => ({ ...prev, loading: false }));
@@ -138,18 +135,16 @@ function Checkout() {
     document.body.appendChild(script);
   }
 
-
-
   // Loading page
   if (Doctor.loading) {
     return <Spinner />;
   }
-  console.log('ckeckout',Day);
+  console.log('ckeckout', Day);
   return (
     <>
       <Header />
       {/* <!-- Page Content --> */}
-      <div className="content" style={{backgroundColor:'#f5f5f5'}}>
+      <div className="content" style={{ backgroundColor: '#f5f5f5' }}>
         <div className="container mt-5">
           <div className="row">
             <div className="col-md-7 col-lg-8">
@@ -217,8 +212,10 @@ function Checkout() {
                         <label className="payment-radio paypal-option">
                           {/* <input type="radio" name="radio" /> */}
                         </label>
-                        <FaCreditCard style={{marginRight:8}}/>
-                        <span style={{color: '#20c0f3',fontWeight: 'bold'}}>Razorpay only</span>
+                        <FaCreditCard style={{ marginRight: 8 }} />
+                        <span style={{ color: '#20c0f3', fontWeight: 'bold' }}>
+                          Razorpay only
+                        </span>
                       </div>
                       {/* <!-- /Paypal Payment --> */}
 
@@ -272,7 +269,7 @@ function Checkout() {
                       </h4>
                       <div className="clinic-details">
                         <p className="doc-location">
-                          <FaMapMarkerAlt style={{marginRight:4}}/>
+                          <FaMapMarkerAlt style={{ marginRight: 4 }} />
                           {Doctor?.state},{Doctor?.country}
                         </p>
                       </div>
@@ -287,8 +284,7 @@ function Checkout() {
                           Date <span>{Date ? Date : 'yyy-mm-dd'}</span>
                         </li>
                         <li>
-                          Time{' '}
-                          <span>{Slot ? Slot : '00:00 AM-00:00 PM'}</span>
+                          Time <span>{Slot ? Slot : '00:00 AM-00:00 PM'}</span>
                         </li>
                       </ul>
                       <ul className="booking-fee">
@@ -317,6 +313,7 @@ function Checkout() {
         </div>
       </div>
       {/* <!-- /Page Content --> */}
+      <Footer />
     </>
   );
 }

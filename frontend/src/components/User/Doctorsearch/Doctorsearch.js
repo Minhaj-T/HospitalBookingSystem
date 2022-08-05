@@ -171,16 +171,6 @@ function Doctorsearch() {
                           /> */}
                               {row.specialization}
                             </h5>
-                            {/* <div className="rating">
-                          <i className="fas fa-star filled"></i>
-                          <i className="fas fa-star filled"></i>
-                          <i className="fas fa-star filled"></i>
-                          <i className="fas fa-star filled"></i>
-                          <i className="fas fa-star"></i>
-                          <span className="d-inline-block average-rating">
-                            (17)
-                          </span>
-                        </div> */}
                             <div className="clinic-details">
                               <p className="doc-location">
                                 <FaMapMarkerAlt />

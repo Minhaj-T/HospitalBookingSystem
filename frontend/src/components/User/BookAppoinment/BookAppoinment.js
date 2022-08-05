@@ -7,6 +7,7 @@ import * as api from '../../../api/index';
 import Spinner from '../Spinner/Spinner';
 import { iterateDate } from '../../../utilities/DateItration';
 import moment from 'moment';
+import Footer from '../../Footer/Footer';
 
 function BookAppoinment() {
   const [Date, setDate] = useState([]);
@@ -338,6 +339,7 @@ function BookAppoinment() {
         </div>
       </div>
       {/* /Page Content  */}
+      <Footer />
     </>
   );
 }
