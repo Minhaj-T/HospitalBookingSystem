@@ -58,12 +58,9 @@ export default function CustomizedDialogs1({ id }) {
   const Result = billing?.filter((row) => row?._id === id);
 //   //calculate the total amount
 
-// var val = Result[0]?.bill.reduce(function(previousValue, currentValue) {
-//   return {
-//     total: parseInt(previousValue.amount) + parseInt(currentValue.amount),
-//   }
-// });
+const Total = Result[0]?.bill.reduce((a,b)=>({Total:a.Total+parseInt(b.amount)}),{Total:0}) 
 
+ 
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -142,7 +139,7 @@ export default function CustomizedDialogs1({ id }) {
                 className="span8 well invoice-thank"
                 style={{ padding: '10px' }}
               >
-                <h5>Thank You!</h5>
+                <h5 className="m-auto">Total = {Total?.Total}</h5>
               </div>
             </div>
           </div>

@@ -2,50 +2,64 @@ import './userdashboard.css';
 import mm from '../../../images/myImage.jpg';
 import { FaPrint, FaEye } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import heart_rate from '../../../images/pt-dashboard-01.png'
-import body_temp from '../../../images/pt-dashboard-02.png'
-import glucose_level from '../../../images/pt-dashboard-03.png'
-import blood_pressure from '../../../images/pt-dashboard-04.png'
+import heart_rate from '../../../images/pt-dashboard-01.png';
+import body_temp from '../../../images/pt-dashboard-02.png';
+import glucose_level from '../../../images/pt-dashboard-03.png';
+import blood_pressure from '../../../images/pt-dashboard-04.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import * as api from '../../../api/index';
 import { errorHandler } from '../../../utilities/errorMessege';
-import {notification} from '../../../utilities/notification'
+import { notification } from '../../../utilities/notification';
 import Spinner from '../Spinner/Spinner';
 import moment from 'moment';
-import { reset } from '../../../features/Doctor/userProfile/userProfileSlice';  
+import { reset } from '../../../features/Doctor/userProfile/userProfileSlice';
 import CustomizedDialogs from '../../Doctor/UserProfile/PrescriptionModal';
-
+import CustomizedDialogs1 from '../../Doctor/UserProfile/BillingModal';
 
 function UserDashBoard() {
-  const dispatch= useDispatch();
-  const [Fulldata, setFulldata] = useState({loading:false,done:false})
-  const { user } = useSelector((state) => state.auth);  
-  
-  const {prescription,medicalRecords,billing,isLoading,isError,isSuccess,message,
+  const dispatch = useDispatch();
+  const [Fulldata, setFulldata] = useState({ loading: false, done: false });
+  const { user } = useSelector((state) => state.auth);
+
+  const {
+    prescription,
+    medicalRecords,
+    billing,
+    isLoading,
+    isError,
+    isSuccess,
+    message,
   } = useSelector((state) => state.userprofile);
 
   useEffect(() => {
-    if (isError) {   
+    if (isError) {
       notification.error(message);
     }
     dispatch(reset());
-  }, [prescription,medicalRecords,billing,isLoading,isError,isSuccess,message,dispatch]);
+  }, [
+    prescription,
+    medicalRecords,
+    billing,
+    isLoading,
+    isError,
+    isSuccess,
+    message,
+    dispatch,
+  ]);
 
   const user_prescription = prescription?.filter(
     (row) => row?.userId === user?._id
-    );
+  );
 
   const user_medicalRecords = medicalRecords?.filter(
-      (row) => row?.userId === user?._id
-    );
+    (row) => row?.userId === user?._id
+  );
 
-  const user_billing = billing?.filter(
-      (row) => row?.userId === user?._id
-    );
+  const user_billing = billing?.filter((row) => row?.userId === user?._id);
 
   //create a tocken
-  const {token}=user?user:"";
+  const { token } = user ? user : '';
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -53,30 +67,30 @@ function UserDashBoard() {
   };
 
   useEffect(() => {
-    !Fulldata.done && fetchAllAppointments()
-  }, [])
-const fetchAllAppointments= async()=>{
-  setFulldata((prev)=>({ ...prev, loading: true}))
-  try {
-    const {data}=await api.getAllappointment(config);
-    if (data?.data) {
-    setFulldata((prev)=>({
-       ...prev,
-       ...data, 
-       loading: false, 
-       done: true}));
+    !Fulldata.done && fetchAllAppointments();
+  }, []);
+  const fetchAllAppointments = async () => {
+    setFulldata((prev) => ({ ...prev, loading: true }));
+    try {
+      const { data } = await api.getAllappointment(config);
+      if (data?.data) {
+        setFulldata((prev) => ({
+          ...prev,
+          ...data,
+          loading: false,
+          done: true,
+        }));
+      }
+    } catch (error) {
+      return notification.error(errorHandler(error));
     }
-  } catch (error) {
-    return notification.error(errorHandler(error))
+  };
+
+  // Loading page
+  if (Fulldata.loading || isLoading) {
+    return <Spinner />;
   }
-}
 
-
-// Loading page
-if (Fulldata.loading||isLoading) {
-  return <Spinner />;
-}
-  
   return (
     <>
       <div className="row">
@@ -84,16 +98,10 @@ if (Fulldata.loading||isLoading) {
           <div className="card">
             <div className="card-body text-center">
               <div className="mb-3">
-                <img
-                  src={heart_rate} 
-                  alt=""
-                  width="55"
-                />
+                <img src={heart_rate} alt="" width="55" />
               </div>
               <h5>Heart Rate</h5>
-              <h6>
-                {user.heart_rate}
-              </h6>
+              <h6>{user.heart_rate}</h6>
             </div>
           </div>
         </div>
@@ -101,16 +109,10 @@ if (Fulldata.loading||isLoading) {
           <div className="card">
             <div className="card-body text-center">
               <div className="mb-3">
-                <img
-                  src={body_temp}
-                  alt=""
-                  width="55"
-                />
+                <img src={body_temp} alt="" width="55" />
               </div>
               <h5>Body Temperature</h5>
-              <h6>
-                18 C
-              </h6>
+              <h6>18 C</h6>
             </div>
           </div>
         </div>
@@ -118,11 +120,7 @@ if (Fulldata.loading||isLoading) {
           <div className="card">
             <div className="card-body text-center">
               <div className="mb-3">
-                <img
-                  src={glucose_level}
-                  alt=""
-                  width="55"
-                />
+                <img src={glucose_level} alt="" width="55" />
               </div>
               <h5>Glucose Level</h5>
               <h6>{user.glucose}</h6>
@@ -133,16 +131,10 @@ if (Fulldata.loading||isLoading) {
           <div className="card">
             <div className="card-body text-center">
               <div className="mb-3">
-                <img
-                  src={blood_pressure}
-                  alt=""
-                  width="55"
-                />
+                <img src={blood_pressure} alt="" width="55" />
               </div>
               <h5>Blood Pressure</h5>
-              <h6>
-                {user.bp}
-              </h6>
+              <h6>{user.bp}</h6>
             </div>
           </div>
         </div>
@@ -210,74 +202,80 @@ if (Fulldata.loading||isLoading) {
                           <th></th>
                         </tr>
                       </thead>
-                      {Fulldata?.data && 
-                       Fulldata?.data.map((row)=> (
-                      <tbody>
-                        <tr>
-                          <td>
-                            <h2 className="table-avatar">
-                              <Link to={''} className="avatar avatar-sm mr-2">
-                                <img
-                                  className="avatar-img rounded-circle"
-                                  src={row['doctorId']?.profile_image}
-                                  alt="User"
-                                />
-                              </Link>
-                              <Link to={''} style={{paddingLeft: '5px'}}>
-                                Dr.{row['doctorId']?.name}{" "}{row['doctorId']?.lastname} <span>{row['doctorId']?.specialization}</span>
-                              </Link>
-                            </h2>
-                          </td>
-                          <td>
-                          {row?.slotDetails['Date']}
-                            <span className="d-block text-info">
-                            {row?.slotDetails['Slot']}
-                            </span>
-                          </td>
-                          <td>{moment().format('YYYY-M-D')}</td>
-                          <td>₹{row['amount']}</td>
-                          <td>
-                            {row['status']==='true' &&
-                            <span className="badge badge-pill bg-success-light">
-                              Confirm
-                            </span>
-                            }
-                            {row['status']==='false' &&
-                            <span className="badge badge-pill bg-danger-light">
-                              Rejected
-                            </span>
-                            }
-                            {row['status']==='pending' &&
-                            <span className="badge badge-pill bg-warning-light">
-                              Pending
-                            </span>
-                            }
-                            {row['status']==='complete' &&
-                            <span className="badge badge-pill bg-primary-light">
-                              Completed
-                            </span>
-                            }
-                          </td>
-                          <td className="text-right">
-                            <div className="table-action">
-                              <Link
-                                to={''}
-                                className="btn btn-sm bg-primary-light"
-                              >
-                                <FaPrint /> Print
-                              </Link>
-                              <Link
-                                to={''}
-                                className="btn btn-sm bg-info-light"
-                              >
-                                <FaEye /> View
-                              </Link>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-
-                       ))}
+                      {Fulldata?.data &&
+                        Fulldata?.data.map((row) => (
+                          <tbody>
+                            <tr>
+                              <td>
+                                <h2 className="table-avatar">
+                                  <Link
+                                    to={''}
+                                    className="avatar avatar-sm mr-2"
+                                  >
+                                    <img
+                                      className="avatar-img rounded-circle"
+                                      src={row['doctorId']?.profile_image}
+                                      alt="User"
+                                    />
+                                  </Link>
+                                  <Link to={''} style={{ paddingLeft: '5px' }}>
+                                    Dr.{row['doctorId']?.name}{' '}
+                                    {row['doctorId']?.lastname}{' '}
+                                    <span>
+                                      {row['doctorId']?.specialization}
+                                    </span>
+                                  </Link>
+                                </h2>
+                              </td>
+                              <td>
+                                {row?.slotDetails['Date']}
+                                <span className="d-block text-info">
+                                  {row?.slotDetails['Slot']}
+                                </span>
+                              </td>
+                              <td>{moment().format('YYYY-M-D')}</td>
+                              <td>₹{row['amount']}</td>
+                              <td>
+                                {row['status'] === 'true' && (
+                                  <span className="badge badge-pill bg-success-light">
+                                    Confirm
+                                  </span>
+                                )}
+                                {row['status'] === 'false' && (
+                                  <span className="badge badge-pill bg-danger-light">
+                                    Rejected
+                                  </span>
+                                )}
+                                {row['status'] === 'pending' && (
+                                  <span className="badge badge-pill bg-warning-light">
+                                    Pending
+                                  </span>
+                                )}
+                                {row['status'] === 'complete' && (
+                                  <span className="badge badge-pill bg-primary-light">
+                                    Completed
+                                  </span>
+                                )}
+                              </td>
+                              <td className="text-right">
+                                <div className="table-action">
+                                  <Link
+                                    to={''}
+                                    className="btn btn-sm bg-primary-light"
+                                  >
+                                    <FaPrint /> Print
+                                  </Link>
+                                  <Link
+                                    to={''}
+                                    className="btn btn-sm bg-info-light"
+                                  >
+                                    <FaEye /> View
+                                  </Link>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        ))}
                     </table>
                   </div>
                 </div>
@@ -300,35 +298,38 @@ if (Fulldata.loading||isLoading) {
                         </tr>
                       </thead>
                       <tbody>
-                      {user_prescription &&
-                              user_prescription.map((row) => (
-                        <tr>
-                          <td>{moment(row?.date).format('LL')}</td>
-                          <td>{row['_id'].substr(0, 10)}</td>
-                          <td>
-                            <h2 className="table-avatar">
-                              <Link to={''} className="avatar avatar-sm mr-2">
-                                <img
-                                  className="avatar-img rounded-circle"
-                                  src={row?.doctorId['profile_image']}
-                                  alt="User"
-                                />
-                              </Link>
-                              <Link to={''} style={{paddingLeft: '5px'}}>
-                              Dr {row?.doctorId['name']}{' '}
-                                        <span>
-                                          {row?.doctorId['specialization']}
-                                        </span>
-                              </Link>
-                            </h2>
-                          </td>
-                          <td className="text-right">
-                            <div className="table-action">
-                            <CustomizedDialogs id={row._id} />
-                            </div>
-                          </td>
-                        </tr>
-                        ))}
+                        {user_prescription &&
+                          user_prescription.map((row) => (
+                            <tr>
+                              <td>{moment(row?.date).format('LL')}</td>
+                              <td>{row['_id'].substr(0, 10)}</td>
+                              <td>
+                                <h2 className="table-avatar">
+                                  <Link
+                                    to={''}
+                                    className="avatar avatar-sm mr-2"
+                                  >
+                                    <img
+                                      className="avatar-img rounded-circle"
+                                      src={row?.doctorId['profile_image']}
+                                      alt="User"
+                                    />
+                                  </Link>
+                                  <Link to={''} style={{ paddingLeft: '5px' }}>
+                                    Dr {row?.doctorId['name']}{' '}
+                                    <span>
+                                      {row?.doctorId['specialization']}
+                                    </span>
+                                  </Link>
+                                </h2>
+                              </td>
+                              <td className="text-right">
+                                <div className="table-action">
+                                  <CustomizedDialogs id={row._id} />
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
                       </tbody>
                     </table>
                   </div>
@@ -354,53 +355,48 @@ if (Fulldata.loading||isLoading) {
                         </tr>
                       </thead>
                       <tbody>
-                      {user_medicalRecords &&
-                              user_medicalRecords.map((row) => (
-                                <tr>
-                                  <td>
-                                    <Link to={''}>
-                                      #{row['_id'].substr(0, 10)}
-                                    </Link>
-                                  </td>
-                                  <td>{moment(row?.date).format('LL')}</td>
-                                  <td>{row['description']}</td>
-                                  <td>
-                                    <h2 className="table-avatar">
-                                      <Link
-                                        to={''}
-                                        className="avatar avatar-sm mr-2"
-                                      >
-                                        <img
-                                          className="avatar-img rounded-circle"
-                                          src={row?.doctorId['profile_image']}
-                                          alt="User"
-                                        />
-                                      </Link>
-                                      <Link
-                                        to={''}
-                                        style={{ paddingLeft: '10px' }}
-                                      >
-                                        Dr {row?.doctorId['name']}
-                                        <span>
-                                          {row?.doctorId['specialization']}
-                                        </span>
-                                      </Link>
-                                    </h2>
-                                  </td>
-                                  <td className="text-right">
-                                    <div className="main">
-                                      <a
-                                        className="btn btn-sm bg-info-light"
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        href={row['document']}
-                                      >
-                                        <FaEye /> View
-                                      </a>
-                                    </div>
-                                  </td>
-                                </tr>
-                              ))}
+                        {user_medicalRecords &&
+                          user_medicalRecords.map((row) => (
+                            <tr>
+                              <td>
+                                <Link to={''}>#{row['_id'].substr(0, 10)}</Link>
+                              </td>
+                              <td>{moment(row?.date).format('LL')}</td>
+                              <td>{row['description']}</td>
+                              <td>
+                                <h2 className="table-avatar">
+                                  <Link
+                                    to={''}
+                                    className="avatar avatar-sm mr-2"
+                                  >
+                                    <img
+                                      className="avatar-img rounded-circle"
+                                      src={row?.doctorId['profile_image']}
+                                      alt="User"
+                                    />
+                                  </Link>
+                                  <Link to={''} style={{ paddingLeft: '10px' }}>
+                                    Dr {row?.doctorId['name']}
+                                    <span>
+                                      {row?.doctorId['specialization']}
+                                    </span>
+                                  </Link>
+                                </h2>
+                              </td>
+                              <td className="text-right">
+                                <div className="main">
+                                  <a
+                                    className="btn btn-sm bg-info-light"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    href={row['document']}
+                                  >
+                                    <FaEye /> View
+                                  </a>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
                       </tbody>
                     </table>
                   </div>
@@ -425,8 +421,8 @@ if (Fulldata.loading||isLoading) {
                         </tr>
                       </thead>
                       <tbody>
-                      {user_billing&&
-                              user_billing.map((row) => (
+                        {user_billing &&
+                          user_billing.map((row) => (
                             <tr>
                               <td>
                                 <Link to={''}>#{row['_id'].substr(0, 10)}</Link>
@@ -444,7 +440,10 @@ if (Fulldata.loading||isLoading) {
                                     />
                                   </Link>
                                   <Link to={''} style={{ paddingLeft: '10px' }}>
-                                 Dr {row?.doctorId['name']} <span>{row?.doctorId['specialization']}</span>
+                                    Dr {row?.doctorId['name']}{' '}
+                                    <span>
+                                      {row?.doctorId['specialization']}
+                                    </span>
                                   </Link>
                                 </h2>
                               </td>
@@ -452,16 +451,11 @@ if (Fulldata.loading||isLoading) {
                               <td>{moment(row?.date).format('LL')}</td>
                               <td className="text-right">
                                 <div className="main">
-                                  <Link
-                                    to={''}
-                                    className="btn btn-sm bg-info-light"
-                                  >
-                                    <FaEye /> View
-                                  </Link>
+                                  <CustomizedDialogs1 id={row._id} />
                                 </div>
                               </td>
                             </tr>
-                           ))}
+                          ))}
                       </tbody>
                     </table>
                   </div>

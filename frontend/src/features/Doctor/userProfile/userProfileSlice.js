@@ -17,13 +17,13 @@ export const getPrescription = createAsyncThunk(
     'userProfile/getPrescription',
     async (_, thunkAPI) => {
       try {
-        const token = thunkAPI.getState().doctorAuth.doctor.token || thunkAPI.getState().auth.user.token;
-        return await userProfileService.GetPrescription( token)
+        const token = thunkAPI.getState().doctorAuth.doctor.token;
+        return await userProfileService.GetPrescription(token);
       } catch (error) {
         return thunkAPI.rejectWithValue(errorHandler(error));
       }
     }
-  );
+  );  
 
   //add Prescription
 export const addPrescription = createAsyncThunk(
@@ -44,7 +44,7 @@ export const getMedicalRecords = createAsyncThunk(
     'userProfile/getMedicalRecords',
     async (_, thunkAPI) => {
       try {
-        const token = thunkAPI.getState().doctorAuth.doctor.token || thunkAPI.getState().auth.user.token;
+        const token = thunkAPI.getState().doctorAuth.doctor.token;
         return await userProfileService.GetMedicalRecords(token);
       } catch (error) {
         return thunkAPI.rejectWithValue(errorHandler(error));
@@ -70,8 +70,8 @@ export const billingRecords = createAsyncThunk(
   'userProfile/billingRecords',
   async (_, thunkAPI) => {
     try {
-       const token = thunkAPI.getState().doctorAuth.doctor.token || thunkAPI.getState().auth.user.token;
-      return await userProfileService.GetBillingRecords( token);
+      const token = thunkAPI.getState().doctorAuth.doctor.token;
+      return await userProfileService.GetBillingRecords(token);
     } catch (error) {
       return thunkAPI.rejectWithValue(errorHandler(error));
     }
@@ -150,7 +150,7 @@ export const billingRecords = createAsyncThunk(
             state.isLoading = true;
           },
           [addPrescription.fulfilled]: (state, action) => {
-            state.prescription.push(...action.payload.Data);
+            state.prescription.unshift(...action.payload.Data);
             state.isLoading = false;
             state.isSuccess = true;
           },
