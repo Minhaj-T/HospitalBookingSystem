@@ -64,7 +64,7 @@ export default function CustomizedDialogs1({ id }) {
 //   }
 // });
 
-console.log("res.........",val);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
