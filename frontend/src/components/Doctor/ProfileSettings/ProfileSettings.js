@@ -9,6 +9,7 @@ import {
 import { toast } from 'react-toastify';
 import Spinner from '../../User/Spinner/Spinner';
 import { UploadImage } from '../../../utilities/cloudinaryImageUpload';
+import { notification } from '../../../utilities/notification';
 
 function ProfileSettings() {
   const dispatch = useDispatch();
@@ -79,7 +80,7 @@ function ProfileSettings() {
       setPic(data.secure_url.toString());
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      notification.error(error);
     }
   };
 

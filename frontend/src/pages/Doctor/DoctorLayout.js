@@ -8,7 +8,6 @@ import {
   FaCalendarCheck,
   FaUserInjured,
   FaHourglassStart,
-  FaFileInvoice,
   FaComments,
   FaUserCog,
   FaLock,
@@ -16,6 +15,7 @@ import {
 } from 'react-icons/fa';
 import { useEffect } from 'react';
 import Header from '../../components/Doctor/Header/Header'
+import Footer from '../../components/Footer/Footer';
 
 function DoctorLayout({ children }) {
   const dispatch = useDispatch();
@@ -98,15 +98,6 @@ function DoctorLayout({ children }) {
                         </NavLink>
                       </li>
                       <li className="main">
-                        <NavLink to={'/inv'}>
-                          <span style={{ paddingRight: '5px' }}>
-                            {' '}
-                            <FaFileInvoice />
-                          </span>
-                          <span>Invoices</span>
-                        </NavLink>
-                      </li>
-                      <li className="main">
                         <NavLink to={'/doctor/messenger'}>
                           <span style={{ paddingRight: '5px' }}>
                             {' '}
@@ -152,6 +143,7 @@ function DoctorLayout({ children }) {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

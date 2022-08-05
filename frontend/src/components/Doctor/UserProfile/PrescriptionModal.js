@@ -9,13 +9,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa';
-import Mainlogo from "../../../images/logo.png";
+import Mainlogo from '../../../images/logo.png';
 import moment from 'moment';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
-    
   },
   '& .MuiDialogActions-root': {
     padding: theme.spacing(1),
@@ -51,12 +50,10 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function CustomizedDialogs({id}) {
-    const {
-        prescription,
-      } = useSelector((state) => state.userprofile);
-      
-      const Result = prescription?.filter((row) => row?._id === id);
+export default function CustomizedDialogs({ id }) {
+  const { prescription } = useSelector((state) => state.userprofile);
+
+  const Result = prescription?.filter((row) => row?._id === id);
 
   const [open, setOpen] = React.useState(false);
 
@@ -69,7 +66,7 @@ export default function CustomizedDialogs({id}) {
 
   return (
     <div>
-        <Link
+      <Link
         to={''}
         className="btn btn-sm bg-info-light"
         onClick={handleClickOpen}
@@ -83,40 +80,44 @@ export default function CustomizedDialogs({id}) {
         fullWidth={true}
         maxWidth="md"
       >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Prescription
+        <BootstrapDialogTitle
+          id="customized-dialog-title"
+          onClose={handleClose}
+        >
+          Prescription
         </BootstrapDialogTitle>
         <DialogContent dividers>
-        <div className="container">
-                <div className="row">
-                  <div className="span4">
-                    <img
-                      src={Mainlogo}
-                      className="img-rounded logo"
-                      style={{width:'7rem',paddingBottom:'5px'}}
-                      alt='doctor'
-                    />
-                    <address>
-                      <strong>{Result[0].doctorId?.name}</strong>
-                      <br />
-                      {Result[0].doctorId?.specialization}
-                      <br />
-                       {moment(Result[0].date).format('LL')}
-                    </address>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="span8 well invoice-body">
-                    <table className="table table-bordered">
-                      <thead>
-                        <tr>
-                          <th>name</th>
-                          <th>Quantity</th>
-                          <th>Days</th>
-                          <th>Time</th>
-                        </tr>
-                      </thead>
-                      {Result&&Result[0]?.prescription.map((row)=>(
+          <div className="container">
+            <div className="row">
+              <div className="span4">
+                <img
+                  src={Mainlogo}
+                  className="img-rounded logo"
+                  style={{ width: '7rem', paddingBottom: '5px' }}
+                  alt="doctor"
+                />
+                <address>
+                  <strong>{Result[0].doctorId?.name}</strong>
+                  <br />
+                  {Result[0].doctorId?.specialization}
+                  <br />
+                  {moment(Result[0].date).format('LL')}
+                </address>
+              </div>
+            </div>
+            <div className="row">
+              <div className="span8 well invoice-body">
+                <table className="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>name</th>
+                      <th>Quantity</th>
+                      <th>Days</th>
+                      <th>Time</th>
+                    </tr>
+                  </thead>
+                  {Result &&
+                    Result[0]?.prescription.map((row) => (
                       <tbody>
                         <tr>
                           <td>{row.name}</td>
@@ -125,19 +126,22 @@ export default function CustomizedDialogs({id}) {
                           <td>{row.time}</td>
                         </tr>
                       </tbody>
-                        ))}
-                        <tr>
-                          <td colspan="4"></td>
-                        </tr>
-                    </table>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="span8 well invoice-thank" style={{padding:'10px'}}>
-                    <h5>Thank You!</h5>
-                  </div>
-                </div>
+                    ))}
+                  <tr>
+                    <td colspan="4"></td>
+                  </tr>
+                </table>
               </div>
+            </div>
+            <div className="row">
+              <div
+                className="span8 well invoice-thank"
+                style={{ padding: '10px' }}
+              >
+                <h5>Thank You!</h5>
+              </div>
+            </div>
+          </div>
         </DialogContent>
       </BootstrapDialog>
     </div>

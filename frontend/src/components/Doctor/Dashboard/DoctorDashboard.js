@@ -1,7 +1,7 @@
 import './doctorDashboard.css';
 import { Link } from 'react-router-dom';
 import { FaEye, FaCheck, FaTimes, FaHandshake } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { notification } from '../../../utilities/notification';
 import { reset } from '../../../features/Doctor/appointments/appointmentSlice';

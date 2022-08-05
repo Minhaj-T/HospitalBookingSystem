@@ -5,7 +5,10 @@ import classname from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../../User/Spinner/Spinner';
-import { editDoctor_Password,reset } from '../../../features/Doctor/auth/doctorauthSlice';
+import {
+  editDoctor_Password,
+  reset,
+} from '../../../features/Doctor/auth/doctorauthSlice';
 
 function Changepassword() {
   const navigate = useNavigate();
@@ -31,7 +34,6 @@ function Changepassword() {
       toast.error(message);
     }
     if (isSuccess) {
-      // dispatch(logout());
       navigate('/login');
     }
     dispatch(reset());

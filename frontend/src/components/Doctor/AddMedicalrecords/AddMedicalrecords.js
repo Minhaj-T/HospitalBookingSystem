@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UploadDocument } from '../../../utilities/cloudnarydocumentUpload';
 import { toast } from 'react-toastify';
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { notification } from '../../../utilities/notification';
 import { addMedicalRecords } from '../../../features/Doctor/userProfile/userProfileSlice';
-
 
 function AddMedicalrecords({ userId, doctor1 }) {
   const dispatch = useDispatch();
@@ -33,9 +32,9 @@ function AddMedicalrecords({ userId, doctor1 }) {
       doctorId: doctor1['_id'],
       userId,
     };
-    dispatch(addMedicalRecords(Data))
+    dispatch(addMedicalRecords(Data));
     setFormData({ date: '', description: '' });
-    notification.success("Document uploaded successfully..!");
+    notification.success('Document uploaded successfully..!');
   };
 
   //dump the document into cloudinary
@@ -59,7 +58,6 @@ function AddMedicalrecords({ userId, doctor1 }) {
       toast.update(2, { render: error, type: 'error', isLoading: false });
     }
   };
-
 
   return (
     <>

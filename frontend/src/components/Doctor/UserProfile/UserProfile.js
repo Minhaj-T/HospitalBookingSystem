@@ -15,6 +15,7 @@ import moment from 'moment';
 import CustomizedDialogs from './PrescriptionModal';
 import Spinner from '../../User/Spinner/Spinner';
 import CustomizedDialogs1 from './BillingModal';
+import Footer from '../../Footer/Footer';
 
 function UserProfile() {
   const dispatch = useDispatch();
@@ -211,12 +212,6 @@ function UserProfile() {
                                   </td>
                                   <td className="text-right">
                                     <div className="main">
-                                      {/* <Link
-                                    to={''}
-                                    className="btn btn-sm bg-primary-light"
-                                  >
-                                    <FaPrint /> Print
-                                  </Link> */}
                                       <CustomizedDialogs id={row._id} />
                                     </div>
                                   </td>
@@ -329,38 +324,46 @@ function UserProfile() {
                             </tr>
                           </thead>
                           <tbody>
-                          {user_billing&&
+                            {user_billing &&
                               user_billing.map((row) => (
-                            <tr>
-                              <td>
-                                <Link to={''}>#{row['_id'].substr(0, 10)}</Link>
-                              </td>
-                              <td>
-                                <h2 className="table-avatar">
-                                  <Link
-                                    to={''}
-                                    className="avatar avatar-sm mr-2"
-                                  >
-                                    <img
-                                      className="avatar-img rounded-circle"
-                                      src={row?.doctorId['profile_image']}
-                                      alt="User"
-                                    />
-                                  </Link>
-                                  <Link to={''} style={{ paddingLeft: '10px' }}>
-                                 Dr {row?.doctorId['name']} <span>{row?.doctorId['specialization']}</span>
-                                  </Link>
-                                </h2>
-                              </td>
-                              <td>$450</td>
-                              <td>{moment(row?.date).format('LL')}</td>
-                              <td className="text-right">
-                                <div className="main">
-                                  <CustomizedDialogs1 id={row._id}/>
-                                </div>
-                              </td>
-                            </tr>
-                           ))}
+                                <tr>
+                                  <td>
+                                    <Link to={''}>
+                                      #{row['_id'].substr(0, 10)}
+                                    </Link>
+                                  </td>
+                                  <td>
+                                    <h2 className="table-avatar">
+                                      <Link
+                                        to={''}
+                                        className="avatar avatar-sm mr-2"
+                                      >
+                                        <img
+                                          className="avatar-img rounded-circle"
+                                          src={row?.doctorId['profile_image']}
+                                          alt="User"
+                                        />
+                                      </Link>
+                                      <Link
+                                        to={''}
+                                        style={{ paddingLeft: '10px' }}
+                                      >
+                                        Dr {row?.doctorId['name']}{' '}
+                                        <span>
+                                          {row?.doctorId['specialization']}
+                                        </span>
+                                      </Link>
+                                    </h2>
+                                  </td>
+                                  <td>$450</td>
+                                  <td>{moment(row?.date).format('LL')}</td>
+                                  <td className="text-right">
+                                    <div className="main">
+                                      <CustomizedDialogs1 id={row._id} />
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))}
                           </tbody>
                         </table>
                       </div>
@@ -373,6 +376,7 @@ function UserProfile() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

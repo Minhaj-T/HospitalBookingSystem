@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaPlusCircle, FaRegTrashAlt } from 'react-icons/fa';
 import { useState } from 'react';
 import moment from 'moment';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { notification } from '../../../utilities/notification';
 import { addBills } from '../../../features/Doctor/userProfile/userProfileSlice';
 
@@ -192,7 +192,7 @@ function AddBilling({userId,doctor1}) {
                     submit();
                   }}
                 >
-                  Save changes
+                  Add
                 </button>
               </div>
             </div>

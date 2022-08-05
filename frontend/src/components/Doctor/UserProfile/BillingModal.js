@@ -56,11 +56,12 @@ export default function CustomizedDialogs1({ id }) {
   const { billing } = useSelector((state) => state.userprofile);
   //filter the result
   const Result = billing?.filter((row) => row?._id === id);
-//   //calculate the total amount
 
-const Total = Result[0]?.bill.reduce((a,b)=>({Total:a.Total+parseInt(b.amount)}),{Total:0}) 
-
- 
+  //calculate the total amount
+  const Total = Result[0]?.bill.reduce(
+    (a, b) => ({ Total: a.Total + parseInt(b.amount) }),
+    { Total: 0 }
+  );
 
   const handleClickOpen = () => {
     setOpen(true);
