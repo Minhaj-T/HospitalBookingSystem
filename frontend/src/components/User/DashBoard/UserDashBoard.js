@@ -6,17 +6,43 @@ import heart_rate from '../../../images/pt-dashboard-01.png'
 import body_temp from '../../../images/pt-dashboard-02.png'
 import glucose_level from '../../../images/pt-dashboard-03.png'
 import blood_pressure from '../../../images/pt-dashboard-04.png'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import * as api from '../../../api/index';
 import { errorHandler } from '../../../utilities/errorMessege';
 import {notification} from '../../../utilities/notification'
 import Spinner from '../Spinner/Spinner';
 import moment from 'moment';
+import { reset } from '../../../features/Doctor/userProfile/userProfileSlice';  
+import CustomizedDialogs from '../../Doctor/UserProfile/PrescriptionModal';
+
 
 function UserDashBoard() {
+  const dispatch= useDispatch();
   const [Fulldata, setFulldata] = useState({loading:false,done:false})
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);  
+  
+  const {prescription,medicalRecords,billing,isLoading,isError,isSuccess,message,
+  } = useSelector((state) => state.userprofile);
+
+  useEffect(() => {
+    if (isError) {   
+      notification.error(message);
+    }
+    dispatch(reset());
+  }, [prescription,medicalRecords,billing,isLoading,isError,isSuccess,message,dispatch]);
+
+  const user_prescription = prescription?.filter(
+    (row) => row?.userId === user?._id
+    );
+
+  const user_medicalRecords = medicalRecords?.filter(
+      (row) => row?.userId === user?._id
+    );
+
+  const user_billing = billing?.filter(
+      (row) => row?.userId === user?._id
+    );
 
   //create a tocken
   const {token}=user?user:"";
@@ -47,7 +73,7 @@ const fetchAllAppointments= async()=>{
 
 
 // Loading page
-if (Fulldata.loading) {
+if (Fulldata.loading||isLoading) {
   return <Spinner />;
 }
   
@@ -268,46 +294,41 @@ if (Fulldata.loading) {
                       <thead>
                         <tr>
                           <th>Date </th>
-                          <th>Name</th>
+                          <th>Prescription ID</th>
                           <th>Created by </th>
                           <th></th>
                         </tr>
                       </thead>
                       <tbody>
+                      {user_prescription &&
+                              user_prescription.map((row) => (
                         <tr>
-                          <td>5 Nov 2019</td>
-                          <td>Prescription 10</td>
+                          <td>{moment(row?.date).format('LL')}</td>
+                          <td>{row['_id'].substr(0, 10)}</td>
                           <td>
                             <h2 className="table-avatar">
                               <Link to={''} className="avatar avatar-sm mr-2">
                                 <img
                                   className="avatar-img rounded-circle"
-                                  src={mm}
+                                  src={row?.doctorId['profile_image']}
                                   alt="User"
                                 />
                               </Link>
                               <Link to={''} style={{paddingLeft: '5px'}}>
-                                Dr. Olga Barlow <span>Dental</span>
+                              Dr {row?.doctorId['name']}{' '}
+                                        <span>
+                                          {row?.doctorId['specialization']}
+                                        </span>
                               </Link>
                             </h2>
                           </td>
                           <td className="text-right">
                             <div className="table-action">
-                              <Link
-                                to={''}
-                                className="btn btn-sm bg-primary-light"
-                              >
-                                <FaPrint /> Print
-                              </Link>
-                              <Link
-                                to={''}
-                                className="btn btn-sm bg-info-light"
-                              >
-                                <FaEye /> View
-                              </Link>
+                            <CustomizedDialogs id={row._id} />
                             </div>
                           </td>
                         </tr>
+                        ))}
                       </tbody>
                     </table>
                   </div>
@@ -333,46 +354,53 @@ if (Fulldata.loading) {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>
-                            <Link to={''}>#MR-0002</Link>
-                          </td>
-                          <td>6 Nov 2019</td>
-                          <td>Dental Removing</td>
-                          <td>
-                            <Link to={''}>dental-test.pdf</Link>
-                          </td>
-                          <td>
-                            <h2 className="table-avatar">
-                              <Link to={''} className="avatar avatar-sm mr-2">
-                                <img
-                                  className="avatar-img rounded-circle"
-                                  src={mm}
-                                  alt="User"
-                                />
-                              </Link>
-                              <Link to={''} style={{paddingLeft: '5px'}}>
-                                Dr. John Gibbs <span>Dental</span>
-                              </Link>
-                            </h2>
-                          </td>
-                          <td className="text-right">
-                            <div className="table-action">
-                              <Link
-                                to={''}
-                                className="btn btn-sm bg-info-light"
-                              >
-                                <FaEye /> View
-                              </Link>
-                              <Link
-                                to={''}
-                                className="btn btn-sm bg-primary-light"
-                              >
-                                <FaPrint /> Print
-                              </Link>
-                            </div>
-                          </td>
-                        </tr>
+                      {user_medicalRecords &&
+                              user_medicalRecords.map((row) => (
+                                <tr>
+                                  <td>
+                                    <Link to={''}>
+                                      #{row['_id'].substr(0, 10)}
+                                    </Link>
+                                  </td>
+                                  <td>{moment(row?.date).format('LL')}</td>
+                                  <td>{row['description']}</td>
+                                  <td>
+                                    <h2 className="table-avatar">
+                                      <Link
+                                        to={''}
+                                        className="avatar avatar-sm mr-2"
+                                      >
+                                        <img
+                                          className="avatar-img rounded-circle"
+                                          src={row?.doctorId['profile_image']}
+                                          alt="User"
+                                        />
+                                      </Link>
+                                      <Link
+                                        to={''}
+                                        style={{ paddingLeft: '10px' }}
+                                      >
+                                        Dr {row?.doctorId['name']}
+                                        <span>
+                                          {row?.doctorId['specialization']}
+                                        </span>
+                                      </Link>
+                                    </h2>
+                                  </td>
+                                  <td className="text-right">
+                                    <div className="main">
+                                      <a
+                                        className="btn btn-sm bg-info-light"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        href={row['document']}
+                                      >
+                                        <FaEye /> View
+                                      </a>
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))}
                       </tbody>
                     </table>
                   </div>
@@ -396,48 +424,45 @@ if (Fulldata.loading) {
                           <th></th>
                         </tr>
                       </thead>
-                      {Fulldata?.data && 
-                       Fulldata?.data.map((row)=>(
                       <tbody>
-                        <tr>
-                          <td>
-                            <Link to={''}>#{row['payId'].substr(4, 6)}</Link>
-                          </td>
-                          <td>
-                            <h2 className="table-avatar">
-                              <Link to={''} className="avatar avatar-sm mr-2">
-                                <img
-                                  className="avatar-img rounded-circle"
-                                  src={row['doctorId']?.profile_image}
-                                  alt="User"
-                                />
-                              </Link>
-                              <Link to={''} style={{paddingLeft: '5px'}}>
-                                Dr. {row['doctorId']?.name} <span>#{row['doctorId']?.doctorID}</span>
-                              </Link>
-                            </h2>
-                          </td>
-                          <td>₹{row['amount']}</td>
-                          <td>{row['date'].substr(0, 10)}</td>
-                          <td className="text-right">
-                            <div className="table-action">
-                              <Link
-                                to={''}
-                                className="btn btn-sm bg-info-light"
-                              >
-                                <FaEye /> View
-                              </Link>
-                              <Link
-                                to={''}
-                                className="btn btn-sm bg-primary-light"
-                              >
-                                <FaPrint /> Print
-                              </Link>
-                            </div>
-                          </td>
-                        </tr>
+                      {user_billing&&
+                              user_billing.map((row) => (
+                            <tr>
+                              <td>
+                                <Link to={''}>#{row['_id'].substr(0, 10)}</Link>
+                              </td>
+                              <td>
+                                <h2 className="table-avatar">
+                                  <Link
+                                    to={''}
+                                    className="avatar avatar-sm mr-2"
+                                  >
+                                    <img
+                                      className="avatar-img rounded-circle"
+                                      src={row?.doctorId['profile_image']}
+                                      alt="User"
+                                    />
+                                  </Link>
+                                  <Link to={''} style={{ paddingLeft: '10px' }}>
+                                 Dr {row?.doctorId['name']} <span>{row?.doctorId['specialization']}</span>
+                                  </Link>
+                                </h2>
+                              </td>
+                              <td>$450</td>
+                              <td>{moment(row?.date).format('LL')}</td>
+                              <td className="text-right">
+                                <div className="main">
+                                  <Link
+                                    to={''}
+                                    className="btn btn-sm bg-info-light"
+                                  >
+                                    <FaEye /> View
+                                  </Link>
+                                </div>
+                              </td>
+                            </tr>
+                           ))}
                       </tbody>
-                      ))}
                     </table>
                   </div>
                 </div>

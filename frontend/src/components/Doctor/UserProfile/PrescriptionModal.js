@@ -56,7 +56,7 @@ export default function CustomizedDialogs({id}) {
         prescription,
       } = useSelector((state) => state.userprofile);
       
-      const use = prescription?.filter((row) => row?._id == id);
+      const Result = prescription?.filter((row) => row?._id === id);
 
   const [open, setOpen] = React.useState(false);
 
@@ -94,13 +94,14 @@ export default function CustomizedDialogs({id}) {
                       src={Mainlogo}
                       className="img-rounded logo"
                       style={{width:'7rem',paddingBottom:'5px'}}
+                      alt='doctor'
                     />
                     <address>
-                      <strong>{use[0].doctorId?.name}</strong>
+                      <strong>{Result[0].doctorId?.name}</strong>
                       <br />
-                      {use[0].doctorId?.specialization}
+                      {Result[0].doctorId?.specialization}
                       <br />
-                       {moment(use[0].date).format('LL')}
+                       {moment(Result[0].date).format('LL')}
                     </address>
                   </div>
                 </div>
@@ -115,7 +116,7 @@ export default function CustomizedDialogs({id}) {
                           <th>Time</th>
                         </tr>
                       </thead>
-                      {use&&use[0]?.prescription.map((row)=>(
+                      {Result&&Result[0]?.prescription.map((row)=>(
                       <tbody>
                         <tr>
                           <td>{row.name}</td>

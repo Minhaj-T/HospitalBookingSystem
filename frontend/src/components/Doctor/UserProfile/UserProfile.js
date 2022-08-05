@@ -2,7 +2,7 @@ import '../../User/DashBoard/userdashboard.css';
 import '../Mypatients/mypatients.css';
 import './userprofile.css';
 import { Link, useParams } from 'react-router-dom';
-import { FaPrint, FaEye, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaEye, FaMapMarkerAlt } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../Header/Header';
 import AddPrescription from '../AddPrescription/AddPrescription';
@@ -14,6 +14,7 @@ import { reset } from '../../../features/Doctor/userProfile/userProfileSlice';
 import moment from 'moment';
 import CustomizedDialogs from './PrescriptionModal';
 import Spinner from '../../User/Spinner/Spinner';
+import CustomizedDialogs1 from './BillingModal';
 
 function UserProfile() {
   const dispatch = useDispatch();
@@ -355,12 +356,7 @@ function UserProfile() {
                               <td>{moment(row?.date).format('LL')}</td>
                               <td className="text-right">
                                 <div className="main">
-                                  <Link
-                                    to={''}
-                                    className="btn btn-sm bg-info-light"
-                                  >
-                                    <FaEye /> View
-                                  </Link>
+                                  <CustomizedDialogs1 id={row._id}/>
                                 </div>
                               </td>
                             </tr>

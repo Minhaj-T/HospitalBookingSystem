@@ -11,9 +11,18 @@ import {
   FaBookmark,
 } from 'react-icons/fa'
 import Header from "../../components/User/Header/Header";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { billingRecords,getMedicalRecords,getPrescription } from '../../features/Doctor/userProfile/userProfileSlice';
+import { useEffect } from 'react';
 
 function UserLayout({children}) {
+  const dispatch= useDispatch();
+  useEffect(() => {
+    dispatch(billingRecords())
+    dispatch(getMedicalRecords())
+    dispatch(getPrescription())
+  }, [])
+  
   const { user } = useSelector((state) => state.auth);
   return (
     <>
