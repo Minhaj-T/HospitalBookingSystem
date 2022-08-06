@@ -8,6 +8,9 @@ import { errorHandler } from '../../../utilities/errorMessege';
 import { notification } from '../../../utilities/notification';
 import Spinner from '../../../components/User/Spinner/Spinner';
 import { io } from 'socket.io-client';
+import Header from '../../../components/Doctor/Header/Header';
+import Footer from '../../../components/Footer/Footer';
+
 
 function ChatUser() {
   const [Fulldata, setFulldata] = useState({
@@ -23,7 +26,7 @@ function ChatUser() {
   const { doctor } = useSelector((state) => state.doctorAuth);
 
   useEffect(() => {
-    socket.current = io('ws://localhost:8900');
+    socket.current = io(process.env.REACT_APP_SOCKET_URL); 
     socket.current.on('getMessage', (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -119,6 +122,7 @@ function ChatUser() {
 
   return (
     <>
+    <Header/>
       <div className="messenger ">
         <div className="chatMenu">
           <div className="chatMenuWrapper">
@@ -172,6 +176,7 @@ function ChatUser() {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 }
