@@ -147,20 +147,20 @@ function DoctorProfile() {
                       </Link>
                     )}
 
-                    <Link to={''} className="btn btn-white msg-btn">
+                    <Link to={'/user/messenger'} className="btn btn-white msg-btn">
                       <FaCommentAlt />
                     </Link>
-                    <Link
-                      to={''}
+                    <a
+                    href="tel:+919539920559"
                       className="btn btn-white call-btn"
                       data-toggle="modal"
                       data-target="#voice_call"
                     >
                       <FaPhone />
-                    </Link>
+                    </a>
                   </div>
                   <div className="clinic-booking">
-                    <Link to={''} className="apt-btn">
+                    <Link to={`/user/book-appoinment/${Doctor?._id}`} className="apt-btn">
                       Book Appointment
                     </Link>
                   </div>
