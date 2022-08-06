@@ -20,11 +20,11 @@ const loginAdmin = asyncHandler(async (req, res) => {
       _id: admin.id,
       name: admin.name,
       email: admin.email,
-      profile_img:admin.profile_img,
+      profile_img: admin.profile_img,
       token: generateToken(admin._id),
     });
   } else {
-    res.status(400)
+    res.status(400);
     throw new Error('invalid the Admin data');
     throw new Error('invalid the Admin data');
   }
@@ -300,6 +300,44 @@ const latestTransactions = asyncHandler(async (req, res) => {
   res.status(200).json({ transactions });
 });
 
+// @desc calculate specialties based revenue
+// @rout GET /api/admin/specialization-revenue
+const specializationsRevenue = asyncHandler(async (req, res) => {
+  const data = await Transactions.aggregate([
+    {
+      "$lookup": {
+        "from": "doctors",
+        "localField": "doctorId",
+        "foreignField": "_id",
+        "as": "result",
+      }
+    },
+    {
+      "$project": {
+                  "_id": 1,
+                  "amount": 1,
+                  "result.specialization": 1,
+              }
+  },
+  { "$unwind": "$result" },
+  {
+    $group: {
+        _id: "$result.specialization",
+        pv: { 
+          $sum: "$amount" 
+      }
+    },
+  },
+  { $project: {
+    _id:0,
+    name: "$_id",
+    pv: 1,
+ }
+}
+  ])
+  res.status(200).json({ data });
+});
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '10d',
@@ -323,4 +361,5 @@ module.exports = {
   widgetsValues,
   appointmentStatus,
   latestTransactions,
+  specializationsRevenue,
 };

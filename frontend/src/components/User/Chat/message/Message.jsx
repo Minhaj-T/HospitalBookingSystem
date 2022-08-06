@@ -1,5 +1,5 @@
 import "./message.css";
-import { format } from "timeago.js";
+import moment from 'moment';
 
 export default function Message({ message, own }) {
   console.log("replay",message, own);
@@ -13,7 +13,7 @@ export default function Message({ message, own }) {
         />
         <p className="messageText">{message.text}</p>
       </div>
-      <div className="messageBottom">{format(message.createdAt)}</div>
+      <div className="messageBottom">{moment(new Date(message.createdAt)).fromNow()}</div>
     </div>
   );
 }

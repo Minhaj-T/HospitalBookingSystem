@@ -10,11 +10,10 @@ import { useForm } from "react-hook-form";
 import { notification } from "../../../utilities/notification";
 
 
-// TODO: admin form validation pending
 //style proportys
 const paperStyle = {
   padding: 51,
-  height: "55vh",
+  height: "61vh",
   width: 490,
   margin: "100px auto",
 };
@@ -90,7 +89,7 @@ function AdminLogin() {
             <TextField
               variant="standard"
               label="Password"
-              
+              type={"password"}
               name="password"
               placeholder="Enter password"
             

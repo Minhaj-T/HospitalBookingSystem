@@ -26,3 +26,4 @@ export const deleteSpecialties=(Id)=>API.delete(`/delete-specialties/${Id}`)
 export const widgetValues=(config)=> API.get('/get-widget-count',config)
 export const appointmentStatistics=(config)=> API.get('/appointment-statistics',config);
 export const latestTransactions=(limit,config)=> API.get(`/latest-transactions?limit=${limit}`,config);
+export const specializationsRevenue=(config)=> API.get(`/specialization-revenue`,config)

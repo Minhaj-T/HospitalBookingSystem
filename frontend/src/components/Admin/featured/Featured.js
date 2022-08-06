@@ -4,6 +4,7 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 function Featured({ statics,TotalAppointments }) {
+  console.log("1212121212",statics,TotalAppointments);
   return (
     <>
       <div className="featured">
@@ -23,7 +24,7 @@ function Featured({ statics,TotalAppointments }) {
             />
           </div>
           <p className="title">Total Appointment</p>
-          <p className="amount">7</p>
+          <p className="amount">{TotalAppointments}</p>
           <p className="desc">
             Previous transactions processing. Last payments may not be included.
           </p>
