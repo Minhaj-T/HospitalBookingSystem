@@ -29,10 +29,12 @@ function Reports() {
     setFulldata((prev) => ({ ...prev, loading: true }));
     try {
       const { data } = await api.specializationsRevenue(config);
-      if (data) {
+      const Users = await api.latestUsers(config,5);
+      if (data&&Users) {
         setFulldata((prev) => ({
           ...prev,
           ...data,
+          ...Users?.data,
           loading: false,
           done: true,
         }));
@@ -60,8 +62,8 @@ function Reports() {
         <Chart2  data={Fulldata?.data}/>
       </div>
       <div className="listContainer">
-        <div className="listTitle">Latest Transactions</div>
-        <Table2/>
+        <div className="listTitle">Latest Users</div>
+        <Table2 data={Fulldata?.users}/>
       </div>
 
     </>

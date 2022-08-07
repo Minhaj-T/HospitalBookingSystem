@@ -261,7 +261,6 @@ const widgetsValues = asyncHandler(async (req, res) => {
     TotelAppointments,
     TotelEarnings: amount,
   };
-
   res.status(200).json({ data });
 });
 
@@ -338,6 +337,16 @@ const specializationsRevenue = asyncHandler(async (req, res) => {
   res.status(200).json({ data });
 });
 
+// @desc get the latest users
+// @rout GET /api/admin/latest-users
+const latestUsers= asyncHandler(async (req, res) => {
+  const{limit}=req.query;
+  const users= await User.find()
+  .sort({ $natural: -1 })
+  .limit(limit);
+  res.status(200).json({ users });
+})
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '10d',
@@ -362,4 +371,5 @@ module.exports = {
   appointmentStatus,
   latestTransactions,
   specializationsRevenue,
+  latestUsers
 };

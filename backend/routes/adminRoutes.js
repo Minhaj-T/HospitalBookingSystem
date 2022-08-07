@@ -5,7 +5,8 @@ const {loginAdmin ,addDoctors ,fetchUsers,blockUser ,fetchDoctors
     ,editUser ,editDoctor ,deleteDoctor ,addSpecialities 
     ,fetchSpecialties ,deleteSpecialties ,removeUser
      ,blockDoctor,widgetsValues,appointmentStatus,
-    latestTransactions,specializationsRevenue}=require('../controllers/adminControllers');
+    latestTransactions,specializationsRevenue,
+    latestUsers}=require('../controllers/adminControllers');
 const { isAdmin } = require('../middlewares/authMiddleware')
 
 router.post('/login', loginAdmin);
@@ -25,4 +26,5 @@ router.get('/get-widget-count',isAdmin,widgetsValues)
 router.get('/appointment-statistics',isAdmin,appointmentStatus)
 router.get('/latest-transactions',isAdmin,latestTransactions)
 router.get('/specialization-revenue',isAdmin,specializationsRevenue)
+router.get('/latest-users',isAdmin,latestUsers)
 module.exports=router;
