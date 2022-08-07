@@ -260,18 +260,6 @@ function UserDashBoard() {
                               </td>
                               <td className="text-right">
                                 <div className="table-action">
-                                  <Link
-                                    to={''}
-                                    className="btn btn-sm bg-primary-light"
-                                  >
-                                    <FaPrint /> Print
-                                  </Link>
-                                  <Link
-                                    to={''}
-                                    className="btn btn-sm bg-info-light"
-                                  >
-                                    <FaEye /> View
-                                  </Link>
                                 </div>
                               </td>
                             </tr>

@@ -28,23 +28,18 @@ function Header() {
           <div className="main-menu-wrapper">
             <ul className=" main-nav navbar-nav ">
               <li className="has-submenu">
-                <Link className=" nav-link" to={''}>
+                <Link className=" nav-link" to={'/'}>
                   Home
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className=" nav-link" to={''}>
+                <Link className=" nav-link" to={'/user'}>
                   Appoinments
                 </Link>
               </li>
               <li className="nav-item">
                 <Link className=" nav-link" to={'/doctor-search'}>
                   Search-Doctors
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className=" nav-link" to={''}>
-                  About
                 </Link>
               </li>
             </ul>
