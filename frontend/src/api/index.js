@@ -9,10 +9,10 @@ const API = axios.create({
 export const signUp = (userData) => API.post('/signup', userData);
 export const login = (userData) => API.post('/login', userData);
 export const login_google = (userData) => API.post('/login-google', userData);
+export const getDoctor = (id) => API.get(`/get-doctor?id=${id}`)
 export const editUserDetails = (userData,config) => API.put(`/edit-userDetails`, userData,config);
 export const editUserPassword = (NewPassword,config) => API.post(`/edit-password`, NewPassword,config);
 export const getAllDoctors = (skip,limit) => API.get(`/fetch-allDoctors?limit=${limit}&skip=${skip}`)
-export const getDoctor = (id) => API.get(`/get-doctor?id=${id}`)
 export const getAllSpecialites=()=> API.get ('/fetch-specialties');
 export const getAllappointment= (config,limit) => API.get(`/get-appointments?limit=${limit}`,config) 
 export const getappointments= (config) => API.get(`/get-user-Allappointments`,config)

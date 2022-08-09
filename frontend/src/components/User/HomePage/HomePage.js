@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react';
 import * as api from '../../../api/index';
 import Spinner from '../Spinner/Spinner';
 import Showdoctors from './Showdoctors';
+import { notification } from '../../../utilities/notification';
+import { errorHandler } from '../../../utilities/errorMessege';
 
 function HomePage() {
   const [fullData, setFullData] = useState({ loading: false, done: false });
@@ -18,18 +20,22 @@ function HomePage() {
   }, []);
 
   //  fetch the all specialties
-  const fetchAllSpecialitis = async () => {
-    setFullData((prev) => ({ ...prev, loading: true }));
-    let { data } = await api.getAllSpecialites();
-    let  doctors = await api.getAllDoctors(0,0);
-    if (data?.specialties&&doctors?.data) {
-      setFullData((prev) => ({
-        ...prev,
-        ...data,
-        ...doctors?.data,
-        loading: false,
-        done: true,
-      }));
+  const fetchAllSpecialitis = async () => { 
+    try {
+      setFullData((prev) => ({ ...prev, loading: true }));
+      let { data } = await api.getAllSpecialites();
+      let  doctors = await api.getAllDoctors(0,0);
+      if (data?.specialties&&doctors?.data) {
+        setFullData((prev) => ({
+          ...prev,
+          ...data,
+          ...doctors?.data,
+          loading: false,
+          done: true,
+        }));
+      }
+    } catch (error) {
+      notification(errorHandler(error));
     }
   };
 

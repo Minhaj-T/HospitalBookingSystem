@@ -2,8 +2,6 @@ import '../featured/featured.scss'
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { CircularProgressbar,buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
 import { useEffect, useState } from 'react';
 
 function Featured2({data}) {
