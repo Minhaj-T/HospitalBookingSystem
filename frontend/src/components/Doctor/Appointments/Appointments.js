@@ -56,14 +56,6 @@ function Appointments() {
                   </div>
                 </div>
                 <div className="appointment-action">
-                  <Link
-                    to={''}
-                    className="btn btn-sm bg-info-light"
-                    data-toggle="modal"
-                    data-target="#appt_details"
-                  >
-                    <FaEye /> View
-                  </Link>
                   {row?.status === 'pending' && (
                     <>
                       <Link

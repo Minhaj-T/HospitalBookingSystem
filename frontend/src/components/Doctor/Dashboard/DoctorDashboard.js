@@ -121,12 +121,6 @@ function DoctorDashboard() {
                                 </td>
                                 <td className="text-right">
                                   <div className="table-action pe-5">
-                                    <Link
-                                      to={''}
-                                      className="btn btn-sm bg-info-light"
-                                    >
-                                      <FaEye /> View
-                                    </Link>
                                     {row?.status === 'pending' && (
                                       <>
                                         <Link
@@ -270,12 +264,6 @@ function DoctorDashboard() {
                             <td className="text-center">₹{row['amount']}</td>
                             <td className="text-right">
                               <div className="table-action pe-5">
-                                <Link
-                                  to={''}
-                                  className="btn btn-sm bg-info-light"
-                                >
-                                  <FaEye /> View
-                                </Link>
                                 {row?.status === 'pending' && (
                                   <>
                                     <Link

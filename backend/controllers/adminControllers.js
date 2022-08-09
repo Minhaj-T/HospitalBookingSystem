@@ -304,53 +304,79 @@ const latestTransactions = asyncHandler(async (req, res) => {
 const specializationsRevenue = asyncHandler(async (req, res) => {
   const data = await Transactions.aggregate([
     {
-      "$lookup": {
-        "from": "doctors",
-        "localField": "doctorId",
-        "foreignField": "_id",
-        "as": "result",
-      }
+      $lookup: {
+        from: 'doctors',
+        localField: 'doctorId',
+        foreignField: '_id',
+        as: 'result',
+      },
     },
     {
-      "$project": {
-                  "_id": 1,
-                  "amount": 1,
-                  "result.specialization": 1,
-              }
-  },
-  { "$unwind": "$result" },
-  {
-    $group: {
-        _id: "$result.specialization",
-        pv: { 
-          $sum: "$amount" 
-      }
+      $project: {
+        _id: 1,
+        amount: 1,
+        'result.specialization': 1,
+      },
     },
-  },
-  { $project: {
-    _id:0,
-    name: "$_id",
-    pv: 1,
- }
-}
-  ])
+    { $unwind: '$result' },
+    {
+      $group: {
+        _id: '$result.specialization',
+        pv: {
+          $sum: '$amount',
+        },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        name: '$_id',
+        pv: 1,
+      },
+    },
+  ]);
   res.status(200).json({ data });
 });
 
 // @desc get the latest users
 // @rout GET /api/admin/latest-users
-const latestUsers= asyncHandler(async (req, res) => {
-  const{limit}=req.query;
-  const users= await User.find()
-  .sort({ $natural: -1 })
-  .limit(limit);
+const latestUsers = asyncHandler(async (req, res) => {
+  const { limit } = req.query;
+  const users = await User.find().sort({ $natural: -1 }).limit(limit);
   res.status(200).json({ users });
-})
+});
+
+// @desc get the daily revenue
+// @rout GET /api/admin/daily-revenue
+const dailyRevenue = asyncHandler(async (req, res) => {
+  const revenue = await Transactions.aggregate([
+    { $match: { createdAt: { $gte: today() } } },
+    {
+      $group: {
+        _id: null,
+        total: {
+          $sum: '$amount',
+        },
+      },
+    },
+   
+  ]);
+  res.status(200).json({ revenue });
+});
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '10d',
   });
+};
+
+const today = () => {
+  const d = new Date();
+  const yy = d.getFullYear();
+  const mm = d.getMonth() + 1 < 10 ? `0${d.getMonth() + 1}` : d.getMonth() + 1;
+  const dd = d.getDate() < 10 ? `0${d.getDate()}` : d.getDate();
+  const newDate = `${yy}-${mm}-${dd}`;
+  return new Date(newDate);
 };
 
 module.exports = {
@@ -371,5 +397,6 @@ module.exports = {
   appointmentStatus,
   latestTransactions,
   specializationsRevenue,
-  latestUsers
+  latestUsers,
+  dailyRevenue,
 };

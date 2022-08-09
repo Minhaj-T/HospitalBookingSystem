@@ -28,3 +28,4 @@ export const appointmentStatistics=(config)=> API.get('/appointment-statistics',
 export const latestTransactions=(limit,config)=> API.get(`/latest-transactions?limit=${limit}`,config);
 export const specializationsRevenue=(config)=> API.get(`/specialization-revenue`,config)
 export const latestUsers=(config,limit)=> API.get(`/latest-users?limit=${limit}`,config)
+export const dailyRevenue=(config)=> API.get(`/daily-revenue`,config)

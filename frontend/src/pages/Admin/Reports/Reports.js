@@ -30,11 +30,13 @@ function Reports() {
     try {
       const { data } = await api.specializationsRevenue(config);
       const Users = await api.latestUsers(config,5);
+      const DailyRevenue= await api.dailyRevenue(config)
       if (data&&Users) {
         setFulldata((prev) => ({
           ...prev,
           ...data,
           ...Users?.data,
+          ...DailyRevenue?.data,
           loading: false,
           done: true,
         }));
@@ -44,12 +46,13 @@ function Reports() {
     }
   };
 
-  console.log('specializationsRevenue.......', Fulldata);
+
+  // let obj = Fulldata.find(o => o.name === 'string 1');
   // Loading page
   if (Fulldata.loading) {
     return <Spinner />;
   }
-
+console.log("wrwrrwrwrwrw",Fulldata);
   return (
     <>
      <PageHeader
@@ -58,7 +61,7 @@ function Reports() {
         icon={<AssessmentIcon fontSize="large" />}
       />
     <div className="charts">
-        <Featured2/>
+        <Featured2 data={Fulldata.revenue}/>
         <Chart2  data={Fulldata?.data}/>
       </div>
       <div className="listContainer">

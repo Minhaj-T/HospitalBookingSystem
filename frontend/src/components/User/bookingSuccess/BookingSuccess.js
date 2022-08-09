@@ -60,11 +60,11 @@ function BookingSuccess() {
                       </strong>
                     </p>
                     <Link
-                      to={'/'}
+                      to={'/user'}
                       href="invoice-view.html"
                       className="btn btn-primary view-inv-btn"
                     >
-                      View Invoice
+                      View Appointments
                     </Link>
                   </div>
                 </div>

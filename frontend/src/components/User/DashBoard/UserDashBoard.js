@@ -259,8 +259,7 @@ function UserDashBoard() {
                                 )}
                               </td>
                               <td className="text-right">
-                                <div className="table-action">
-                                </div>
+                                
                               </td>
                             </tr>
                           </tbody>
