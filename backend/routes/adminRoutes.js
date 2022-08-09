@@ -10,22 +10,21 @@ const {loginAdmin ,addDoctors ,fetchUsers,blockUser ,fetchDoctors
 const { isAdmin } = require('../middlewares/authMiddleware')
 
 router.post('/login', loginAdmin);
-router.get('/fetch-users', fetchUsers);
-router.put('/edit-user/:id',editUser)
 router.patch('/block-user',blockUser)
-router.delete('/remove-user',removeUser)
-router.post('/add-doctors',addDoctors)
-router.get('/fetch-doctors',fetchDoctors)
-router.put('/edit-doctor/:id',editDoctor)
 router.patch('/block-doctor',blockDoctor)
-router.delete("/delete-doctor/:id",deleteDoctor)
-router.get('/fetch-specialties',fetchSpecialties)
-router.post('/add-specialties',addSpecialities)
-router.delete("/delete-specialties/:id",deleteSpecialties)
+router.get('/fetch-users',isAdmin,fetchUsers);
+router.put('/edit-user/:id',isAdmin,editUser)
+router.delete('/remove-user',isAdmin,removeUser)
+router.post('/add-doctors',isAdmin,addDoctors)
+router.get('/fetch-doctors',isAdmin,fetchDoctors)
+router.delete("/delete-doctor/:id",isAdmin,deleteDoctor)
+router.get('/fetch-specialties',isAdmin,fetchSpecialties)
+router.post('/add-specialties',isAdmin,addSpecialities)
+router.delete("/delete-specialties/:id",isAdmin,deleteSpecialties)
 router.get('/get-widget-count',isAdmin,widgetsValues)
 router.get('/appointment-statistics',isAdmin,appointmentStatus)
 router.get('/latest-transactions',isAdmin,latestTransactions)
 router.get('/specialization-revenue',isAdmin,specializationsRevenue)
 router.get('/latest-users',isAdmin,latestUsers)
-router.get('/daily-revenue',dailyRevenue)
+router.get('/daily-revenue',isAdmin,dailyRevenue)
 module.exports=router;
