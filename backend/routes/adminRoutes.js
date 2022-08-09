@@ -2,7 +2,7 @@ const { Router } = require('express');
 const express= require('express')
 const router=express.Router()
 const {loginAdmin ,addDoctors ,fetchUsers,blockUser ,fetchDoctors 
-    ,editUser ,editDoctor ,deleteDoctor ,addSpecialities 
+    ,editUser ,deleteDoctor ,addSpecialities 
     ,fetchSpecialties ,deleteSpecialties ,removeUser
      ,blockDoctor,widgetsValues,appointmentStatus,
     latestTransactions,specializationsRevenue,

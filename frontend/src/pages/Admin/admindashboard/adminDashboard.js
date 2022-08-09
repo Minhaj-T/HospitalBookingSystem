@@ -41,9 +41,9 @@ function AdminDashboard() {
     setFulldata((prev) => ({ ...prev, loading: true }));
     try {
       const { data } = await api.widgetValues(config);
-      const appointments= await api.appointmentStatistics(config)
-      const transactions = await api.latestTransactions(limit,config);
-      if (data?.data&&appointments&&transactions) {
+      const appointments = await api.appointmentStatistics(config);
+      const transactions = await api.latestTransactions(limit, config);
+      if (data?.data && appointments && transactions) {
         setFulldata((prev) => ({
           ...prev,
           ...data,
@@ -68,13 +68,32 @@ function AdminDashboard() {
   return (
     <>
       <div className="widgets">
-        <Widgets type="user" Total={Fulldata['data']?.TotelUsers} diff={Math.floor(Math.random() * 50) + 50} />
-        <Widgets type="doctors" Total={Fulldata['data']?.TotelDoctors} diff={Math.floor(Math.random() * 50) + 50}/>
-        <Widgets type="appointments" Total={Fulldata['data']?.TotelAppointments} diff={Math.floor(Math.random() * 50) + 50}/>
-        <Widgets type="earnings" Total={Fulldata['data']?.TotelEarnings} diff={Math.floor(Math.random() * 50) + 50}/>
+        <Widgets
+          type="user"
+          Total={Fulldata['data']?.TotelUsers}
+          diff={Math.floor(Math.random() * 50) + 50}
+        />
+        <Widgets
+          type="doctors"
+          Total={Fulldata['data']?.TotelDoctors}
+          diff={Math.floor(Math.random() * 50) + 50}
+        />
+        <Widgets
+          type="appointments"
+          Total={Fulldata['data']?.TotelAppointments}
+          diff={Math.floor(Math.random() * 50) + 50}
+        />
+        <Widgets
+          type="earnings"
+          Total={Fulldata['data']?.TotelEarnings}
+          diff={Math.floor(Math.random() * 50) + 50}
+        />
       </div>
       <div className="charts">
-        <Featured statics={Fulldata['appointments'] } TotalAppointments={Fulldata['data']?.TotelAppointments} />
+        <Featured
+          statics={Fulldata['appointments']}
+          TotalAppointments={Fulldata['data']?.TotelAppointments}
+        />
         <Chart title="Last 6 Months (Revenue)" aspect={2 / 1} />
       </div>
       <div className="listContainer">

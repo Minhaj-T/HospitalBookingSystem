@@ -96,26 +96,25 @@ function Datatables() {
       renderCell: (params) => {
         return (
           <>
-            
-              <div className="cellAction">
-                {/* <CustomizedDialogs id={params.id ? params.id:""}/> */}
+            <div className="cellAction">
+              {/* <CustomizedDialogs id={params.id ? params.id:""}/> */}
 
-                <div className="deleteButton">
-                  <Link to="" style={{ textDecoration: 'none' }}>
-                    <Button
-                      onClick={() => {
-                        setDeleteId(params.id);
-                        handleOpen();
-                      }}
-                      variant="outlined"
-                      size="small"
-                      color="error"
-                    >
-                      Delete
-                    </Button>
-                  </Link>
-                </div>
+              <div className="deleteButton">
+                <Link to="" style={{ textDecoration: 'none' }}>
+                  <Button
+                    onClick={() => {
+                      setDeleteId(params.id);
+                      handleOpen();
+                    }}
+                    variant="outlined"
+                    size="small"
+                    color="error"
+                  >
+                    Delete
+                  </Button>
+                </Link>
               </div>
+            </div>
 
             <div>
               <Modal
@@ -171,17 +170,17 @@ function Datatables() {
 
   return (
     <div className="listContainer">
-    <div className="datatable">
-      <div style={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          getRowId={(row) => row._id}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-        />
+      <div className="datatable">
+        <div style={{ height: 400, width: '100%' }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+          />
+        </div>
       </div>
-    </div>
     </div>
   );
 }

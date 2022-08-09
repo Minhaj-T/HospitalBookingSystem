@@ -3,8 +3,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-function Featured({ statics,TotalAppointments }) {
-  console.log("1212121212",statics,TotalAppointments);
+function Featured({ statics, TotalAppointments }) {
+  console.log('1212121212', statics, TotalAppointments);
   return (
     <>
       <div className="featured">
@@ -16,10 +16,13 @@ function Featured({ statics,TotalAppointments }) {
           <div className="featuredChart">
             <CircularProgressbar
               value={(
-                (statics?.completedAppointments/TotalAppointments ) *100).toFixed(2)}
+                (statics?.completedAppointments / TotalAppointments) *
+                100
+              ).toFixed(2)}
               text={(
-                (statics?.completedAppointments/TotalAppointments ) *100).toFixed(2)
-                }
+                (statics?.completedAppointments / TotalAppointments) *
+                100
+              ).toFixed(2)}
               strokeWidth={5}
             />
           </div>

@@ -121,18 +121,18 @@ function Datatable() {
 
   return (
     <>
-    <div className="listContainer">
-      <div className="datatable">
-        <div style={{ height: 400, width: '100%' }}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            getRowId={(row) => row._id}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-          />
+      <div className="listContainer">
+        <div className="datatable">
+          <div style={{ height: 400, width: '100%' }}>
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              getRowId={(row) => row._id}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+            />
+          </div>
         </div>
-      </div>
       </div>
 
       <div>
