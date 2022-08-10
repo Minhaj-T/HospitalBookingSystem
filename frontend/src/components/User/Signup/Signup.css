@@ -168,7 +168,7 @@
   color: #fff;
 }
 .step-list ul li a.active-done {
-  background-image: url(../../../../build/static/fonts/icons-tick-icon.svg);
+  background-image: url(../../../fonts/icons-tick-icon.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 18px;
@@ -311,7 +311,7 @@
   .select2-selection--single
   .select2-selection__arrow
   b {
-  background-image: url(../../../../build/static/fonts/icons-down-arrow-gray-dark.svg);
+  background-image: url(../../../fonts/icons-down-arrow-gray-dark.svg);
 }
 .login-page .login-right .step-process-col .form-control {
   color: #808080;
@@ -459,7 +459,7 @@
   text-align: left;
 }
 .country-select .select-col .btn-info.dropdown-toggle:after {
-  background-image: url(../../../../build/static/fonts/icons-down-arrow-gray-dark.svg);
+  background-image: url(../../../fonts/icons-down-arrow-gray-dark.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -538,7 +538,7 @@
   .select2-selection--single
   .select2-selection__arrow
   b {
-  background-image: url(../../../../build/static/fonts/icons-down-arrow-gray-dark.svg);
+  background-image: url(../../../fonts/icons-down-arrow-gray-dark.svg);
 }
 .country-select .number-col input {
   padding-left: 96px;
@@ -551,7 +551,7 @@
   margin: 12px 0;
 }
 .login-page .login-right .search-location-input-box input {
-  background-image: url(../../../../build/static/fonts/icons-search-icon.svg);
+  background-image: url(../../../fonts/icons-search-icon.svg);
   background-repeat: no-repeat;
   background-position: 10px 50%;
   background-size: 16px;
@@ -575,7 +575,7 @@
   .select2-selection--single
   .select2-selection__arrow
   b {
-  background-image: url(../../../../build/static/fonts/icons-down-arrow-gray-dark.svg);
+  background-image: url(../../../fonts/icons-down-arrow-gray-dark.svg);
 }
 .premium-text {
   font-size: 18px;
